@@ -11,6 +11,33 @@ function g2rd_register_assets() {
 add_action('wp_enqueue_scripts', 'g2rd_register_assets');
 
 
+# Charger les styles des variations de blocs
+function g2rd_register_blocks_assets()
+{
+    wp_enqueue_block_style(
+        "core/group",
+        [
+            'handle' => "g2rd-group",
+            'src'    => get_theme_file_uri("assets/css/core-group.css"),
+            'path'   => get_theme_file_path("assets/css/core-group.css"),
+            'ver'    => "1.0",
+        ]
+    );
+}
+add_action("init", "g2rd_register_blocks_assets");
+
+function g2rd_deregister_blocks_variations()
+{
+    wp_enqueue_script(
+        "unregister-styles",
+        get_template_directory_uri() . "/assets/js/unregister-blocks-styles.js",
+        ["wp-blocks", "wp-dom-ready", "wp-edit-post"],
+        "1.0",
+    );
+}
+add_action("enqueue_block_editor_assets", "g2rd_deregister_blocks_variations");
+
+
 // function filter_theme_json_theme($theme_json) {
 // 	$new_data = [
 // 		"version" => 3,

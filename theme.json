@@ -80,7 +80,7 @@
       "defaultSpacingSizes": false,
       "margin": false,
       "padding": true,
-      "units": ["em", "rem", "vh", "vw"],
+      "units": ["%", "em", "rem", "vh", "vw"],
       "spacingSizes": [
         {
           "name": "Très petit",
