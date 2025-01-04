@@ -37,6 +37,35 @@ function g2rd_deregister_blocks_variations()
 }
 add_action("enqueue_block_editor_assets", "g2rd_deregister_blocks_variations");
 
+// Pour retirer les compositions par défaut, mais aussi les suggestions de compositions
+remove_theme_support("core-block-patterns");
+
+// retirer les suggestions de blocs en provenance du « Block Directory » de WordPress.org
+remove_action("enqueue_block_editor_assets", "wp_enqueue_editor_block_directory_assets");
+
+function g2rd_register_patterns_categories()
+{
+    register_block_pattern_category(
+        "marketing",
+        ["label" => __("Marketing", "g2rd")]
+	);
+    
+    register_block_pattern_category(
+        "card",
+        ["label" => __("Cartes", "g2rd")]
+	);
+    
+    register_block_pattern_category(
+        "hero",
+        ["label" => __("Hero", "g2rd")]
+    );
+
+    register_block_pattern_category(
+        "post",
+        ["label" => __("Publications", "g2rd")]
+    );
+}
+add_filter("init", "g2rd_register_patterns_categories");
 
 // function filter_theme_json_theme($theme_json) {
 // 	$new_data = [
