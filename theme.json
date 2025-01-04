@@ -125,6 +125,21 @@
       "writingMode": true,
       "fontFamilies": [
         {
+          "fontFamily": "'Quantum', sans-serif",
+          "name": "Quantum",
+          "slug": "Quantum",
+          "fontFace": [
+            {
+              "fontFamily": "Quantum",
+              "fontDisplay": "block",
+              "fontStretch": "normal",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/Quantum.woff2"]
+            }
+          ]
+        },
+        {
           "fontFamily": "'Audiowide', sans-serif",
           "name": "Audiowide",
           "slug": "audiowide",
@@ -273,12 +288,15 @@
       "core/group": {
         "spacing": {
           "margin": {
-            "top": "0 !important"
+            "top": "0"
           }
         }
       },
       "core/image": {
-        "shadow": "var:preset|shadow|neat"
+        "shadow": "var:preset|shadow|neat",
+        "border": {
+          "radius": "var:custom|radius|s"
+        }
       }
     },
     "color": {
@@ -303,7 +321,7 @@
     "elements": {
       "h1": {
         "typography": {
-          "fontFamily": "var(--wp--preset--font-family--audiowide)",
+          "fontFamily": "var(--wp--preset--font-family--quantum)",
           "fontSize": "var:preset|font-size|xxl"
         }
       },
@@ -337,7 +355,21 @@
           "fontSize": "var:preset|font-size|s"
         }
       },
+      "link": {
+        "color": {
+          "text": "var:preset|color|secondary"
+        }
+      },
+      "caption": {
+        "color": {
+          "text": "var:preset|color|grey-text-alt"
+        },
+        "typography": {
+          "fontSize": "var:preset|font-size|s"
+        }
+      },
       "button": {
+        "css": "transition: .3s ease-in all;",
         "border": {
           "radius": "var:custom|radius|m",
           "width": "0"
