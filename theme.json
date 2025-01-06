@@ -423,6 +423,16 @@
       "area": "footer",
       "name": "footer",
       "title": "Footer"
+  },
+  {
+    "name": "sidebar",
+    "title": "Sidebar",
+    "area": "sidebar"
+  },
+  {
+    "area": "",
+    "name": "newsletter",
+    "title": "Inscription à la newsletter"
   }
   ]
 }
