@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Title: Liste des articles en grille
  * Slug: posts-loop
@@ -6,7 +7,7 @@
  * Categories: posts
  * Keywords: blog, posts, query, loop
  * Viewport Width: 1200
- * Block Types: core/query 
+ * Block Types: core/query
  * Post Types: 
  * Inserter: true
  */
