@@ -67,38 +67,51 @@ function g2rd_register_patterns_categories()
 }
 add_filter("init", "g2rd_register_patterns_categories");
 
-// function filter_theme_json_theme($theme_json) {
-// 	$new_data = [
-// 		"version" => 3,
-// 		"settings" => [
-// 			"color" => [
-// 				"palette" => [
-// 					[
-// 						"slug"  => "primary",
-// 						"color" => "#023047",
-// 						"name"  => "Nouvelle couleur principale",
-// 					],
-// 					[
-// 						"slug"  => "secondary",
-// 						"color" => "#FB8500",
-// 						"name"  => "Nouvelle couleur secondaire",
-// 					],
-//                 ],
-//             ],
-//         ],
-//         "styles" => [
-//             "elements" => [
-//                 "h1" => [
-//                     "typography" => [
-//                         "fontSize" => "var:preset|font-size|xl",
-//                     ],
-//                 ],
-//             ],
-//         ],	
-//     ];
 
-// 	return $theme_json->update_with( $new_data );
+# Ajouter un code de vérification Google dans la balise <head>
+// function capitaine_add_google_site_verification()
+// {
+//     echo '<meta name="google-site-verification" content="12345" />';
 // }
+// add_action('wp_head', 'g2rd_add_google_site_verification');
 
-// add_filter('wp_theme_json_data_theme', 'filter_theme_json_theme');
+# Ajouter une classe CSS au body"
+// function capitaine_body_class($classes)
+// {
+//     $classes[] = 'capitainewp';
+//     return $classes;
+// }
+// add_filter('body_class', 'capitaine_body_class');
+
+# Ajouter du markup au début de la page
+// function capitaine_add_something_to_body()
+// {
+//     echo '<div>Tout premier élément de la page !</div>';
+// }
+// add_action('wp_body_open', 'capitaine_add_something_to_body');
+
+# Déclaration des articles en single post pour les articles a lire également
+function g2rd_related_posts_query($wp_query)
+{
+    if (!is_admin() && !$wp_query->is_main_query() && is_singular('post')) {
+        
+        // Récupérer l'ID de l'article actuel
+        $current_post_id = get_the_ID();
+
+        // Récupérer les ID de catégories de l'article actuel
+        $current_post_cats = wp_get_post_categories($current_post_id, ['fields' => 'ids']);
+        
+		// Ignorer l'article actuel
+        $wp_query->set('post__not_in', [$current_post_id]);
+        
+		// Inclure uniquement les articles des mêmes catégories que l'article
+        $wp_query->set('cat', $current_post_cats);
+    }
+}
+add_action('pre_get_posts', 'g2rd_related_posts_query');
+
+
+
+
+
 

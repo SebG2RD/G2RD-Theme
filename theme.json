@@ -288,7 +288,14 @@
       "core/group": {
         "spacing": {
           "margin": {
-            "top": "0"
+            "top": "0 !important"
+          }
+        }
+      },
+      "core/template-part": {
+        "spacing": {
+          "margin": {
+            "top": "0 !important"
           }
         }
       },
@@ -404,7 +411,7 @@
   "customTemplates": [
     {
       "name": "page-no-title",
-      "title": "Page pleine largeur et sans titre",
+      "title": "Page pleine largeur, sans titre",
       "postTypes": ["page", "post"]
     }
   ],
@@ -413,26 +420,26 @@
       "area": "header",
       "name": "header",
       "title": "Header"
-  },
-  {
-    "area": "header",
-    "name": "header-color",
-    "title": "Header Couleur"
-  },  
-  {
+    },
+    {
+      "area": "header",
+      "name": "header-color",
+      "title": "Header Couleur"
+    },
+    {
       "area": "footer",
       "name": "footer",
       "title": "Footer"
-  },
-  {
-    "name": "sidebar",
-    "title": "Sidebar",
-    "area": "sidebar"
-  },
-  {
-    "area": "",
-    "name": "newsletter",
-    "title": "Inscription à la newsletter"
-  }
+    },
+    {
+      "name": "sidebar",
+      "title": "Sidebar",
+      "area": "sidebar"
+    },
+    {
+      "area": "",
+      "name": "newsletter",
+      "title": "Inscription à la newsletter"
+    }
   ]
 }
