@@ -1,0 +1,93 @@
+/* Style pour le tableau de bord des plugins */
+.website-link {
+  color: #2271b1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.website-link:hover {
+  color: #135e96;
+  text-decoration: underline;
+}
+
+/* Style pour les colonnes du tableau */
+.wp-list-table .column-thumbnail {
+  width: 4% !important;
+}
+.wp-list-table .column-title {
+  width: 15% !important;
+}
+.wp-list-table .column-expiration_date {
+  width: 6% !important;
+}
+.wp-list-table .column-days_remaining {
+  width: 6% !important;
+}
+.wp-list-table .column-price {
+  width: 6% !important;
+}
+
+.password-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.password-mask {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.password-mask:hover {
+  color: #135e96;
+}
+
+.password-mask.copied {
+  background-color: #edfaff;
+  color: #0078a0;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.toggle-password {
+  cursor: pointer;
+  color: #2271b1;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: #135e96;
+}
+
+/* Style pour les jours restants */
+.days-remaining.warning {
+  color: #d63638;
+  font-weight: bold;
+}
+/* style pour la colonne title */
+.wp-list-table .column-title {
+  width: 10% !important;
+}
+
+/* Style pour l'image à la une */
+.plugin-thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Style pour l'icône par défaut quand il n'y a pas d'image */
+.dashicons-format-image {
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f1;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
