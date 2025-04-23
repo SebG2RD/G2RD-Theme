@@ -14,10 +14,12 @@ use function get_template_directory;
 require_once get_template_directory() . '/app/models/PostTypes.php';
 require_once get_template_directory() . '/app/models/PluginMeta.php';
 require_once get_template_directory() . '/app/controllers/LoginCustomizer.php';
+require_once get_template_directory() . '/app/controllers/AdminCustomizer.php';
 
 use G2RD\Models\PostTypes;
 use G2RD\Models\PluginMeta;
 use G2RD\Controllers\LoginCustomizer;
+use G2RD\Controllers\AdminCustomizer;
 
 // Charger les fichiers MVC
 $mvc_files = [
@@ -26,7 +28,8 @@ $mvc_files = [
     '/app/controllers/Patterns.php',
     '/app/controllers/Queries.php',
     '/app/controllers/Theme.php',
-    '/app/controllers/LoginCustomizer.php'
+    '/app/controllers/LoginCustomizer.php',
+    '/app/controllers/AdminCustomizer.php'
 ];
 
 foreach ($mvc_files as $file) {
@@ -46,6 +49,7 @@ function g2rd_init() {
     G2RD\Controllers\Queries::register();
     G2RD\Controllers\Theme::register();
     LoginCustomizer::register();
+    AdminCustomizer::register();
     
     // Réactiver les champs personnalisés natifs
     add_action('do_meta_boxes', 'g2rd_restore_custom_fields');

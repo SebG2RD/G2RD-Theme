@@ -6,6 +6,11 @@ body.login {
   padding: 0;
   display: flex;
   align-items: stretch;
+  --primary-color: #2f425d;
+  --secondary-color: #d4a373;
+  --secondary-color-darker: #8c5c2b;
+  --text-light: rgba(255, 255, 255, 0.8);
+  --input-bg: rgba(255, 255, 255, 0.95);
 }
 
 .login-container {
@@ -19,7 +24,7 @@ body.login {
   width: 50% !important;
   max-width: none !important;
   margin: 0 !important;
-  background: #2f425d;
+  background: var(--primary-color);
   display: flex !important;
   flex-direction: column !important;
   align-items: center;
@@ -53,14 +58,14 @@ body.login {
 
 /* Style des labels */
 .login label {
-  color: white !important;
+  color: var(--text-light) !important;
   font-size: 15px !important;
   font-weight: 500 !important;
 }
 
 /* Style du bouton de connexion */
 .wp-core-ui .button-primary {
-  background-color: #d4a373 !important;
+  background-color: var(--secondary-color) !important;
   border: none !important;
   border-radius: 8px !important;
   padding: 12px 25px !important;
@@ -79,7 +84,7 @@ body.login {
 }
 
 .wp-core-ui .button-primary:hover {
-  background-color: #8c5c2b !important;
+  background-color: var(--secondary-color-darker) !important;
   transform: translateY(-2px);
 }
 
@@ -93,7 +98,7 @@ body.login {
 
 .login #nav a,
 .login #backtoblog a {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--text-light) !important;
   font-size: 14px !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
@@ -101,14 +106,14 @@ body.login {
 
 .login #nav a:hover,
 .login #backtoblog a:hover {
-  color: #d4a373 !important;
+  color: var(--secondary-color) !important;
 }
 
 /* Messages d'erreur */
 .login .message,
 .login #login_error {
   background-color: white !important;
-  border-left: 4px solid #d4a373 !important;
+  border-left: 4px solid var(--secondary-color) !important;
   border-radius: 8px !important;
   margin-bottom: 25px !important;
   padding: 12px 20px !important;
@@ -123,7 +128,7 @@ body.login {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--text-light) !important;
 }
 
 input[type="checkbox"] {
@@ -132,8 +137,8 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-color: #d4a373 !important;
-  border-color: #d4a373 !important;
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
 }
 
 /* Formulaire */
@@ -158,8 +163,8 @@ input[type="checkbox"]:checked {
   padding: 12px !important;
   border: none !important;
   border-radius: 8px !important;
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  color: #2f425d !important;
+  background-color: var(--input-bg) !important;
+  color: var(--primary-color) !important;
   font-size: 14px !important;
   cursor: pointer !important;
   appearance: none !important;
