@@ -49,7 +49,37 @@
             }
           ]
         }
+      ],
+      "fontSizes": [
+        {
+          "name": "Petit",
+          "size": "0.8rem",
+          "slug": "s"
+        },
+        {
+          "name": "Moyen",
+          "size": "1.1rem",
+          "slug": "m"
+        },
+        {
+          "name": "Grand",
+          "size": "2rem",
+          "slug": "l"
+        }
       ]
+    }
+  },
+  "styles": {
+    "elements": {
+      "h1": {
+        "typography": {
+          "fontFamily": "Borel",
+          "fontSize": "var:preset|font-size|l"
+        },
+        "color": {
+          "text": "var:preset|color|primary"
+        }
+      }
     }
   }
 }

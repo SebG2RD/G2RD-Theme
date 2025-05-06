@@ -12,10 +12,181 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD
 */
-:root {
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 100px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
-@media and (max-width: 768px) {
-  :root {
+.scroll-animation {
+  animation: reveal linear both;
+  animation-timeline: view(block);
+  animation-range: cover -10% cover 25%;
+}
+
+/* Visuel article */
+.img-h-100 {
+  height: 100%;
+  width: 100%;
+}
+.h-article,
+.portfolio {
+  height: 100%;
+  box-shadow: var(--wp--preset--shadow--light);
+  transition: box-shadow 0.5s ease;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.h-article:hover,
+.portfolio:hover {
+  box-shadow: var(--wp--preset--shadow--huge);
+}
+
+.h-article img,
+.portfolio img {
+  transition: transform 0.5s ease;
+}
+
+.h-article:hover img,
+.portfolio:hover img {
+  transform: scale(1.05);
+}
+
+/* Rendre toute la zone cliquable */
+.h-article::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Créer un lien invisible qui couvre tout le bloc */
+.h-article::after {
+  pointer-events: none;
+}
+
+.h-article a:first-of-type {
+  position: relative;
+  z-index: 2;
+}
+
+/* JavaScript à ajouter via un script */
+/* Ce CSS s'assure que le premier lien dans .h-article sera cliqué quand on clique sur le bloc */
+.h-article * {
+  position: relative;
+  z-index: 0;
+}
+
+/* Permettre aux liens à l'intérieur de rester cliquables */
+.h-article a {
+  z-index: 3;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .groupe-flex {
+    flex-direction: column;
   }
+  .responsive-group {
+    padding: 0.5rem;
+  }
+  .wp-block-group-is-layout-flex {
+    flex-direction: column;
+  }
+
+  /* Adaptation du CSS pour la verision mobile */
+  .ti-widget {
+    width: 100% !important;
+  }
+}
+
+/* Effet de particules pour les éléments avec data-particles=true */
+[data-particles="true"] {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-particles="true"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* Animation des particules */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100px) translateX(30px);
+    opacity: 0;
+  }
+}
+
+/* Suppression de l'ancien effet de particules avec radial-gradient */
+[data-particles="true"]::after {
+  display: none;
+}
+
+/* Style pour les noeuds (points) du réseau */
+[data-particles="true"] .node {
+  position: absolute;
+  background: #cccccc;
+  border-radius: 50%;
+  width: 2.5px;
+  height: 2.5px;
+  opacity: 0.7;
+  z-index: -1;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  will-change: transform, left, top;
+}
+
+/* Style pour les lignes connectant les noeuds */
+[data-particles="true"] .line {
+  position: absolute;
+  background: #cccccc;
+  height: 0.5px;
+  transform-origin: 0 0;
+  opacity: 0.3;
+  z-index: -1;
+  transition: opacity 0.2s ease;
+  will-change: transform, width, opacity;
+}
+
+/* Z-index pour les particules et conteneurs */
+.particles-container {
+  z-index: 0;
+  position: relative;
+}
+
+/* Assurer que le contenu du bloc est au-dessus des particules */
+[data-particles="true"] > *:not(.node):not(.line):not(.particle) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Effet de survol au niveau du conteneur parent */
+[data-particles="true"]:hover .node {
+  opacity: 0.9;
+}
+
+[data-particles="true"]:hover .line {
+  opacity: 0.6;
 }

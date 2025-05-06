@@ -4,9 +4,10 @@
  * Title: Boucle de requête du Site Web
  * Slug: query-site-web
  * Description: 
- * Categories: hero
+ * Categories: Posts
  * Viewport width: 1200
  * Inserter: false
+ * Text Domain: g2rd
  */
 ?>
 <!-- wp:spacer {"height":"60px"} -->

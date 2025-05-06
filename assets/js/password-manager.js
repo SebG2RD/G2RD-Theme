@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
-  // Gérer l'affichage/masquage du mot de passe
-  $(".toggle-password").on("click", function (e) {
-    e.preventDefault();
+  // 1. Gestion des mots de passe dans la liste des plugins
+  $(".password-container .toggle-password").on("click", function () {
+    console.log("Clic sur toggle-password dans la liste");
     const container = $(this).closest(".password-container");
     const passwordMask = container.find(".password-mask");
     const password = passwordMask.data("password");
@@ -15,12 +15,38 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  // Gérer le clic sur le masque de mot de passe
-  $(".password-mask").on("click", function () {
-    $(this).closest(".password-container").find(".toggle-password").click();
-  });
+  // 2. Gestion des mots de passe dans la page d'édition
+  $(".password-container .toggle-password[data-target]").on(
+    "click",
+    function (e) {
+      console.log("Clic sur toggle-password dans l'édition");
+      e.preventDefault();
+      e.stopPropagation();
 
-  // Gérer le double-clic sur le mot de passe pour le copier
+      const targetId = $(this).data("target");
+      const passwordInput = $("#" + targetId);
+      const container = passwordInput.closest(".password-container");
+      const isVisible = container.hasClass("password-visible");
+
+      if (isVisible) {
+        // Masquer le mot de passe
+        container.removeClass("password-visible");
+        passwordInput.attr("type", "password");
+        $(this)
+          .removeClass("dashicons-hidden")
+          .addClass("dashicons-visibility");
+      } else {
+        // Afficher le mot de passe
+        container.addClass("password-visible");
+        passwordInput.attr("type", "text");
+        $(this)
+          .removeClass("dashicons-visibility")
+          .addClass("dashicons-hidden");
+      }
+    }
+  );
+
+  // 3. Gestion de la copie des mots de passe
   $(".password-mask").on("dblclick", function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -29,11 +55,9 @@ jQuery(document).ready(function ($) {
     const password = passwordElement.data("password");
 
     if (password) {
-      // Sauvegarder l'état actuel pour le restaurer après feedback
       const originalText = passwordElement.text();
       const wasVisible = originalText !== "••••••••";
 
-      // Fonction pour afficher le feedback visuel
       function showCopyFeedback() {
         passwordElement.addClass("copied").text("Copié !");
 
@@ -47,32 +71,15 @@ jQuery(document).ready(function ($) {
         }, 1000);
       }
 
-      // Utiliser l'API Clipboard moderne si disponible
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard
-          .writeText(password)
-          .then(showCopyFeedback)
-          .catch((error) => {
-            console.error("Erreur lors de la copie :", error);
-            // Utiliser la méthode de fallback en cas d'erreur
-            copyWithFallback();
-          });
+        navigator.clipboard.writeText(password).then(showCopyFeedback);
       } else {
-        // Méthode de fallback pour les navigateurs plus anciens
-        copyWithFallback();
-      }
-
-      // Fonction de fallback utilisant document.execCommand
-      function copyWithFallback() {
         const tempInput = $("<input>");
         $("body").append(tempInput);
         tempInput.val(password).select();
-        const success = document.execCommand("copy");
+        document.execCommand("copy");
         tempInput.remove();
-
-        if (success) {
-          showCopyFeedback();
-        }
+        showCopyFeedback();
       }
     }
   });

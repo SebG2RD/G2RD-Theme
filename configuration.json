@@ -1,0 +1,17 @@
+{
+  "registerBlocksCategories": {
+    "capitaine": "Capitaine WP"
+  },
+  "registerPatternsCategories": {
+    "hero": "hero",
+    "card": "Cartes",
+    "info": "info",
+    "Posts": "Posts"
+  },
+  "deregisterBlocks": [
+    "core/preformatted",
+    "core/pullquote",
+    "core/rss",
+    "core/verse"
+  ]
+}
