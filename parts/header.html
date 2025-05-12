@@ -7,10 +7,14 @@
     padding-bottom: var(--wp--preset--spacing--s);
     padding-left: var(--wp--preset--spacing--l);
   "
+  role="banner"
+  aria-label="En-tête du site"
 >
   <!-- wp:image {"lightbox":{"enabled":false},"width":"150px","sizeSlug":"full","linkDestination":"custom","style":{"shadow":"none"}} -->
   <figure class="wp-block-image size-full is-resized">
-    <a href="/"><img style="box-shadow: none; width: 150px" /></a>
+    <a href="/" aria-label="Retour à l'accueil"
+      ><img style="box-shadow: none; width: 150px" alt="Logo G2RD Agence Web"
+    /></a>
   </figure>
   <!-- /wp:image -->
 
@@ -20,7 +24,12 @@
   <div class="wp-block-buttons">
     <!-- wp:button -->
     <div class="wp-block-button">
-      <a class="wp-block-button__link wp-element-button">Nous contacter</a>
+      <a
+        class="wp-block-button__link wp-element-button"
+        href="/contact"
+        aria-label="Nous contacter"
+        >Nous contacter</a
+      >
     </div>
     <!-- /wp:button -->
   </div>

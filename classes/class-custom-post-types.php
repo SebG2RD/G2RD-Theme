@@ -1,28 +1,68 @@
 <?php
+/**
+ * Gestion des types de contenu personnalisés
+ * 
+ * Cette classe gère la création et la configuration des types de contenu
+ * personnalisés (CPT) et leurs taxonomies associées.
+ *
+ * @package G2RD
+ * @since 1.0.0
+ * @license EUPL-1.2
+ * @copyright (c) 2024 Sebastien GERARD
+ * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+ */
 
 namespace G2RD;
 
+/**
+ * Gestion des types de contenu personnalisés (CPT) et taxonomies
+ * 
+ * Cette classe gère la création et la configuration des types de contenu personnalisés,
+ * notamment le portfolio et les prestations, ainsi que leurs taxonomies associées et métadonnées.
+ *
+ * @package G2RD
+ * @since 1.0.0
+ */
 class CPT
 {
+    /**
+     * Enregistre tous les hooks nécessaires pour les CPT
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public function registerHooks(): void
     {
         add_action('init', [$this, 'registerPostTypes']);
         add_action('add_meta_boxes', [$this, 'addPortfolioMetaBox']);
         add_action('save_post_portfolio', [$this, 'savePortfolioMeta']);
-        add_filter('use_block_editor_for_post_type', [$this, 'disableGutenbergForPortfolio'], 10, 2);
+        add_filter('use_block_editor_for_post_type', [$this, 'disableGutenbergForCPT'], 10, 2);
         add_action('init', [$this, 'registerBindingSources']);
     }
 
-    # Désactiver Gutenberg pour le CPT Portfolio
-    public function disableGutenbergForPortfolio($use_block_editor, $post_type): bool
+    /**
+     * Désactive l'éditeur Gutenberg pour certains types de contenu
+     *
+     * @since 1.0.0
+     * @param bool $use_block_editor État actuel de l'éditeur de blocs
+     * @param string $post_type Type de contenu
+     * @return bool État modifié de l'éditeur de blocs
+     */
+    public function disableGutenbergForCPT($use_block_editor, $post_type): bool
     {
-        if ($post_type === 'portfolio') {
+        $disabled_types = ['portfolio', 'prestations'];
+        if (in_array($post_type, $disabled_types)) {
             return false;
         }
         return $use_block_editor;
     }
 
-    # Déclarer des types de publication personnalisés
+    /**
+     * Enregistre les types de contenu personnalisés et leurs taxonomies
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public function registerPostTypes(): void
     {
         # CPT « Portfolio »
@@ -38,7 +78,7 @@ class CPT
         $args = [
             'labels' => $labels,
             'public' => true,
-            'show_in_rest' => true, // Garde l'API REST active
+            'show_in_rest' => true,
             'has_archive' => true,
             'supports' => ['title', 'editor', 'thumbnail', 'revisions', 'custom-fields'],
             'menu_position' => 5,
@@ -46,6 +86,28 @@ class CPT
         ];
 
         register_post_type('portfolio', $args);
+
+        # CPT « Prestations »
+        $labels = [
+            'name' => 'Prestations',
+            'all_items' => 'Toutes les prestations',
+            'singular_name' => 'Prestation',
+            'add_new_item' => 'Ajouter une prestation',
+            'edit_item' => 'Modifier la prestation',
+            'menu_name' => 'Prestations'
+        ];
+
+        $args = [
+            'labels' => $labels,
+            'public' => true,
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'supports' => ['title', 'editor', 'thumbnail', 'revisions', 'custom-fields'],
+            'menu_position' => 6,
+            'menu_icon' => 'dashicons-clipboard',
+        ];
+
+        register_post_type('prestations', $args);
 
         # Taxonomy « Type de projets »
         $labels = [
@@ -64,9 +126,32 @@ class CPT
         ];
 
         register_taxonomy('type-projets', 'portfolio', $args);
+
+        # Taxonomy « Catégories de prestations »
+        $labels = [
+            'name' => 'Catégories de prestations',
+            'singular_name' => 'Catégorie de prestation',
+            'add_new_item' => 'Ajouter une catégorie',
+            'new_item_name' => 'Nom de la nouvelle catégorie',
+            'parent_item' => 'Catégorie parente',
+        ];
+
+        $args = [
+            'labels' => $labels,
+            'public' => true,
+            'show_in_rest' => true,
+            'hierarchical' => true,
+        ];
+
+        register_taxonomy('categories-prestations', 'prestations', $args);
     }
 
-    # Ajouter la boîte de métadonnées pour le lien
+    /**
+     * Ajoute une boîte de métadonnées pour le lien du portfolio
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public function addPortfolioMetaBox(): void
     {
         add_meta_box(
@@ -79,7 +164,13 @@ class CPT
         );
     }
 
-    # Afficher le champ de lien dans la boîte de métadonnées
+    /**
+     * Affiche le champ de lien dans la boîte de métadonnées
+     *
+     * @since 1.0.0
+     * @param \WP_Post $post L'objet post actuel
+     * @return void
+     */
     public function renderPortfolioLinkMetaBox($post): void
     {
         // Récupérer la valeur existante du lien
@@ -94,7 +185,13 @@ class CPT
         echo '<p class="description">Entrez l\'URL complète du projet (ex: https://www.exemple.com)</p>';
     }
 
-    # Sauvegarder le lien en base de données
+    /**
+     * Sauvegarde le lien du portfolio en base de données
+     *
+     * @since 1.0.0
+     * @param int $post_id ID du post
+     * @return void
+     */
     public function savePortfolioMeta($post_id): void
     {
         // Vérifier le nonce
@@ -113,14 +210,24 @@ class CPT
         }
     }
 
-    # Déclarer des sources de données personnalisées pour le block binding
+    /**
+     * Enregistre les sources de données personnalisées pour le block binding
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public function registerBindingSources(): void
     {
         // Enregistrer le shortcode
         add_shortcode('portfolio_link', [$this, 'portfolioLinkShortcode']);
     }
 
-    # Shortcode pour afficher le lien du portfolio
+    /**
+     * Shortcode pour afficher le lien du portfolio
+     *
+     * @since 1.0.0
+     * @return string URL du projet ou '#' si non définie
+     */
     public function portfolioLinkShortcode(): string
     {
         $post_id = get_the_ID();

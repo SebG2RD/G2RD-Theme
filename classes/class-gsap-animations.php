@@ -1,14 +1,36 @@
 <?php
 
+/**
+ * Gestion des animations GSAP
+ * 
+ * Cette classe gère l'intégration et la configuration des animations
+ * utilisant la bibliothèque GSAP (GreenSock Animation Platform).
+ *
+ * @package G2RD
+ * @since 1.0.0
+ * @license EUPL-1.2
+ * @copyright (c) 2024 Sebastien GERARD
+ * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+ */
+
 namespace G2RD;
 
 /**
- * Classe pour gérer les animations GSAP
+ * Gestion des animations GSAP (GreenSock Animation Platform)
+ * 
+ * Cette classe gère le chargement et la configuration des animations GSAP,
+ * à la fois sur le frontend et dans l'éditeur de blocs.
+ *
+ * @package G2RD
+ * @since 1.0.0
  */
 class GSAPAnimations
 {
     /**
-     * Enregistrer les hooks nécessaires
+     * Enregistre les hooks nécessaires pour les animations GSAP
+     *
+     * @since 1.0.0
+     * @return void
      */
     public function registerHooks(): void
     {
@@ -20,7 +42,13 @@ class GSAPAnimations
     }
 
     /**
-     * Enregistrer les scripts pour le frontend
+     * Enregistre et charge les scripts GSAP pour le frontend
+     * 
+     * Charge les bibliothèques GSAP et ScrollTrigger depuis CDN,
+     * ainsi que le script personnalisé d'animations.
+     *
+     * @since 1.0.0
+     * @return void
      */
     public function registerFrontendScripts(): void
     {
@@ -51,7 +79,13 @@ class GSAPAnimations
     }
 
     /**
-     * Enregistrer les scripts pour l'éditeur
+     * Enregistre et charge les scripts pour les contrôles d'animation dans l'éditeur
+     * 
+     * Charge le script de contrôle des blocs et ajoute les données
+     * localisées pour les options d'animation disponibles.
+     *
+     * @since 1.0.0
+     * @return void
      */
     public function registerEditorScripts(): void
     {
@@ -67,13 +101,26 @@ class GSAPAnimations
         // Ajouter les données localisées
         \wp_localize_script('gsap-block-controls', 'gsapBlockData', [
             'animations' => [
-                'fadeIn' => 'Fade In',
-                'slideUp' => 'Slide Up',
-                'slideDown' => 'Slide Down',
-                'slideLeft' => 'Slide Left',
-                'slideRight' => 'Slide Right',
-                'scale' => 'Scale',
-                'rotate' => 'Rotate'
+                'fadeIn' => 'Apparition en fondu',
+                'slideUp' => 'Glissement vers le haut',
+                'slideDown' => 'Glissement vers le bas',
+                'slideLeft' => 'Glissement vers la gauche',
+                'slideRight' => 'Glissement vers la droite',
+                'scale' => 'Mise à l\'échelle',
+                'rotate' => 'Rotation',
+                'zoomIn' => 'Zoom avant',
+                'zoomOut' => 'Zoom arrière',
+                'flip' => 'Retournement',
+                'bounce' => 'Rebond',
+                'stagger' => 'Effet cascade',
+                'blur' => 'Flou',
+                'skew' => 'Inclinaison',
+                'shake' => 'Secousse',
+                'pulse' => 'Pulsation',
+                'wave' => 'Vague',
+                'swing' => 'Balancement',
+                'tada' => 'Tada',
+                'wobble' => 'Oscillation'
             ]
         ]);
     }

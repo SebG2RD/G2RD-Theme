@@ -1,12 +1,12 @@
 {
   "registerBlocksCategories": {
-    "capitaine": "Capitaine WP"
+    "G2RD Agence Web": "G2RD Agence Web"
   },
   "registerPatternsCategories": {
-    "hero": "hero",
+    "hero": "Hero",
     "card": "Cartes",
-    "info": "info",
-    "Posts": "Posts"
+    "info": "Info",
+    "posts": "Posts"
   },
   "deregisterBlocks": [
     "core/preformatted",

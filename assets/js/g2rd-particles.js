@@ -1,7 +1,14 @@
 /**
- * G2RD Particles Effect
- * Inspiré de particles.js par Vincent Garreau (https://vincentgarreau.com/particles.js/)
- * Utilisation : Ajoute un effet de particules pour les éléments avec l'attribut data-particles="true"
+ * Effet de particules interactif
+ *
+ * Ce script gère l'effet de particules interactif dans les blocs
+ * qui ont l'attribut data-particles="true".
+ *
+ * @package G2RD
+ * @since 1.0.0
+ * @license EUPL-1.2
+ * @copyright (c) 2024 Sebastien GERARD
+ * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
  */
 
 document.addEventListener("DOMContentLoaded", function () {

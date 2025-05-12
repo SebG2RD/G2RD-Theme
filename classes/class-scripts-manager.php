@@ -1,32 +1,54 @@
 <?php
 /**
- * Classe pour gérer les scripts du thème
+ * Gestionnaire des scripts et styles
+ * 
+ * Cette classe gère le chargement et l'optimisation des scripts
+ * et des feuilles de style du thème.
  *
  * @package G2RD
+ * @since 1.0.0
+ * @license EUPL-1.2
+ * @copyright (c) 2024 Sebastien GERARD
+ * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
  */
 
 namespace G2RD;
 
 /**
- * Class ScriptsManager
+ * Gestionnaire des scripts JavaScript
  *
- * Gère l'enregistrement et le chargement des scripts du thème
+ * Cette classe gère l'enregistrement et le chargement des scripts JavaScript
+ * nécessaires au fonctionnement du thème, notamment pour les interactions
+ * utilisateur et les effets visuels.
+ *
+ * @package G2RD
+ * @since 1.0.0
  */
 class ScriptsManager
 {
     /**
-     * Enregistre les hooks WordPress
+     * Enregistre les hooks WordPress pour la gestion des scripts
+     *
+     * @since 1.0.0
+     * @return void
      */
-    public function registerHooks()
+    public function registerHooks(): void
     {
         // Utiliser le namespace global pour les fonctions WordPress
         \add_action('wp_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     /**
-     * Enregistre et charge les scripts du thème
+     * Enregistre et charge les scripts JavaScript du thème
+     *
+     * Cette méthode charge les scripts nécessaires pour :
+     * - Rendre les articles entièrement cliquables
+     * - Gérer l'effet de particules interactif
+     *
+     * @since 1.0.0
+     * @return void
      */
-    public function enqueueScripts()
+    public function enqueueScripts(): void
     {
         // Script pour rendre les articles cliquables
         \wp_enqueue_script(

@@ -1,16 +1,17 @@
 /*
 Theme Name: Thème FSE G2RD Agence Web
-Theme URI: 
+Theme URI: https://g2rd.fr/themes/g2rd-agence-web
 Author: Sebastien GERARD
 Author URI: https://g2rd.fr
-Description: Thème agence pour le Full Site Editing
+Description: Un thème Full Site Editing (FSE) moderne et flexible pour les agences web. Ce thème offre une expérience d'édition complète avec des blocs personnalisés, des animations fluides et une interface intuitive. Idéal pour les sites vitrines, portfolios et sites d'agences web.
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
 Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: European Union Public License v1.2 (EUPL-1.2)
+License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 Text Domain: G2RD
+Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors, custom-menu, custom-logo, featured-images, footer-widgets, portfolio, blog, translation-ready, rtl-language-support, threaded-comments, accessibility-ready
 */
 @keyframes reveal {
   from {
@@ -29,115 +30,113 @@ Text Domain: G2RD
   animation-range: cover -10% cover 25%;
 }
 
+/* Barre de cookies */
+
+.seopress-user-consent {
+  height: 20%;
+}
+
+.seopress-user-consent button {
+  padding: 1rem 2rem;
+}
+
 /* Visuel article */
 .img-h-100 {
   height: 100%;
   width: 100%;
 }
+
+/* Variables globales */
+:root {
+  --transition-standard: 0.2s ease;
+  --transition-slow: 0.5s ease;
+  --z-index-base: 1;
+  --z-index-links: 2;
+  --z-index-buttons: 2;
+  --z-index-overlay: 3;
+}
+
+/* Styles communs pour les articles et portfolios */
 .h-article,
 .portfolio {
   height: 100%;
   box-shadow: var(--wp--preset--shadow--light);
-  transition: box-shadow 0.5s ease;
+  transition: transform var(--transition-standard),
+    box-shadow var(--transition-standard);
   position: relative;
   cursor: pointer;
   overflow: hidden;
+  z-index: var(--z-index-base);
 }
+
+/* Effets de survol communs */
 .h-article:hover,
 .portfolio:hover {
+  transform: translateY(-2px);
   box-shadow: var(--wp--preset--shadow--huge);
 }
 
+.g2rd-clickable-article {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: var(--z-index-base);
+  height: 100%;
+}
+
+/* Styles communs pour les images */
 .h-article img,
-.portfolio img {
-  transition: transform 0.5s ease;
+.portfolio img,
+.g2rd-clickable-article img {
+  transition: transform var(--transition-slow);
 }
 
 .h-article:hover img,
-.portfolio:hover img {
+.portfolio:hover img,
+.g2rd-clickable-article:hover img {
   transform: scale(1.05);
 }
 
-/* Rendre toute la zone cliquable */
-.h-article::after {
+/* Styles spécifiques pour les éléments cliquables */
+.g2rd-clickable-article {
+  cursor: pointer !important;
+}
+
+/* Gestion des z-index pour les éléments cliquables */
+.g2rd-clickable-article::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-}
-
-/* Créer un lien invisible qui couvre tout le bloc */
-.h-article::after {
+  z-index: var(--z-index-base);
   pointer-events: none;
 }
 
-.h-article a:first-of-type {
-  position: relative;
-  z-index: 2;
-}
-
-/* JavaScript à ajouter via un script */
-/* Ce CSS s'assure que le premier lien dans .h-article sera cliqué quand on clique sur le bloc */
-.h-article * {
+.g2rd-clickable-article * {
   position: relative;
   z-index: 0;
 }
 
-/* Permettre aux liens à l'intérieur de rester cliquables */
-.h-article a {
-  z-index: 3;
+.g2rd-clickable-article a {
+  position: relative;
+  z-index: var(--z-index-links);
+}
+
+.g2rd-clickable-article button {
+  position: relative;
+  z-index: var(--z-index-buttons);
+}
+
+/* Styles pour les blocs avec l'option clickableArticles */
+[data-clickable-articles="true"] {
   position: relative;
 }
 
-@media (max-width: 768px) {
-  .groupe-flex {
-    flex-direction: column;
-  }
-  .responsive-group {
-    padding: 0.5rem;
-  }
-  .wp-block-group-is-layout-flex {
-    flex-direction: column;
-  }
-
-  /* Adaptation du CSS pour la verision mobile */
-  .ti-widget {
-    width: 100% !important;
-  }
-}
-
-/* Effet de particules pour les éléments avec data-particles=true */
-[data-particles="true"] {
+[data-clickable-articles="true"] .g2rd-clickable-article {
   position: relative;
-  overflow: hidden;
-}
-
-[data-particles="true"]::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
-
-/* Animation des particules */
-@keyframes particle-float {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-100px) translateX(30px);
-    opacity: 0;
-  }
+  z-index: var(--z-index-base);
 }
 
 /* Suppression de l'ancien effet de particules avec radial-gradient */
@@ -189,4 +188,52 @@ Text Domain: G2RD
 
 [data-particles="true"]:hover .line {
   opacity: 0.6;
+}
+
+/* Effet de particules pour les éléments avec data-particles=true */
+[data-particles="true"] {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-particles="true"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* Animation des particules */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100px) translateX(30px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .groupe-flex {
+    flex-direction: column;
+  }
+  .responsive-group {
+    padding: 0.5rem;
+  }
+  .wp-block-group-is-layout-flex {
+    flex-direction: column;
+  }
+
+  /* Adaptation du CSS pour la verision mobile */
+  .ti-widget {
+    width: 100% !important;
+  }
 }

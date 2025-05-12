@@ -1,3 +1,16 @@
+/**
+ * Gestionnaire de mot de passe
+ *
+ * Ce script gère la validation et la gestion des mots de passe
+ * dans les formulaires du thème.
+ *
+ * @package G2RD
+ * @since 1.0.0
+ * @license EUPL-1.2
+ * @copyright (c) 2024 Sebastien GERARD
+ * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+ */
+
 jQuery(document).ready(function ($) {
   // 1. Gestion des mots de passe dans la liste des plugins
   $(".password-container .toggle-password").on("click", function () {
