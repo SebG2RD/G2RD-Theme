@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gestionnaire des scripts et styles
  * 
@@ -58,7 +59,7 @@ class ScriptsManager
             '1.0.0',
             true
         );
-        
+
         // Script pour l'effet de particules
         \wp_enqueue_script(
             'g2rd-particles',
@@ -68,4 +69,4 @@ class ScriptsManager
             true
         );
     }
-} 
+}
