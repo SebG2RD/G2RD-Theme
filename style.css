@@ -8,11 +8,20 @@ Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
 Version: 1.0
-License: European Union Public License v1.2 (EUPL-1.2)
-License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+License: GPL-2.0-or-later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD
 Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors, custom-menu, custom-logo, featured-images, footer-widgets, portfolio, blog, translation-ready, rtl-language-support, threaded-comments, accessibility-ready
+
+GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
 */
+
+/* Erreur avec l'activation de surecart */
+.wp-block-buttons {
+  width: auto !important;
+}
+
+/* Animation de découverte */
 @keyframes reveal {
   from {
     opacity: 0;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fichier principal du thème G2RD
  *
@@ -23,6 +24,7 @@ require_once __DIR__ . '/classes/class-json-config.php';
 require_once __DIR__ . '/classes/class-scripts-manager.php';
 require_once __DIR__ . '/classes/class-particules-effect.php';
 require_once __DIR__ . '/classes/class-clickable-articles.php';
+require_once __DIR__ . '/classes/class-github-updater.php';
 
 /**
  * Initialise toutes les composantes du thème
@@ -42,7 +44,8 @@ function bootstrap_theme()
         JsonConfig::class,
         ScriptsManager::class,
         ParticlesEffect::class,
-        ClickableArticles::class
+        ClickableArticles::class,
+        GitHubUpdater::class
     ];
 
     // Enregistrer les hooks pour chaque classe
