@@ -38,6 +38,7 @@ class GitHubUpdater
     {
         \add_filter('pre_set_site_transient_update_themes', [$this, 'checkForUpdates']);
         \add_filter('themes_api', [$this, 'getThemeInfo'], 10, 3);
+        \add_filter('upgrader_source_selection', [$this, 'preventThemeRename'], 10, 4);
     }
 
     /**
@@ -53,6 +54,7 @@ class GitHubUpdater
      */
     public function checkForUpdates($transient)
     {
+        // Si les données de mise à jour ne sont pas initialisées, on retourne le transient tel quel
         if (empty($transient->checked)) {
             return $transient;
         }
@@ -62,7 +64,12 @@ class GitHubUpdater
         $current_version = $theme_data->get('Version');
 
         // Récupérer les informations de la dernière version depuis GitHub
-        $response = \wp_remote_get('https://api.github.com/repos/SebG2RD/G2RD-Theme-FSE/releases/latest');
+        $response = \wp_remote_get('https://github.com/SebG2RD/G2RD-Theme/releases/latest', [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'User-Agent' => 'WordPress Theme Update Check'
+            ]
+        ]);
 
         if (\is_wp_error($response)) {
             return $transient;
@@ -76,13 +83,25 @@ class GitHubUpdater
 
         $latest_version = ltrim($release_data['tag_name'], 'v');
 
+        // Comparaison stricte des versions
         if (version_compare($current_version, $latest_version, '<')) {
+            // Ajout des informations de mise à jour
             $transient->response[$theme_slug] = [
                 'theme' => $theme_slug,
                 'new_version' => $latest_version,
                 'url' => $this->github_url,
                 'package' => $release_data['zipball_url'],
+                'requires' => '5.0', // Version minimale de WordPress requise
+                'requires_php' => '7.4', // Version minimale de PHP requise
+                'last_updated' => $release_data['published_at'],
+                'sections' => [
+                    'description' => $release_data['body'],
+                    'changelog' => $release_data['body']
+                ]
             ];
+        } else {
+            // Si la version est identique ou plus récente, on s'assure qu'il n'y a pas de notification
+            unset($transient->response[$theme_slug]);
         }
 
         return $transient;
@@ -113,7 +132,7 @@ class GitHubUpdater
             return $false;
         }
 
-        $response = \wp_remote_get('https://api.github.com/repos/SebG2RD/G2RD-Theme-FSE/releases/latest');
+        $response = \wp_remote_get('https://github.com/SebG2RD/G2RD-Theme/releases/latest');
 
         if (\is_wp_error($response)) {
             return $false;
@@ -139,5 +158,47 @@ class GitHubUpdater
             ],
             'download_link' => $release_data['zipball_url'],
         ];
+    }
+
+    /**
+     * Empêche le renommage du thème lors de la mise à jour
+     *
+     * Cette méthode intercepte le processus de mise à jour pour conserver
+     * le nom original du dossier du thème.
+     *
+     * @since 1.0.0
+     * @param string $source Chemin du dossier source
+     * @param string $remote_source URL de la source distante
+     * @param \WP_Upgrader $upgrader Instance de l'upgrader
+     * @param array $args Arguments supplémentaires
+     * @return string Chemin du dossier source modifié
+     */
+    public function preventThemeRename($source, $remote_source, $upgrader, $args)
+    {
+        if (!isset($args['theme'])) {
+            return $source;
+        }
+
+        $theme_slug = basename(\get_template_directory());
+
+        if ($args['theme'] !== $theme_slug) {
+            return $source;
+        }
+
+        // Récupérer le nom du dossier source
+        $source_dir = basename($source);
+
+        // Si le dossier source ne correspond pas au slug du thème
+        if ($source_dir !== $theme_slug) {
+            // Créer un nouveau chemin avec le bon nom de dossier
+            $new_source = dirname($source) . '/' . $theme_slug;
+
+            // Renommer le dossier
+            if (\rename($source, $new_source)) {
+                return $new_source;
+            }
+        }
+
+        return $source;
     }
 }
