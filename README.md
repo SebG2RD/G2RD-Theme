@@ -14,6 +14,29 @@ Ce thème offre une expérience d'édition complète avec des blocs personnalis�
 - Interface intuitive
 - Support multilingue
 - Responsive design
+- Gestion avancée des membres d'équipe
+- Sélecteur de médias WordPress intégré
+- Interface d'administration native
+- Types de contenu personnalisés
+- Portfolio professionnel
+- Section "Qui sommes nous" avec gestion des icônes
+
+## Fonctionnalités détaillées
+
+### Section "Qui sommes nous"
+
+- Profils détaillés des membres
+- Gestion des compétences et expériences
+- Sélection multiple d'icônes via la bibliothèque de médias
+- Interface d'administration native WordPress
+- Prévisualisation des icônes en temps réel
+
+### Interface d'administration
+
+- Utilisation des classes natives WordPress
+- Sélecteur de médias intégré
+- Gestion intuitive des contenus
+- Interface responsive et accessible
 
 ## Prérequis
 
@@ -27,6 +50,16 @@ Ce thème offre une expérience d'édition complète avec des blocs personnalis�
 3. Naviguez vers Apparence > Thèmes
 4. Cliquez sur "Ajouter" et uploadez le thème
 5. Activez le thème
+
+## Utilisation
+
+### Gestion des membres d'équipe
+
+1. Accédez à "Qui sommes nous" dans le menu WordPress
+2. Créez un nouveau membre
+3. Remplissez les informations du profil
+4. Utilisez le sélecteur de médias pour ajouter des icônes
+5. Publiez le profil
 
 ## Licence
 

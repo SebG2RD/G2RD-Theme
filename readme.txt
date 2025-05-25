@@ -28,6 +28,9 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * Gestion avancée des types de contenu personnalisés
 * Intégration de portfolio professionnel
 * Support des projets et réalisations
+* Section "Qui sommes nous" avec gestion avancée des membres
+* Sélecteur de médias WordPress pour les icônes personnalisées
+* Interface d'administration optimisée avec classes natives WordPress
 
 = Installation =
 
@@ -41,7 +44,11 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 
 = Personnalisation =
 
-Le thème utilise l'éditeur de site complet de WordPress, ce qui vous permet de personnaliser chaque aspect de votre site directement dans l'interface d'administration.
+Le thème utilise l'éditeur de site complet de WordPress, ce qui vous permet de personnaliser chaque aspect de votre site directement dans l'interface d'administration. La section "Qui sommes nous" offre une gestion intuitive des membres avec :
+* Profils détaillés des membres
+* Gestion des compétences et expériences
+* Sélection multiple d'icônes via la bibliothèque de médias
+* Interface d'administration native WordPress
 
 = Mises à jour automatiques =
 
@@ -69,7 +76,18 @@ Les animations peuvent être personnalisées via l'éditeur de site complet de W
 
 Le thème vérifie automatiquement les nouvelles versions disponibles sur GitHub. Lorsqu'une mise à jour est disponible, vous recevrez une notification dans votre tableau de bord WordPress et pourrez l'installer en un clic.
 
+= Comment gérer les icônes dans la section "Qui sommes nous" ? =
+
+La section "Qui sommes nous" utilise le sélecteur de médias natif de WordPress pour une gestion intuitive des icônes. Vous pouvez facilement ajouter, supprimer et prévisualiser les icônes directement dans l'interface d'administration.
+
 == Changelog ==
+
+= 1.0.1 =
+* Ajout de la gestion avancée des icônes dans "Qui sommes nous"
+* Intégration du sélecteur de médias WordPress
+* Optimisation de l'interface d'administration
+* Utilisation des classes natives WordPress
+* Amélioration de la documentation
 
 = 1.0 =
 * Version initiale
@@ -91,6 +109,8 @@ Le thème vérifie automatiquement les nouvelles versions disponibles sur GitHub
 * Support de fonctionnalités avancées
 * Amélioration du système de mise à jour
 * Intégration de nouvelles fonctionnalités de portfolio
+* Amélioration de la gestion des médias
+* Nouvelles options de personnalisation pour "Qui sommes nous"
 
 == Crédits ==
 
