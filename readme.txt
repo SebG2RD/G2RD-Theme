@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -14,23 +14,30 @@ Un thème Full Site Editing (FSE) moderne et flexible pour les agences web.
 
 Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifiquement pour les agences web et les professionnels du web. Il offre une expérience d'édition complète avec des fonctionnalités avancées et une interface intuitive.
 
+[Voir la démo](https://g2rd.fr)
+
 = Fonctionnalités principales =
 
-* Full Site Editing (FSE) intégré
-* Blocs personnalisés pour les agences web
-* Animations fluides avec GSAP
-* Effets de particules interactifs
-* Design responsive
-* Support multilingue
-* Optimisé pour les performances
-* Accessibilité WCAG 2.1
+* Full Site Editing (FSE) intégré avec support complet de l'éditeur de site
+* Blocs personnalisés pour les agences web (Portfolio, Équipe, Services)
+* Animations fluides avec GSAP et effets de particules interactifs
+* Design responsive et accessible (WCAG 2.1)
+* Support multilingue et RTL
+* Optimisé pour les performances (lazy loading, minification)
 * Mises à jour automatiques via GitHub
 * Gestion avancée des types de contenu personnalisés
-* Intégration de portfolio professionnel
-* Support des projets et réalisations
+* Intégration de portfolio professionnel avec galerie
 * Section "Qui sommes nous" avec gestion avancée des membres
 * Sélecteur de médias WordPress pour les icônes personnalisées
 * Interface d'administration optimisée avec classes natives WordPress
+
+= Blocs personnalisés =
+
+* **Portfolio Block** : Affiche vos projets avec filtrage et animations
+* **Team Block** : Présente votre équipe avec des profils détaillés
+* **Services Block** : Mettez en avant vos services avec des icônes et descriptions
+* **Contact Block** : Formulaire de contact personnalisable
+* **Testimonials Block** : Affichez les témoignages de vos clients
 
 = Installation =
 
@@ -80,7 +87,22 @@ Le thème vérifie automatiquement les nouvelles versions disponibles sur GitHub
 
 La section "Qui sommes nous" utilise le sélecteur de médias natif de WordPress pour une gestion intuitive des icônes. Vous pouvez facilement ajouter, supprimer et prévisualiser les icônes directement dans l'interface d'administration.
 
+= Puis-je migrer depuis un autre thème FSE ? =
+
+Oui, le thème inclut des outils de migration pour faciliter la transition depuis d'autres thèmes FSE. Les blocs et les styles seront automatiquement adaptés.
+
+= Le thème est-il compatible avec d'autres thèmes FSE ? =
+
+Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
+
 == Changelog ==
+
+= 1.0.2 =
+* Correction des erreurs de linter
+* Amélioration de la documentation
+* Optimisation des performances
+* Mise à jour des dépendances
+* Correction des bugs mineurs
 
 = 1.0.1 =
 * Ajout de la gestion avancée des icônes dans "Qui sommes nous"
@@ -117,4 +139,10 @@ La section "Qui sommes nous" utilise le sélecteur de médias natif de WordPress
 * Développé par G2RD
 * Animations GSAP
 * Icônes et ressources graphiques personnalisées
-* Système de mise à jour basé sur l'API GitHub 
+* Système de mise à jour basé sur l'API GitHub
+
+== Documentation complémentaire ==
+
+Pour la documentation avancée (accessibilité, guides développeur, etc.), consultez le dossier /docs du thème.
+- Le présent fichier readme.txt est destiné à la présentation sur WordPress.org.
+- Un fichier README.md est également disponible à la racine pour les développeurs (GitHub). 

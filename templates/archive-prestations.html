@@ -1,0 +1,78 @@
+<!-- wp:template-part {"slug":"header","theme":"G2RD-theme","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|l","bottom":"var:preset|spacing|l"}}},"backgroundColor":"gray","layout":{"type":"constrained"}} -->
+<main
+  class="wp-block-group has-gray-background-color has-background"
+  style="
+    padding-top: var(--wp--preset--spacing--l);
+    padding-bottom: var(--wp--preset--spacing--l);
+  "
+>
+  <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
+  <div class="wp-block-group">
+    <!-- wp:group {"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group">
+      <!-- wp:heading {"level":1} -->
+      <h1 class="wp-block-heading">
+        Un projet, une ambition ? Donnez vie à vos idées avec G2RD Agence Web
+      </h1>
+      <!-- /wp:heading -->
+
+      <!-- wp:paragraph -->
+      <p>
+        Chez G2RD Agence Web, nous transformons vos besoins numériques en
+        solutions concrètes et performantes. Spécialisés dans la création et la
+        refonte de sites web, le web design, le référencement SEO, la
+        maintenance et la formation WordPress, nous vous accompagnons à chaque
+        étape de votre projet. Notre objectif : vous fournir une présence en
+        ligne qui reflète votre identité et atteint vos objectifs.
+      </p>
+      <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- wp:image {"id":97,"width":"400px","sizeSlug":"full","linkDestination":"none"} -->
+    <figure class="wp-block-image size-full is-resized">
+      <img
+        src="http://projetg2rd.local/wp-content/uploads/2025/05/g2rd-agence-web_engineering_team_a7n2.svg"
+        alt="g2rd-agence-web_engineering_team_a7n2"
+        class="wp-image-97"
+        style="width: 400px"
+      />
+    </figure>
+    <!-- /wp:image -->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:query {"queryId":4,"query":{"perPage":25,"pages":0,"offset":0,"postType":"prestations","order":"asc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"parents":[],"format":[]}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"var:preset|spacing|m"}},"layout":{"type":"grid","columnCount":3,"minimumColumnWidth":null}} -->
+    <!-- wp:group {"style":{"border":{"width":"1px","color":"#2F425D","radius":"15px"},"spacing":{"padding":{"right":"var:preset|spacing|s","left":"var:preset|spacing|s","top":"var:preset|spacing|xs","bottom":"var:preset|spacing|xs"}}},"layout":{"type":"constrained"},"clickableArticles":true} -->
+    <div
+      class="wp-block-group has-border-color"
+      style="
+        border-color: #2f425d;
+        border-width: 1px;
+        border-radius: 15px;
+        padding-top: var(--wp--preset--spacing--xs);
+        padding-right: var(--wp--preset--spacing--s);
+        padding-bottom: var(--wp--preset--spacing--xs);
+        padding-left: var(--wp--preset--spacing--s);
+      "
+    >
+      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"auto","width":"","height":"","sizeSlug":"full","align":"center","style":{"border":{"radius":{"topLeft":"1rem","topRight":"1rem","bottomLeft":"0","bottomRight":"0"}},"spacing":{"margin":{"bottom":"var:preset|spacing|xs"},"padding":{"right":"var:preset|spacing|l","left":"var:preset|spacing|l"}},"layout":{"selfStretch":"fit","flexSize":null}}} /-->
+
+      <!-- wp:post-title {"textAlign":"center","level":3,"isLink":true,"fontSize":"l"} /-->
+
+      <!-- wp:post-terms {"term":"categories-qui-sommes-nous","textAlign":"center"} /-->
+
+      <!-- wp:post-excerpt {"textAlign":"center","excerptLength":10} /-->
+    </div>
+    <!-- /wp:group -->
+    <!-- /wp:post-template -->
+  </div>
+  <!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"G2RD-theme","area":"footer"} /-->

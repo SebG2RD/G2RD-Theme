@@ -1,3 +1,5 @@
+# NOTE : Ce fichier doit rester à la racine du projet. Voir /docs pour la documentation complémentaire.
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 

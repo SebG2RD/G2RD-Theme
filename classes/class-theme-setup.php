@@ -35,6 +35,7 @@ class ThemeSetup
      */
     public function registerHooks(): void
     {
+        \add_action('after_setup_theme', [$this, 'loadThemeTextdomain']);
         \add_action('wp_enqueue_scripts', [$this, 'registerAssets']);
         \add_filter('upload_mimes', [$this, 'allowMimeTypes']);
         \add_filter('wp_check_filetype_and_ext', [$this, 'allowFileTypes'], 10, 4);
@@ -52,7 +53,25 @@ class ThemeSetup
      */
     public function registerAssets(): void
     {
+        // Styles principaux
         \wp_enqueue_style('main', \get_stylesheet_uri(), [], \wp_get_theme()->get('Version'));
+
+        // Styles d'accessibilité
+        \wp_enqueue_style(
+            'g2rd-accessibility',
+            \get_template_directory_uri() . '/assets/css/accessibility.css',
+            [],
+            \wp_get_theme()->get('Version')
+        );
+
+        // Scripts d'accessibilité
+        \wp_enqueue_script(
+            'g2rd-accessibility',
+            \get_template_directory_uri() . '/assets/js/accessibility.js',
+            [],
+            \wp_get_theme()->get('Version'),
+            true // Chargé dans le footer
+        );
     }
 
     /**
@@ -140,5 +159,16 @@ class ThemeSetup
         foreach ($categories as $slug => $label) {
             \register_block_pattern_category($slug, ['label' => $label]);
         }
+    }
+
+    /**
+     * Charge les traductions du thème
+     *
+     * @since 1.0.2
+     * @return void
+     */
+    public function loadThemeTextdomain(): void
+    {
+        load_theme_textdomain('g2rd', get_template_directory() . '/languages');
     }
 }

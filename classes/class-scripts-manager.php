@@ -37,6 +37,7 @@ class ScriptsManager
     {
         // Utiliser le namespace global pour les fonctions WordPress
         \add_action('wp_enqueue_scripts', [$this, 'enqueueScripts']);
+        \add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
     }
 
     /**
@@ -65,6 +66,24 @@ class ScriptsManager
             'g2rd-particles',
             \get_template_directory_uri() . '/assets/js/g2rd-particles.js',
             [],
+            '1.0.0',
+            true
+        );
+    }
+
+    /**
+     * Enregistre et charge les scripts JavaScript de l'administration
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function enqueueAdminScripts(): void
+    {
+        // Script pour la gestion des mots de passe
+        \wp_enqueue_script(
+            'g2rd-password-manager',
+            \get_template_directory_uri() . '/assets/js/password-manager.js',
+            ['jquery'],
             '1.0.0',
             true
         );

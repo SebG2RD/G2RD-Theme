@@ -7,7 +7,7 @@ Description: Un thème Full Site Editing (FSE) moderne et flexible pour les agen
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Version: 1.0.1
+Version: 1.0.2
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD
@@ -91,6 +91,11 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
   overflow: hidden;
   z-index: var(--z-index-base);
   height: 100%;
+}
+
+/* Image prestation */
+.resize-img {
+  width: 30%;
 }
 
 /* Styles communs pour les images */
