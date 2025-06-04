@@ -81,61 +81,28 @@ npm run dev
 
 ```
 g2rd-theme/
-├── assets/           # Assets compilés
+├── assets/           # Assets compilés (CSS, JS, images)
+├── blocks/           # Blocs personnalisés
 ├── classes/          # Classes PHP
-├── inc/             # Fonctions et hooks
+├── docs/            # Documentation complémentaire
+├── languages/       # Fichiers de traduction
 ├── parts/           # Templates de parties
 ├── patterns/        # Patterns FSE
-├── src/             # Source files
-│   ├── js/         # JavaScript
-│   ├── scss/       # Styles
-│   └── blocks/     # Blocs personnalisés
+├── styles/          # Styles FSE
 ├── templates/       # Templates FSE
-└── theme.json      # Configuration FSE
+├── configuration.json  # Configuration du thème
+├── functions.php    # Fonctions principales
+├── index.php        # Template par défaut
+├── license.txt      # Licence (format WordPress.org)
+├── LICENSE          # Licence (format GitHub)
+├── readme.txt       # Documentation utilisateur (WordPress.org)
+├── screenshot.png   # Capture d'écran du thème
+├── style.css        # Fichier de style principal
+├── theme.json       # Configuration FSE principale
+├── theme-settings.json  # Paramètres du thème
+└── theme-styles.json    # Styles du thème
 ```
 
 ### Scripts disponibles
 
-- `npm run dev` : Lance le serveur de développement
-- `npm run build` : Compile les assets pour la production
-- `npm run lint` : Vérifie le code avec ESLint
-- `npm run format` : Formate le code avec Prettier
-- `npm run test` : Lance les tests
-
-### Contribution
-
-1. Fork le projet
-2. Créez une branche pour votre fonctionnalité
-3. Committez vos changements
-4. Poussez vers la branche
-5. Ouvrez une Pull Request
-
-### Standards de code
-
-- PHP : PSR-12
-- JavaScript : ESLint + Prettier
-- CSS : SCSS avec BEM
-- Documentation : PHPDoc
-
-## Licence
-
-Ce projet est sous licence EUPL-1.2. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## Support
-
-Pour le support technique, veuillez ouvrir une issue sur GitHub.
-Pour le support utilisateur, visitez [g2rd.fr](https://g2rd.fr).
-
-## Auteur
-
-Sebastien GERARD - [G2RD](https://g2rd.fr)
-
-## Utilisation
-
-### Gestion des membres d'équipe
-
-1. Accédez à "Qui sommes nous" dans le menu WordPress
-2. Créez un nouveau membre
-3. Remplissez les informations du profil
-4. Utilisez le sélecteur de médias pour ajouter des icônes
-5. Publiez le profil
+- `npm run dev`
