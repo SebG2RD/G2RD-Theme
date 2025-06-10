@@ -15,6 +15,15 @@
 
 namespace G2RD;
 
+// Alias des fonctions WordPress
+use function add_filter;
+use function get_template_directory;
+use function wp_get_theme;
+use function wp_remote_get;
+use function is_wp_error;
+use function wp_remote_retrieve_body;
+use function rename;
+
 class GitHubUpdater
 {
     /**
@@ -24,6 +33,26 @@ class GitHubUpdater
      * @var string
      */
     private $github_url = 'https://github.com/SebG2RD/G2RD-Theme-FSE';
+
+    /**
+     * Instance du gestionnaire de licences
+     *
+     * @since 1.0.0
+     * @var SureCartLicenseManager
+     */
+    private $license_manager;
+
+    /**
+     * Constructeur de la classe
+     *
+     * @since 1.0.0
+     * @param SureCartLicenseManager $license_manager Instance du gestionnaire de licences
+     */
+    public function __construct($license_manager)
+    {
+        $this->license_manager = $license_manager;
+        $this->registerHooks();
+    }
 
     /**
      * Enregistre les hooks WordPress nécessaires
@@ -54,6 +83,11 @@ class GitHubUpdater
      */
     public function checkForUpdates($transient)
     {
+        // Vérifier si la licence est valide
+        if (!$this->license_manager->isLicenseValid()) {
+            return $transient;
+        }
+
         // Si les données de mise à jour ne sont pas initialisées, on retourne le transient tel quel
         if (empty($transient->checked)) {
             return $transient;
@@ -122,6 +156,11 @@ class GitHubUpdater
      */
     public function getThemeInfo($false, $action, $args)
     {
+        // Vérifier si la licence est valide
+        if (!$this->license_manager->isLicenseValid()) {
+            return $false;
+        }
+
         if ($action !== 'theme_information') {
             return $false;
         }
