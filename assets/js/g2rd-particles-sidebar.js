@@ -100,8 +100,6 @@
       withParticlesControl,
       9
     );
-
-    console.log("G2RD Particles Sidebar Control initialized");
   } catch (e) {
     console.error("Error initializing G2RD Particles Sidebar Control", e);
   }

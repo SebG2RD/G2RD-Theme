@@ -1,16 +1,19 @@
 <?php
 
 /**
- * Title: Liste des articles en grille
- * Slug: post-grid
+ * Title: Post Grid
+ * Slug: g2rd-theme/post-grid
  * Description: La liste des articles du blog en grille
- * Categories: hero
- * Keywords: blog, posts, query, loop
- * Viewport Width: 1200
+ * Categories: featured
+ * Keywords: post, grid, blog
+ * Viewport Width: 1400
  * Block Types: core/query
  * Post Types: 
  * Inserter: false
- * Text Domain: g2rd
+ * Text Domain: g2rd-theme
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
  */
 ?>
 <!-- wp:group {"layout":{"type":"constrained"}} -->
@@ -42,7 +45,7 @@
             <!-- /wp:post-template -->
 
             <!-- wp:query-no-results -->
-            <!-- wp:paragraph {"placeholder":"Ajouter un texte ou des blocs qui s’afficheront lorsqu’une requête ne renverra aucun résultat."} -->
+            <!-- wp:paragraph {"placeholder":"Ajouter un texte ou des blocs qui s'afficheront lorsqu'une requête ne renverra aucun résultat."} -->
             <p>Il n'y a pas d'article.</p>
             <!-- /wp:paragraph -->
             <!-- /wp:query-no-results -->

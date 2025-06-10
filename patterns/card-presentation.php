@@ -1,16 +1,18 @@
 <?php
 
 /**
- * Title: Présentation de l'agence
- * Slug: presentation-agence
+ * Title: Card Presentation
+ * Slug: g2rd-theme/card-presentation
  * Description: La présentation de l'agence
- * Categories: card
- * Keywords: agence, presentation
- * Viewport Width: 600
- * Block Types: 
+ * Categories: featured
+ * Keywords: card, presentation, about
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types: 
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: g2rd-theme
+ * @package G2RD Theme
+ * @since 1.0.0
  */
 ?>
 <!-- wp:group {"style":{"layout":{"selfStretch":"fixed","flexSize":"50%"},"dimensions":{"minHeight":"0%"}},"layout":{"type":"constrained"}} -->

@@ -1,15 +1,15 @@
 <?php
 /**
- * Title: Carte de détails
- * Slug: card-details
+ * Title: Card Details
+ * Slug: G2RD-theme/card-details
  * Description: Une carte présentant les détails et statistiques d'un thème
  * Categories: card
  * Keywords: carte, tableau, liste, informations, détails, statistiques
- * Viewport Width: 600
- * Block Types:
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
  */
 ?>
 <!-- wp:group {"style":{"border":{"radius":"5px","color":"#e2e2ef","width":"1px"},"spacing":{"blockGap":"0","padding":{"top":"0","right":"0","bottom":"0","left":"0"}}},"layout":{"type":"constrained"}} -->

@@ -80,7 +80,7 @@ npm run dev
 ### Structure du projet
 
 ```
-g2rd-theme/
+G2RD-theme/
 ├── assets/           # Assets compilés (CSS, JS, images)
 ├── blocks/           # Blocs personnalisés
 ├── classes/          # Classes PHP

@@ -113,8 +113,6 @@
       withClickableControl,
       9
     );
-
-    console.log("G2RD Clickable Articles Sidebar Control initialized");
   } catch (e) {
     console.error(
       "Error initializing G2RD Clickable Articles Sidebar Control",

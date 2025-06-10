@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Title: Articles du blog
- * Slug: articles-blog
+ * Title: Articles Blog
+ * Slug: G2RD-theme/articles-blog
  * Description: Affichage des articles du blog en grille
  * Categories: hero
  * Keywords: blog, posts, query, loop
- * Viewport Width: 1200
+ * Viewport Width: 1400
  * Block Types: core/query
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
  */
 ?>
 

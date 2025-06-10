@@ -1,15 +1,15 @@
 <?php
 /**
- * Title: Boîte d'auteur
- * Slug: card-box
+ * Title: Card Box
+ * Slug: G2RD-theme/card-box
  * Description: Une boîte d'auteur avec photo de profil, biographie et liens sociaux
  * Categories: card
  * Keywords: auteur, profil, biographie, réseaux sociaux
- * Viewport Width: 800
- * Block Types:
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
  */
 ?>
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|large","right":"var:preset|spacing|large","bottom":"var:preset|spacing|large","left":"var:preset|spacing|large"}},"border":{"radius":"5px"}},"backgroundColor":"tertiary","layout":{"type":"constrained"}} -->

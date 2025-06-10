@@ -75,6 +75,10 @@ class ThemeAdmin
         
         // Ajouter le bouton après le formulaire
         \add_action('login_footer', [$this, 'addG2RDButton']);
+
+        // Hooks pour la colonne d'image mise en avant
+        \add_filter('manage_posts_columns', [$this, 'addFeaturedImageColumn']);
+        \add_action('manage_posts_custom_column', [$this, 'displayFeaturedImageColumn'], 10, 2);
     }
     
     /**
@@ -267,6 +271,45 @@ class ThemeAdmin
                 display: none !important;
             }
         </style>';
+    }
+
+    /**
+     * Ajoute une colonne pour l'image mise en avant dans la liste des articles
+     *
+     * @since 1.0.0
+     * @param array $columns Les colonnes existantes
+     * @return array Les colonnes modifiées
+     */
+    public function addFeaturedImageColumn(array $columns): array
+    {
+        $new_columns = [];
+        foreach ($columns as $key => $value) {
+            if ($key === 'title') {
+                $new_columns['featured_image'] = 'Image mise en avant';
+            }
+            $new_columns[$key] = $value;
+        }
+        return $new_columns;
+    }
+
+    /**
+     * Affiche l'image mise en avant dans la colonne personnalisée
+     *
+     * @since 1.0.0
+     * @param string $column_name Le nom de la colonne
+     * @param int $post_id L'ID de l'article
+     * @return void
+     */
+    public function displayFeaturedImageColumn(string $column_name, int $post_id): void
+    {
+        if ($column_name === 'featured_image') {
+            if (has_post_thumbnail($post_id)) {
+                $thumbnail = get_the_post_thumbnail_url($post_id, 'thumbnail');
+                echo '<img src="' . esc_url($thumbnail) . '" style="width: 150px; height: 150px; object-fit: cover;" alt="Image mise en avant">';
+            } else {
+                echo '—';
+            }
+        }
     }
 }
 

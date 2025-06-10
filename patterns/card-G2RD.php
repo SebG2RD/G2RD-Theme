@@ -2,15 +2,18 @@
 
 /**
  * Title: Card G2RD
- * Slug: card-g2rd
+ * Slug: g2rd-theme/card-g2rd
  * Description: Présentation de l'entreprise
- * Categories: card, hero
+ * Categories: featured
  * Keywords: présentation, carte, hero
- * Viewport Width: 1200
- * Block Types:
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: g2rd-theme
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
  */
 ?>
 <!-- wp:group {"layout":{"type":"constrained"}} -->

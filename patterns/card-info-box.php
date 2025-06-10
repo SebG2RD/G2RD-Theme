@@ -1,16 +1,19 @@
 <?php
 
 /**
- * Title: Info Box
- * Slug: info
- * Description: info box avec un titre, un texte
- * Categories: info
- * Keywords: info, box
- * Viewport Width: 300
- * Block Types:
+ * Title: Card Info Box
+ * Slug: G2RD-theme/card-info-box
+ * Description: Une carte pour afficher des informations
+ * Categories: featured
+ * Keywords: card, info, box
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
  */
 
 ?>

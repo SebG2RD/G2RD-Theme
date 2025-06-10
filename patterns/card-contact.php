@@ -1,15 +1,15 @@
 <?php
 /**
- * Title: Carte de contact
- * Slug: card-contact
+ * Title: Card Contact
+ * Slug: G2RD-theme/card-contact
  * Description: Une carte de contact avec coordonnées et liens sociaux
  * Categories: card
  * Keywords: contact, coordonnées, réseaux sociaux, email, téléphone, adresse
- * Viewport Width: 600
- * Block Types:
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
  */
 ?>
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|large","right":"var:preset|spacing|large","bottom":"var:preset|spacing|large","left":"var:preset|spacing|large"},"blockGap":"var:preset|spacing|medium"},"border":{"radius":"5px"}},"backgroundColor":"main","layout":{"type":"constrained"}} -->

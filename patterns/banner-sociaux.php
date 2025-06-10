@@ -1,16 +1,19 @@
 <?php
 
 /**
- * Title: bannière social
- * Slug: banner-sociaux
- * Description: bannière social
- * Categories: banner
- * Keywords: social, banner
- * Viewport Width: 600
- * Block Types: 
+ * Title: Banner Sociaux
+ * Slug: G2RD-theme/banner-sociaux
+ * Description: Un banner pour afficher les réseaux sociaux
+ * Categories: featured
+ * Keywords: banner, social, media
+ * Viewport Width: 1400
+ * Block Types: core/template-part
  * Post Types: 
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
  */
 ?>
 <!-- wp:group {"align":"full","className":"is-style-primary","style":{"spacing":{"padding":{"top":"var:preset|spacing|l","bottom":"var:preset|spacing|l"}}},"layout":{"type":"constrained"}} -->

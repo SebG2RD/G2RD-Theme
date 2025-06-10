@@ -1,13 +1,18 @@
 <?php
 
 /**
- * Title: Boucle de requête du Portfolio Grille
- * Slug: grid-portfolio
- * Description: Affichage des articles en grille avec image et texte
- * Categories: posts, portfolio
- * Viewport width: 1200
- * Inserter: true
- * Text Domain: g2rd
+ * Title: Grid Portfolio
+ * Slug: g2rd-theme/grid-portfolio
+ * Categories: featured
+ * Keywords: portfolio, grid, projects
+ * Block Types: core/template-part
+ * Viewport Width: 1400
+ * Description: Une grille pour afficher le portfolio
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
+ * 
+ * Text Domain: g2rd-theme
  */
 ?>
 <!-- wp:group {"layout":{"type":"constrained"}} -->

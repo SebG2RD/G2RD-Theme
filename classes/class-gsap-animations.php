@@ -56,16 +56,16 @@ class GSAPAnimations
         if (!\is_admin()) {
             \wp_enqueue_script(
                 'gsap',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
+                get_template_directory_uri() . '/assets/js/vendor/gsap.min.js',
                 [],
-                null,
+                '3.12.2',
                 true
             );
             \wp_enqueue_script(
                 'scrolltrigger',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
+                get_template_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js',
                 ['gsap'],
-                null,
+                '3.12.2',
                 true
             );
             \wp_enqueue_script(

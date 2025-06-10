@@ -2,15 +2,15 @@
 
 /**
  * Title: Card Call to Action G2RD
- * Slug: card-call-to-action-G2RD
+ * Slug: G2RD-theme/card-call-to-action-G2RD
  * Description: Présentation de l'entreprise
  * Categories: card, hero
  * Keywords: présentation, carte, hero
- * Viewport Width: 1200
- * Block Types:
+ * Viewport Width: 1400
+ * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: g2rd
+ * Text Domain: G2RD-theme
  */
 ?>
 <!-- wp:group {"metadata":{"name":"G2RD Hero"},"className":"is-style-primary","style":{"spacing":{"padding":{"top":"var:preset|spacing|s","bottom":"var:preset|spacing|s"}}},"layout":{"type":"constrained"}} -->

@@ -1,13 +1,18 @@
 <?php
 
 /**
- * Title: Boucle de requête du Site Web
- * Slug: query-site-web
- * Description: 
- * Categories: Posts
- * Viewport width: 1200
- * Inserter: false
- * Text Domain: g2rd
+ * Title: Query Portfolio
+ * Slug: g2rd-theme/query-portfolio
+ * Categories: featured
+ * Keywords: portfolio, query, grid
+ * Block Types: core/template-part
+ * Viewport Width: 1400
+ * Description: Une requête pour afficher le portfolio
+ * 
+ * @package G2RD Theme
+ * @since 1.0.0
+ * 
+ * Text Domain: g2rd-theme
  */
 ?>
 <!-- wp:spacer {"height":"60px"} -->
@@ -36,7 +41,7 @@
   <!-- /wp:query-pagination -->
 
   <!-- wp:query-no-results -->
-  <!-- wp:paragraph {"placeholder":"Ajouter un texte ou des blocs qui s’afficheront lorsqu’une requête ne renverra aucun résultat."} -->
+  <!-- wp:paragraph {"placeholder":"Ajouter un texte ou des blocs qui s'afficheront lorsqu'une requête ne renverra aucun résultat."} -->
   <p></p>
   <!-- /wp:paragraph -->
   <!-- /wp:query-no-results -->

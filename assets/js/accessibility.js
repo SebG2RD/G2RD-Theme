@@ -326,7 +326,7 @@
     btn.className = "accessibility-floating-btn";
     btn.setAttribute("aria-label", "Ouvrir le panneau d'accessibilité");
     btn.innerHTML = `
-      <img src="/wp-content/themes/G2RD-theme/assets/img/g2rd-accessibilite-50.png" alt="Accessibilité" width="32" height="32" style="display:block; margin:auto;" />
+      <img src="/wp-content/themes/g2rd-theme/assets/img/g2rd-accessibilite-50.png" alt="Accessibilité" width="32" height="32" style="display:block; margin:auto;" />
     `;
     document.body.appendChild(btn);
     return btn;
@@ -338,7 +338,7 @@
     btn.className = "scroll-to-top-btn";
     btn.setAttribute("aria-label", "Remonter en haut de la page");
     btn.innerHTML = `
-      <img src="/wp-content/themes/G2RD-theme/assets/img/g2rd-vers-le-haut-80.png" alt="Remonter en haut" width="32" height="32" style="display:block; margin:auto;" />
+      <img src="/wp-content/themes/g2rd-theme/assets/img/g2rd-vers-le-haut-80.png" alt="Remonter en haut" width="32" height="32" style="display:block; margin:auto;" />
     `;
     btn.style.display = "none";
     document.body.appendChild(btn);
