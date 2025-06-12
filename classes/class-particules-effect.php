@@ -27,28 +27,30 @@ namespace G2RD;
 class ParticlesEffect
 {
     /**
+     * Version du thème pour le cache-busting
+     */
+    private string $theme_version;
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+        $this->theme_version = wp_get_theme()->get('Version');
+    }
+
+    /**
      * Enregistre les hooks nécessaires pour l'effet de particules
-     *
-     * @since 1.0.0
-     * @return void
      */
     public function registerHooks(): void
     {
-        // Ajouter les contrôles de bloc dans l'éditeur
         \add_action('enqueue_block_editor_assets', [$this, 'registerEditorControls'], 5);
-        
-        // Ajouter l'attribut personnalisé aux blocs concernés
         \add_filter('render_block', [$this, 'addParticlesAttribute'], 10, 2);
-        
-        // Ajouter des styles CSS pour l'éditeur
         \add_action('admin_head', [$this, 'addEditorStyles']);
     }
 
     /**
      * Enregistre et charge les contrôles de l'effet de particules dans l'éditeur
-     *
-     * @since 1.0.0
-     * @return void
      */
     public function registerEditorControls(): void
     {
@@ -67,16 +69,13 @@ class ParticlesEffect
                 'wp-i18n',
                 'wp-hooks',
             ],
-            \filemtime(\get_template_directory() . '/assets/js/g2rd-particles-sidebar.js'),
+            $this->theme_version,
             true
         );
     }
     
     /**
      * Ajoute les styles CSS pour les contrôles de l'effet de particules dans l'éditeur
-     *
-     * @since 1.0.0
-     * @return void
      */
     public function addEditorStyles(): void
     {
@@ -105,14 +104,6 @@ class ParticlesEffect
 
     /**
      * Ajoute l'attribut data-particles aux blocs de type group
-     *
-     * Cette méthode ajoute l'attribut data-particles="true" aux blocs
-     * de type group qui ont l'effet de particules activé.
-     *
-     * @since 1.0.0
-     * @param string $block_content Le contenu HTML du bloc
-     * @param array  $block        Les informations du bloc
-     * @return string Le contenu HTML modifié
      */
     public function addParticlesAttribute(string $block_content, array $block): string
     {

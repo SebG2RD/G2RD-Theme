@@ -44,7 +44,7 @@
         const search = document.querySelector(
           '.search-form input[type="search"]'
         );
-        if (search) {
+        if (search && "focus" in search) {
           search.focus();
         }
       }
@@ -93,8 +93,13 @@
 
       // Validation en temps réel
       form.addEventListener("input", (e) => {
-        if (e.target.hasAttribute("required")) {
-          validateField(e.target);
+        const target = e.target;
+        if (
+          target &&
+          "hasAttribute" in target &&
+          target.hasAttribute("required")
+        ) {
+          validateField(target);
         }
       });
     });
@@ -129,6 +134,41 @@
     if (prefersReducedMotion.matches) {
       document.body.classList.add("reduced-motion");
     }
+  }
+
+  // Fonction pour détecter automatiquement le chemin du thème
+  function getThemePath() {
+    // Méthode 1: Chercher dans les liens CSS
+    const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+    for (let link of cssLinks) {
+      const href = link.getAttribute("href");
+      if (href && href.includes("/wp-content/themes/")) {
+        const match = href.match(/(.+\/wp-content\/themes\/[^\/]+)/);
+        if (match) {
+          console.log("Chemin du thème détecté (CSS):", match[1]);
+          return match[1];
+        }
+      }
+    }
+
+    // Méthode 2: Chercher dans les scripts
+    const scripts = document.querySelectorAll("script[src]");
+    for (let script of scripts) {
+      const src = script.getAttribute("src");
+      if (src && src.includes("/wp-content/themes/")) {
+        const match = src.match(/(.+\/wp-content\/themes\/[^\/]+)/);
+        if (match) {
+          console.log("Chemin du thème détecté (JS):", match[1]);
+          return match[1];
+        }
+      }
+    }
+
+    // Méthode 3: Utiliser l'URL actuelle + chemin standard
+    const origin = window.location.origin;
+    const fallbackPath = `${origin}/wp-content/themes/g2rd-theme`;
+    console.log("Chemin du thème (fallback):", fallbackPath);
+    return fallbackPath;
   }
 
   // Création du panneau d'accessibilité
@@ -255,16 +295,18 @@
     const buttons = panel.querySelectorAll(".accessibility-panel__button");
 
     // Toggle du panneau
-    toggle.addEventListener("click", () => {
-      const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", !isExpanded);
-      panel.classList.toggle("is-open");
-    });
+    if (toggle) {
+      toggle.addEventListener("click", () => {
+        const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isExpanded));
+        panel.classList.toggle("is-open");
+      });
+    }
 
     // Gestion des boutons
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        const action = button.dataset.action;
+        const action = button.getAttribute("data-action");
 
         switch (action) {
           case "increase-text":
@@ -325,8 +367,12 @@
     const btn = document.createElement("button");
     btn.className = "accessibility-floating-btn";
     btn.setAttribute("aria-label", "Ouvrir le panneau d'accessibilité");
+
+    // Récupération automatique du chemin du thème
+    const themePath = getThemePath();
+
     btn.innerHTML = `
-      <img src="/wp-content/themes/g2rd-theme/assets/img/g2rd-accessibilite-50.png" alt="Accessibilité" width="32" height="32" style="display:block; margin:auto;" />
+      <img src="${themePath}/assets/img/g2rd-accessibilite-50.png" alt="Accessibilité" width="32" height="32" style="display:block; margin:auto;" />
     `;
     document.body.appendChild(btn);
     return btn;
@@ -337,8 +383,12 @@
     const btn = document.createElement("button");
     btn.className = "scroll-to-top-btn";
     btn.setAttribute("aria-label", "Remonter en haut de la page");
+
+    // Récupération automatique du chemin du thème
+    const themePath = getThemePath();
+
     btn.innerHTML = `
-      <img src="/wp-content/themes/g2rd-theme/assets/img/g2rd-vers-le-haut-80.png" alt="Remonter en haut" width="32" height="32" style="display:block; margin:auto;" />
+      <img src="${themePath}/assets/img/g2rd-vers-le-haut-80.png" alt="Remonter en haut" width="32" height="32" style="display:block; margin:auto;" />
     `;
     btn.style.display = "none";
     document.body.appendChild(btn);

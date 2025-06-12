@@ -28,6 +28,19 @@ namespace G2RD;
 class ThemeSetup
 {
     /**
+     * Version du thème pour le cache-busting
+     */
+    private string $theme_version;
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+        $this->theme_version = wp_get_theme()->get('Version');
+    }
+
+    /**
      * Enregistre tous les hooks nécessaires pour le thème
      *
      * @since 1.0.0
@@ -41,8 +54,38 @@ class ThemeSetup
         \add_filter('wp_check_filetype_and_ext', [$this, 'allowFileTypes'], 10, 4);
         \add_filter('sanitize_file_name', 'remove_accents');
         \add_action('init', [$this, 'g2rd_register_block_patterns']);
+        \add_action('wp_head', [$this, 'addSecurityHeaders'], 1);
+        \add_action('wp_head', [$this, 'addPreloadLinks'], 2);
 
         $this->setupFeatures();
+    }
+
+    /**
+     * Ajoute les en-têtes de sécurité
+     */
+    public function addSecurityHeaders(): void
+    {
+        if (!is_admin()) {
+            header('X-Content-Type-Options: nosniff');
+            header('X-Frame-Options: SAMEORIGIN');
+            header('X-XSS-Protection: 1; mode=block');
+            header('Referrer-Policy: strict-origin-when-cross-origin');
+        }
+    }
+
+    /**
+     * Ajoute les liens de préchargement pour les ressources critiques
+     */
+    public function addPreloadLinks(): void
+    {
+        if (!is_admin()) {
+            // Précharger les polices
+            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
+            
+            // Précharger les styles critiques
+            echo '<link rel="preload" href="' . get_stylesheet_uri() . '" as="style">';
+            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/css/accessibility.css" as="style">';
+        }
     }
 
     /**
@@ -53,25 +96,31 @@ class ThemeSetup
      */
     public function registerAssets(): void
     {
-        // Styles principaux
-        \wp_enqueue_style('main', \get_stylesheet_uri(), [], \wp_get_theme()->get('Version'));
+        // Styles principaux avec version du thème
+        \wp_enqueue_style('main', \get_stylesheet_uri(), [], $this->theme_version);
 
         // Styles d'accessibilité
         \wp_enqueue_style(
             'g2rd-accessibility',
             \get_template_directory_uri() . '/assets/css/accessibility.css',
             [],
-            \wp_get_theme()->get('Version')
+            $this->theme_version
         );
 
-        // Scripts d'accessibilité
+        // Scripts d'accessibilité avec chargement différé
         \wp_enqueue_script(
             'g2rd-accessibility',
             \get_template_directory_uri() . '/assets/js/accessibility.js',
             [],
-            \wp_get_theme()->get('Version'),
-            true // Chargé dans le footer
+            $this->theme_version,
+            true
         );
+
+        // Ajouter les données localisées pour les scripts
+        wp_localize_script('g2rd-accessibility', 'g2rdData', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('g2rd-nonce')
+        ]);
     }
 
     /**
@@ -85,6 +134,7 @@ class ThemeSetup
     {
         $mimes['svg'] = 'image/svg+xml';
         $mimes['webp'] = 'image/webp';
+        $mimes['avif'] = 'image/avif';
 
         return $mimes;
     }
@@ -104,6 +154,9 @@ class ThemeSetup
         if (false !== strpos($filename, '.webp')) {
             $types['ext'] = 'webp';
             $types['type'] = 'image/webp';
+        } elseif (false !== strpos($filename, '.avif')) {
+            $types['ext'] = 'avif';
+            $types['type'] = 'image/avif';
         }
 
         return $types;
@@ -122,6 +175,8 @@ class ThemeSetup
 
         # Ajouter des fonctionnalités
         \add_theme_support("editor-styles");
+        \add_theme_support('responsive-embeds');
+        \add_theme_support('html5', ['search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script']);
 
         # Désactiver l'ancienne API XML RPC
         \add_filter('xmlrpc_enabled', '__return_false');
@@ -134,6 +189,12 @@ class ThemeSetup
         \remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
         \remove_filter('the_content_feed', 'wp_staticize_emoji');
         \remove_filter('comment_text_rss', 'wp_staticize_emoji');
+
+        # Désactiver les fonctionnalités inutiles
+        \remove_action('wp_head', 'wp_generator');
+        \remove_action('wp_head', 'wlwmanifest_link');
+        \remove_action('wp_head', 'rsd_link');
+        \remove_action('wp_head', 'wp_shortlink_wp_head');
     }
 
     /**

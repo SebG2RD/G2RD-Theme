@@ -26,6 +26,19 @@ namespace G2RD;
 class ClickableArticles
 {
     /**
+     * Version du thème pour le cache-busting
+     */
+    private string $theme_version;
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+        $this->theme_version = wp_get_theme()->get('Version');
+    }
+
+    /**
      * Enregistre les hooks nécessaires pour les articles cliquables
      *
      * @since 1.0.0
@@ -41,6 +54,19 @@ class ClickableArticles
 
         // Ajouter l'attribut data-clickable-articles aux blocs
         \add_filter('render_block', [$this, 'addClickableAttribute'], 10, 2);
+
+        // Ajouter les liens de préchargement pour les ressources critiques
+        \add_action('wp_head', [$this, 'addPreloadLinks'], 1);
+    }
+
+    /**
+     * Ajoute les liens de préchargement pour les ressources critiques
+     */
+    public function addPreloadLinks(): void
+    {
+        if (!\is_admin()) {
+            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/js/clickable-articles.js" as="script">';
+        }
     }
 
     /**
@@ -53,14 +79,35 @@ class ClickableArticles
     {
         // Charger le script uniquement sur le frontend
         if (!\is_admin()) {
+            $script_path = \get_template_directory() . '/assets/js/clickable-articles.js';
+            $version = file_exists($script_path) ? filemtime($script_path) : $this->theme_version;
+
             \wp_enqueue_script(
                 'g2rd-clickable-articles',
                 \get_template_directory_uri() . '/assets/js/clickable-articles.js',
                 [],
-                \filemtime(\get_template_directory() . '/assets/js/clickable-articles.js'),
+                $version,
                 true
             );
+
+            // Ajouter les données localisées pour l'accessibilité
+            \wp_localize_script('g2rd-clickable-articles', 'g2rdClickableData', [
+                'isMobile' => wp_is_mobile(),
+                'prefersReducedMotion' => $this->shouldReduceMotion(),
+                'keyboardNavigation' => true
+            ]);
         }
+    }
+
+    /**
+     * Vérifie si l'utilisateur préfère les mouvements réduits
+     */
+    private function shouldReduceMotion(): bool
+    {
+        if (isset($_COOKIE['prefers-reduced-motion'])) {
+            return $_COOKIE['prefers-reduced-motion'] === 'true';
+        }
+        return false;
     }
 
     /**
@@ -71,6 +118,9 @@ class ClickableArticles
      */
     public function registerEditorScripts(): void
     {
+        $script_path = \get_template_directory() . '/assets/js/g2rd-clickable-articles-sidebar.js';
+        $version = file_exists($script_path) ? filemtime($script_path) : $this->theme_version;
+
         \wp_enqueue_script(
             'g2rd-clickable-articles-sidebar',
             \get_template_directory_uri() . '/assets/js/g2rd-clickable-articles-sidebar.js',
@@ -85,7 +135,7 @@ class ClickableArticles
                 'wp-i18n',
                 'wp-hooks',
             ],
-            \filemtime(\get_template_directory() . '/assets/js/g2rd-clickable-articles-sidebar.js'),
+            $version,
             true
         );
     }
@@ -110,12 +160,10 @@ class ClickableArticles
             return $block_content;
         }
 
-        // Ajouter l'attribut data-clickable-articles
+        // Ajouter l'attribut data-clickable-articles et les attributs d'accessibilité
         $class_name = $block['blockName'] === 'core/group' ? 'wp-block-group' : 'wp-block-columns';
-
-        // Utiliser une expression régulière pour s'assurer que nous remplaçons la classe correctement
         $pattern = '/class="' . preg_quote($class_name, '/') . '([^"]*)"/';
-        $replacement = 'class="' . $class_name . '$1" data-clickable-articles="true"';
+        $replacement = 'class="' . $class_name . '$1" data-clickable-articles="true" role="button" tabindex="0"';
 
         $block_content = preg_replace($pattern, $replacement, $block_content);
 
@@ -124,14 +172,14 @@ class ClickableArticles
             // Ajouter la classe aux articles
             $block_content = preg_replace(
                 '/<article([^>]*)class="([^"]*)"/',
-                '<article$1class="$2 g2rd-clickable-article"',
+                '<article$1class="$2 g2rd-clickable-article" role="button" tabindex="0"',
                 $block_content
             );
 
             // Ajouter la classe aux blocs de post
             $block_content = preg_replace(
                 '/<div([^>]*)class="([^"]*wp-block-post[^"]*)"/',
-                '<div$1class="$2 g2rd-clickable-article"',
+                '<div$1class="$2 g2rd-clickable-article" role="button" tabindex="0"',
                 $block_content
             );
         }

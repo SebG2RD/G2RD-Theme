@@ -26,6 +26,29 @@ namespace G2RD;
 class BlockEditorAutoload
 {
     /**
+     * Clé de cache pour les variations de style
+     */
+    private const CACHE_KEY = 'g2rd_style_variations';
+
+    /**
+     * Durée de validité du cache en secondes (24 heures)
+     */
+    private const CACHE_DURATION = 86400;
+
+    /**
+     * Version du thème pour le cache-busting
+     */
+    private string $theme_version;
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+        $this->theme_version = wp_get_theme()->get('Version');
+    }
+
+    /**
      * Enregistre tous les hooks nécessaires pour l'éditeur de blocs
      *
      * @since 1.0.0

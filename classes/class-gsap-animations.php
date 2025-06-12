@@ -27,6 +27,19 @@ namespace G2RD;
 class GSAPAnimations
 {
     /**
+     * Version du thème pour le cache-busting
+     */
+    private string $theme_version;
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+        $this->theme_version = wp_get_theme()->get('Version');
+    }
+
+    /**
      * Enregistre les hooks nécessaires pour les animations GSAP
      *
      * @since 1.0.0
@@ -39,6 +52,18 @@ class GSAPAnimations
 
         // Charger les contrôles de bloc dans l'éditeur
         \add_action('enqueue_block_editor_assets', [$this, 'registerEditorScripts']);
+        \add_action('wp_head', [$this, 'addPreloadLinks'], 1);
+    }
+
+    /**
+     * Ajoute les liens de préchargement pour GSAP
+     */
+    public function addPreloadLinks(): void
+    {
+        if (!\is_admin()) {
+            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/js/vendor/gsap.min.js" as="script">';
+            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js" as="script">';
+        }
     }
 
     /**
@@ -54,28 +79,50 @@ class GSAPAnimations
     {
         // Charger GSAP uniquement sur le frontend
         if (!\is_admin()) {
+            // Charger GSAP depuis un CDN pour de meilleures performances
             \wp_enqueue_script(
                 'gsap',
-                get_template_directory_uri() . '/assets/js/vendor/gsap.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
                 [],
                 '3.12.2',
                 true
             );
+
+            // Charger ScrollTrigger depuis le même CDN
             \wp_enqueue_script(
                 'scrolltrigger',
-                get_template_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
                 ['gsap'],
                 '3.12.2',
                 true
             );
+
+            // Charger notre script d'animation avec version du thème
             \wp_enqueue_script(
                 'gsap-animation',
                 \get_template_directory_uri() . '/assets/js/gsap-animation.js',
                 ['gsap', 'scrolltrigger'],
-                null,
+                $this->theme_version,
                 true
             );
+
+            // Ajouter les données localisées pour les animations
+            \wp_localize_script('gsap-animation', 'gsapData', [
+                'isMobile' => wp_is_mobile(),
+                'prefersReducedMotion' => $this->shouldReduceMotion()
+            ]);
         }
+    }
+
+    /**
+     * Vérifie si l'utilisateur préfère les mouvements réduits
+     */
+    private function shouldReduceMotion(): bool
+    {
+        if (isset($_COOKIE['prefers-reduced-motion'])) {
+            return $_COOKIE['prefers-reduced-motion'] === 'true';
+        }
+        return false;
     }
 
     /**
@@ -89,39 +136,47 @@ class GSAPAnimations
      */
     public function registerEditorScripts(): void
     {
-        // Enregistrer le script de contrôle des blocs
+        // Enregistrer le script de contrôle des blocs avec version du thème
         \wp_enqueue_script(
             'gsap-block-controls',
             \get_template_directory_uri() . '/assets/js/gsap-block-controls.js',
             ['wp-blocks', 'wp-element', 'wp-components', 'wp-editor'],
-            \filemtime(\get_template_directory() . '/assets/js/gsap-block-controls.js'),
+            $this->theme_version,
             true
         );
 
         // Ajouter les données localisées
         \wp_localize_script('gsap-block-controls', 'gsapBlockData', [
-            'animations' => [
-                'fadeIn' => 'Apparition en fondu',
-                'slideUp' => 'Glissement vers le haut',
-                'slideDown' => 'Glissement vers le bas',
-                'slideLeft' => 'Glissement vers la gauche',
-                'slideRight' => 'Glissement vers la droite',
-                'scale' => 'Mise à l\'échelle',
-                'rotate' => 'Rotation',
-                'zoomIn' => 'Zoom avant',
-                'zoomOut' => 'Zoom arrière',
-                'flip' => 'Retournement',
-                'bounce' => 'Rebond',
-                'stagger' => 'Effet cascade',
-                'blur' => 'Flou',
-                'skew' => 'Inclinaison',
-                'shake' => 'Secousse',
-                'pulse' => 'Pulsation',
-                'wave' => 'Vague',
-                'swing' => 'Balancement',
-                'tada' => 'Tada',
-                'wobble' => 'Oscillation'
-            ]
+            'animations' => $this->getAvailableAnimations()
         ]);
+    }
+
+    /**
+     * Retourne la liste des animations disponibles
+     */
+    private function getAvailableAnimations(): array
+    {
+        return [
+            'fadeIn' => 'Apparition en fondu',
+            'slideUp' => 'Glissement vers le haut',
+            'slideDown' => 'Glissement vers le bas',
+            'slideLeft' => 'Glissement vers la gauche',
+            'slideRight' => 'Glissement vers la droite',
+            'scale' => 'Mise à l\'échelle',
+            'rotate' => 'Rotation',
+            'zoomIn' => 'Zoom avant',
+            'zoomOut' => 'Zoom arrière',
+            'flip' => 'Retournement',
+            'bounce' => 'Rebond',
+            'stagger' => 'Effet cascade',
+            'blur' => 'Flou',
+            'skew' => 'Inclinaison',
+            'shake' => 'Secousse',
+            'pulse' => 'Pulsation',
+            'wave' => 'Vague',
+            'swing' => 'Balancement',
+            'tada' => 'Tada',
+            'wobble' => 'Oscillation'
+        ];
     }
 }

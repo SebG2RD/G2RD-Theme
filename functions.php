@@ -14,6 +14,11 @@
 
 namespace G2RD;
 
+// Définition de la clé API SureCart
+if (!defined('G2RD_SURECART_API_KEY')) {
+    define('G2RD_SURECART_API_KEY', '');
+}
+
 // Inclure les fichiers des classes principales
 require_once __DIR__ . '/classes/class-theme-setup.php';
 require_once __DIR__ . '/classes/class-shortcode.php';
@@ -30,6 +35,10 @@ require_once __DIR__ . '/classes/classe-custom-post-types-portfolio.php';
 require_once __DIR__ . '/classes/classe-custom-post-types-prestations.php';
 require_once __DIR__ . '/classes/classe-custom-post-types-qui-sommes-nous.php';
 require_once __DIR__ . '/classes/class-surecart-license-manager.php';
+require_once __DIR__ . '/classes/class-block-patterns.php';
+require_once __DIR__ . '/classes/class-block-styles.php';
+require_once __DIR__ . '/classes/class-block-categories.php';
+require_once __DIR__ . '/classes/class-glass-effect.php';
 
 /**
  * Affiche un avertissement si la clé API n'est pas configurée
@@ -75,30 +84,39 @@ function bootstrap_theme()
     //     $github_updater = new GitHubUpdater($license_manager);
     // }
 
-    // Instancier et initialiser les classes principales
+    // Liste des classes à initialiser
     $classes = [
-        ThemeSetup::class,
-        CPT_Portfolio::class,
-        CPT_Prestations::class,
-        CPT_QuiSommesNous::class,
-        BlockEditorAutoload::class,
-        ThemeAdmin::class,
-        GSAPAnimations::class,
-        JsonConfig::class,
-        ScriptsManager::class,
-        ParticlesEffect::class,
-        ClickableArticles::class,
-        PortfolioQuery::class
+        \G2RD\ThemeSetup::class,
+        \G2RD\BlockEditorAutoload::class,
+        \G2RD\ScriptsManager::class,
+        \G2RD\BlockPatterns::class,
+        \G2RD\BlockStyles::class,
+        \G2RD\BlockCategories::class,
+        \G2RD\ClickableArticles::class,
+        \G2RD\ParticlesEffect::class,
+        \G2RD\GSAPAnimations::class,
+        \G2RD\PortfolioQuery::class,
+        \G2RD\ThemeAdmin::class,
+        \G2RD\CPT_Portfolio::class,
+        \G2RD\CPT_QuiSommesNous::class,
+        \G2RD\CPT_Prestations::class,
+        \G2RD\Shortcode::class,
+        \G2RD\JsonConfig::class,
+        \G2RD\GlassEffect::class,
     ];
 
-    // Enregistrer les hooks pour chaque classe
+    // Initialiser d'abord le gestionnaire de licences
+    $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
+    $license_manager = new \G2RD\SureCartLicenseManager($api_key);
+    $license_manager->registerHooks();
+
+    // Initialiser le gestionnaire de mises à jour GitHub avec le gestionnaire de licences
+    $github_updater = new \G2RD\GitHubUpdater($license_manager);
+    $github_updater->registerHooks();
+
+    // Initialiser les autres classes
     foreach ($classes as $class) {
         (new $class)->registerHooks();
-    }
-
-    // Instancier la classe Shortcode pour enregistrer les shortcodes
-    if (class_exists('G2RD\\Shortcode')) {
-        (new \G2RD\Shortcode())->registerHooks();
     }
 }
 
