@@ -17,7 +17,8 @@
     const { createHigherOrderComponent } = wp.compose;
     const { Fragment } = wp.element;
     const { InspectorControls } = wp.blockEditor;
-    const { PanelBody, ToggleControl } = wp.components;
+    const { PanelBody, ToggleControl, RangeControl, ColorPicker, BaseControl } =
+      wp.components;
     const { addFilter } = wp.hooks;
     const { createElement } = wp.element;
 
@@ -30,12 +31,24 @@
         return settings;
       }
 
-      // Ajouter l'attribut particlesEffect
+      // Ajouter les attributs particlesEffect
       if (settings.attributes) {
         settings.attributes = Object.assign({}, settings.attributes, {
           particlesEffect: {
             type: "boolean",
             default: false,
+          },
+          particlesColor: {
+            type: "string",
+            default: "#cccccc",
+          },
+          particlesSpeed: {
+            type: "number",
+            default: 4.5,
+          },
+          particlesOpacity: {
+            type: "number",
+            default: 0.6,
           },
         });
       }
@@ -54,16 +67,20 @@
         }
 
         const { attributes, setAttributes } = props;
-        const { particlesEffect } = attributes;
+        const {
+          particlesEffect,
+          particlesColor,
+          particlesSpeed,
+          particlesOpacity,
+        } = attributes;
 
-        // Utiliser InspectorControls sans le paramètre group pour l'onglet Réglages
         return createElement(
           Fragment,
           {},
           createElement(BlockEdit, props),
           createElement(
             InspectorControls,
-            null, // Sans le group, cela apparaît dans l'onglet Réglages
+            null,
             createElement(
               PanelBody,
               {
@@ -79,7 +96,70 @@
                 checked: !!particlesEffect,
                 onChange: (value) => setAttributes({ particlesEffect: value }),
                 __nextHasNoMarginBottom: true,
-              })
+              }),
+              particlesEffect &&
+                createElement(
+                  Fragment,
+                  null,
+                  createElement(
+                    BaseControl,
+                    {
+                      className: "g2rd-particles-effects-section",
+                      label: __("Paramètres de l'effet", "G2RD"),
+                      help: __(
+                        "Ajustez les paramètres principaux de l'effet de particules",
+                        "G2RD"
+                      ),
+                    },
+                    createElement(RangeControl, {
+                      label: __("Vitesse de déplacement", "G2RD"),
+                      help: __(
+                        "Contrôle la vitesse de déplacement des particules",
+                        "G2RD"
+                      ),
+                      value: particlesSpeed,
+                      onChange: (value) =>
+                        setAttributes({ particlesSpeed: value }),
+                      min: 1,
+                      max: 10,
+                      step: 0.5,
+                    }),
+                    createElement(RangeControl, {
+                      label: __("Opacité", "G2RD"),
+                      help: __(
+                        "Contrôle la transparence des particules",
+                        "G2RD"
+                      ),
+                      value: particlesOpacity,
+                      onChange: (value) =>
+                        setAttributes({ particlesOpacity: value }),
+                      min: 0.1,
+                      max: 1,
+                      step: 0.1,
+                    })
+                  ),
+                  createElement(
+                    BaseControl,
+                    {
+                      className: "g2rd-particles-colors-section",
+                      label: __("Personnalisation des couleurs", "G2RD"),
+                      help: __(
+                        "Personnalisez l'apparence des particules",
+                        "G2RD"
+                      ),
+                    },
+                    createElement(ColorPicker, {
+                      label: __("Couleur des particules", "G2RD"),
+                      help: __(
+                        "Définit la couleur des particules et des lignes de connexion",
+                        "G2RD"
+                      ),
+                      color: particlesColor,
+                      onChangeComplete: (value) =>
+                        setAttributes({ particlesColor: value.hex }),
+                    })
+                  )
+                )
             )
           )
         );

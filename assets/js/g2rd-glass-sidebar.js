@@ -23,7 +23,8 @@
     const { createHigherOrderComponent } = wp.compose;
     const { Fragment } = wp.element;
     const { InspectorControls } = wp.blockEditor;
-    const { PanelBody, ToggleControl } = wp.components;
+    const { PanelBody, ToggleControl, RangeControl, ColorPicker, BaseControl } =
+      wp.components;
     const { addFilter } = wp.hooks;
     const { createElement } = wp.element;
 
@@ -36,12 +37,32 @@
         return settings;
       }
 
-      // Ajouter l'attribut glassEffect
+      // Ajouter les attributs glassEffect
       if (settings.attributes) {
         settings.attributes = Object.assign({}, settings.attributes, {
           glassEffect: {
             type: "boolean",
             default: false,
+          },
+          glassOpacity: {
+            type: "number",
+            default: 0.2,
+          },
+          glassBlur: {
+            type: "number",
+            default: 5,
+          },
+          glassBorderRadius: {
+            type: "number",
+            default: 16,
+          },
+          glassBorderColor: {
+            type: "string",
+            default: "rgba(255, 255, 255, 0.3)",
+          },
+          glassShadowColor: {
+            type: "string",
+            default: "rgba(0, 0, 0, 0.1)",
           },
         });
       }
@@ -60,7 +81,14 @@
         }
 
         const { attributes, setAttributes } = props;
-        const { glassEffect } = attributes;
+        const {
+          glassEffect,
+          glassOpacity,
+          glassBlur,
+          glassBorderRadius,
+          glassBorderColor,
+          glassShadowColor,
+        } = attributes;
 
         return createElement(
           Fragment,
@@ -84,7 +112,103 @@
                 checked: !!glassEffect,
                 onChange: (value) => setAttributes({ glassEffect: value }),
                 __nextHasNoMarginBottom: true,
-              })
+              }),
+              glassEffect &&
+                createElement(
+                  Fragment,
+                  null,
+                  createElement(
+                    BaseControl,
+                    {
+                      className: "g2rd-glass-effects-section",
+                      label: __("Paramètres de l'effet", "G2RD"),
+                      help: __(
+                        "Ajustez les paramètres principaux de l'effet de verre",
+                        "G2RD"
+                      ),
+                    },
+                    createElement(RangeControl, {
+                      label: __("Opacité du fond", "G2RD"),
+                      help: __(
+                        "Contrôle la transparence du fond de l'effet de verre",
+                        "G2RD"
+                      ),
+                      value: glassOpacity,
+                      onChange: (value) =>
+                        setAttributes({ glassOpacity: value }),
+                      min: 0,
+                      max: 1,
+                      step: 0.1,
+                    }),
+                    createElement(RangeControl, {
+                      label: __("Intensité du flou", "G2RD"),
+                      help: __(
+                        "Détermine l'intensité de l'effet de flou appliqué derrière l'élément",
+                        "G2RD"
+                      ),
+                      value: glassBlur,
+                      onChange: (value) => setAttributes({ glassBlur: value }),
+                      min: 0,
+                      max: 20,
+                      step: 1,
+                    }),
+                    createElement(RangeControl, {
+                      label: __("Rayon de bordure", "G2RD"),
+                      help: __(
+                        "Contrôle l'arrondi des coins de l'effet de verre",
+                        "G2RD"
+                      ),
+                      value: glassBorderRadius,
+                      onChange: (value) =>
+                        setAttributes({ glassBorderRadius: value }),
+                      min: 0,
+                      max: 50,
+                      step: 1,
+                    })
+                  ),
+                  createElement(
+                    BaseControl,
+                    {
+                      className: "g2rd-glass-colors-section",
+                      label: __("Personnalisation des couleurs", "G2RD"),
+                      help: __(
+                        "Ces paramètres vous permettent de personnaliser l'apparence de l'effet de verre",
+                        "G2RD"
+                      ),
+                    },
+                    createElement(ColorPicker, {
+                      label: __("Couleur de la bordure", "G2RD"),
+                      help: __(
+                        "Définit la couleur et l'opacité de la bordure qui entoure l'effet de verre",
+                        "G2RD"
+                      ),
+                      color: glassBorderColor,
+                      onChangeComplete: (value) =>
+                        setAttributes({ glassBorderColor: value.hex }),
+                    })
+                  ),
+                  createElement(
+                    BaseControl,
+                    {
+                      className: "g2rd-glass-shadow-section",
+                      label: __("Paramètres de l'ombre portée", "G2RD"),
+                      help: __(
+                        "Personnalisez l'ombre qui donne de la profondeur à l'effet de verre",
+                        "G2RD"
+                      ),
+                    },
+                    createElement(ColorPicker, {
+                      label: __("Couleur de l'ombre", "G2RD"),
+                      help: __(
+                        "Définit la couleur et l'intensité de l'ombre portée derrière l'effet de verre",
+                        "G2RD"
+                      ),
+                      color: glassShadowColor,
+                      onChangeComplete: (value) =>
+                        setAttributes({ glassShadowColor: value.hex }),
+                    })
+                  )
+                )
             )
           )
         );

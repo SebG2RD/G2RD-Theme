@@ -116,10 +116,20 @@ class ParticlesEffect
         $has_particles = isset($block['attrs']['particlesEffect']) && $block['attrs']['particlesEffect'] === true;
 
         if ($has_particles) {
-            // Ajouter l'attribut data-particles="true" à l'élément
+            // Récupérer les attributs de personnalisation
+            $color = isset($block['attrs']['particlesColor']) ? $block['attrs']['particlesColor'] : '#cccccc';
+            $speed = isset($block['attrs']['particlesSpeed']) ? $block['attrs']['particlesSpeed'] : 4.5;
+            $opacity = isset($block['attrs']['particlesOpacity']) ? $block['attrs']['particlesOpacity'] : 0.6;
+
+            // Ajouter les attributs data-* pour la personnalisation
             $block_content = preg_replace(
                 '/<div/',
-                '<div data-particles="true"',
+                sprintf(
+                    '<div data-particles="true" data-particles-color="%s" data-particles-speed="%s" data-particles-opacity="%s"',
+                    esc_attr($color),
+                    esc_attr($speed),
+                    esc_attr($opacity)
+                ),
                 $block_content,
                 1
             );

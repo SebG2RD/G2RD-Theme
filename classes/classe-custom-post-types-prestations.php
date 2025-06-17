@@ -29,7 +29,6 @@ class CPT_Prestations
     public function registerHooks(): void
     {
         add_action('init', [$this, 'registerPostType']);
-        // Ajouter ici les hooks/metaboxes/colonnes spécifiques à prestations
     }
 
     /**
@@ -53,7 +52,15 @@ class CPT_Prestations
             'public' => true,
             'show_in_rest' => true,
             'has_archive' => true,
-            'supports' => ['title', 'editor', 'thumbnail', 'revisions', 'custom-fields'],
+            'supports' => [
+                'title',
+                'editor',
+                'excerpt',
+                'thumbnail',
+                'revisions',
+                'custom-fields',
+                'page-attributes'
+            ],
             'menu_position' => 6,
             'menu_icon' => 'dashicons-clipboard',
             'capability_type' => 'post',
@@ -63,6 +70,9 @@ class CPT_Prestations
             'query_var' => true,
             'show_in_nav_menus' => true,
             'show_in_admin_bar' => true,
+            'rest_base' => 'prestations',
+            'rest_controller_class' => 'WP_REST_Posts_Controller',
+            'show_in_graphql' => true,
         ];
         register_post_type('prestations', $args);
         // Taxonomies associées

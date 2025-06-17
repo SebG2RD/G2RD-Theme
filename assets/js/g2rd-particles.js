@@ -95,7 +95,35 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialiser l'effet de particules pour chaque élément
   elements.forEach(function (element) {
     try {
-      initParticles(element);
+      // Récupérer les attributs de personnalisation
+      const color = element.dataset.particlesColor || "#cccccc";
+      const speed = parseFloat(element.dataset.particlesSpeed) || 4.5;
+      const opacity = parseFloat(element.dataset.particlesOpacity) || 0.6;
+
+      // Mettre à jour la configuration avec les valeurs personnalisées
+      const customConfig = {
+        ...config,
+        particles: {
+          ...config.particles,
+          color: {
+            value: color,
+          },
+          opacity: {
+            value: opacity,
+            random: true,
+          },
+          move: {
+            ...config.particles.move,
+            speed: speed,
+          },
+          line_linked: {
+            ...config.particles.line_linked,
+            color: color,
+          },
+        },
+      };
+
+      initParticles(element, customConfig);
     } catch (error) {
       console.error("Erreur lors de l'initialisation des particules:", error);
     }
@@ -104,8 +132,9 @@ document.addEventListener("DOMContentLoaded", function () {
   /**
    * Initialise les particules dans un élément
    * @param {Element} container - L'élément conteneur
+   * @param {Object} customConfig - Configuration personnalisée
    */
-  function initParticles(container) {
+  function initParticles(container, customConfig) {
     // Assurer que le conteneur a une position relative/absolute
     if (window.getComputedStyle(container).position === "static") {
       container.style.position = "relative";
@@ -127,7 +156,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const particleCount = Math.min(
       Math.max(
         15,
-        Math.floor(((width * height) / 8000) * config.particles.number.value)
+        Math.floor(
+          ((width * height) / 8000) * customConfig.particles.number.value
+        )
       ),
       180 // Légèrement réduit pour éviter la surcharge
     );
@@ -176,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Click pour ajouter une particule avec effet plus spectaculaire
     container.addEventListener("click", function (e) {
       if (
-        config.interactivity.events.onclick.enable &&
+        customConfig.interactivity.events.onclick.enable &&
         e instanceof MouseEvent
       ) {
         const rect = container.getBoundingClientRect();
@@ -211,9 +242,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 10);
 
         // Ajouter de nouvelles particules avec une distribution plus spectaculaire
-        for (let i = 0; i < config.interactivity.modes.push.particles_nb; i++) {
+        for (
+          let i = 0;
+          i < customConfig.interactivity.modes.push.particles_nb;
+          i++
+        ) {
           const angle =
-            (i / config.interactivity.modes.push.particles_nb) * Math.PI * 2;
+            (i / customConfig.interactivity.modes.push.particles_nb) *
+            Math.PI *
+            2;
           const distance = 30 + Math.random() * 50; // Distance plus grande depuis le point de clic
           const particleX = x + Math.cos(angle) * distance;
           const particleY = y + Math.sin(angle) * distance;
@@ -226,8 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
             particleY
           );
           // Vitesse plus élevée dans la direction de l'angle pour un effet d'explosion
-          particle.vx = Math.cos(angle) * config.particles.move.speed * 4;
-          particle.vy = Math.sin(angle) * config.particles.move.speed * 4;
+          particle.vx = Math.cos(angle) * customConfig.particles.move.speed * 4;
+          particle.vy = Math.sin(angle) * customConfig.particles.move.speed * 4;
           particles.push(particle);
         }
       }
@@ -258,9 +295,9 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function createParticle(parent, width, height, x, y) {
       // Taille aléatoire si configurée
-      const size = config.particles.size.random
-        ? Math.random() * config.particles.size.value + 1
-        : config.particles.size.value;
+      const size = customConfig.particles.size.random
+        ? Math.random() * customConfig.particles.size.value + 1
+        : customConfig.particles.size.value;
 
       // Créer l'élément DOM
       const element = document.createElement("div");
@@ -274,19 +311,21 @@ document.addEventListener("DOMContentLoaded", function () {
       // Vitesse initiale avec une distribution plus variée
       const speedFactor = 0.7 + Math.random() * 0.9; // Augmenté (0.7-1.3 → 0.7-1.6) pour plus de vitesse
       const angle = Math.random() * Math.PI * 2;
-      const vx = Math.cos(angle) * config.particles.move.speed * speedFactor;
-      const vy = Math.sin(angle) * config.particles.move.speed * speedFactor;
+      const vx =
+        Math.cos(angle) * customConfig.particles.move.speed * speedFactor;
+      const vy =
+        Math.sin(angle) * customConfig.particles.move.speed * speedFactor;
 
       // Opacité
-      const opacity = config.particles.opacity.random
-        ? Math.random() * config.particles.opacity.value + 0.2
-        : config.particles.opacity.value;
+      const opacity = customConfig.particles.opacity.random
+        ? Math.random() * customConfig.particles.opacity.value + 0.2
+        : customConfig.particles.opacity.value;
 
       // Appliquer les styles
       element.style.position = "absolute";
       element.style.width = `${size}px`;
       element.style.height = `${size}px`;
-      element.style.backgroundColor = config.particles.color.value;
+      element.style.backgroundColor = customConfig.particles.color.value;
       element.style.borderRadius = "50%";
       element.style.opacity = opacity.toString();
       element.style.left = `${posX}px`;
@@ -344,8 +383,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Appliquer les styles
       line.style.position = "absolute";
       line.style.width = `${distance}px`;
-      line.style.height = `${config.particles.line_linked.width}px`;
-      line.style.backgroundColor = config.particles.line_linked.color;
+      line.style.height = `${customConfig.particles.line_linked.width}px`;
+      line.style.backgroundColor = customConfig.particles.line_linked.color;
       line.style.opacity = opacity.toString();
       line.style.left = `${p1.x}px`;
       line.style.top = `${p1.y}px`;
@@ -397,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
         p.vy += Math.cos(time * 0.2 + p.x * 0.01) * waveFactor;
 
         // Limitation de la vitesse maximale pour un mouvement plus fluide
-        const maxSpeed = 4.5 * config.particles.move.speed; // Augmenté (3 → 4.5)
+        const maxSpeed = 4.5 * customConfig.particles.move.speed; // Augmenté (3 → 4.5)
         const currentSpeed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
         if (currentSpeed > maxSpeed) {
           p.vx = (p.vx / currentSpeed) * maxSpeed;
@@ -405,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Assurer une vitesse minimale pour un mouvement continu
-        const minSpeed = 0.5 * config.particles.move.speed; // Augmenté (0.3 → 0.5)
+        const minSpeed = 0.5 * customConfig.particles.move.speed; // Augmenté (0.3 → 0.5)
         if (currentSpeed < minSpeed) {
           const angle = Math.atan2(p.vy, p.vx);
           p.vx = Math.cos(angle) * minSpeed;
@@ -413,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Force de répulsion entre particules pour éviter le regroupement
-        if (config.particles.repulse.enable) {
+        if (customConfig.particles.repulse.enable) {
           for (let j = 0; j < particles.length; j++) {
             if (j !== index) {
               const other = particles[j];
@@ -421,11 +460,11 @@ document.addEventListener("DOMContentLoaded", function () {
               const dy = p.y - other.y;
               const distance = Math.sqrt(dx * dx + dy * dy);
 
-              if (distance < config.particles.repulse.distance) {
+              if (distance < customConfig.particles.repulse.distance) {
                 // Force inversement proportionnelle à la distance
                 const force =
-                  config.particles.repulse.strength *
-                  (1 - distance / config.particles.repulse.distance) *
+                  customConfig.particles.repulse.strength *
+                  (1 - distance / customConfig.particles.repulse.distance) *
                   timeFactor;
                 const angle = Math.atan2(dy, dx);
 
@@ -467,18 +506,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Effet de répulsion de la souris amélioré
-        if (mouse.isInside && config.interactivity.events.onhover.enable) {
+        if (
+          mouse.isInside &&
+          customConfig.interactivity.events.onhover.enable
+        ) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < config.interactivity.modes.repulse.distance) {
+          if (distance < customConfig.interactivity.modes.repulse.distance) {
             // Force proportionnelle à la distance avec effet plus visible
             const repulseFactor = Math.min(
               Math.max(
                 1 -
                   Math.pow(
-                    distance / config.interactivity.modes.repulse.distance,
+                    distance /
+                      customConfig.interactivity.modes.repulse.distance,
                     2
                   ),
                 0
@@ -487,7 +530,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             const force =
-              config.interactivity.modes.repulse.strength *
+              customConfig.interactivity.modes.repulse.strength *
               repulseFactor *
               timeFactor *
               1.2; // Force accrue (ajout ×1.2)
@@ -498,7 +541,10 @@ document.addEventListener("DOMContentLoaded", function () {
             p.vy += Math.sin(angle) * force;
 
             // Effet visuel supplémentaire - opacité et taille modifiées près de la souris
-            if (distance < config.interactivity.modes.repulse.distance * 0.5) {
+            if (
+              distance <
+              customConfig.interactivity.modes.repulse.distance * 0.5
+            ) {
               const opacityFactor = Math.max(0.2, 1 - repulseFactor * 0.5);
               p.element.style.opacity = (
                 p.originalOpacity * opacityFactor
@@ -551,11 +597,11 @@ document.addEventListener("DOMContentLoaded", function () {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           // Connecter si suffisamment proche
-          if (distance < config.particles.line_linked.distance) {
+          if (distance < customConfig.particles.line_linked.distance) {
             // Opacité variable selon la distance
             const opacity =
-              (1 - distance / config.particles.line_linked.distance) *
-              config.particles.line_linked.opacity;
+              (1 - distance / customConfig.particles.line_linked.distance) *
+              customConfig.particles.line_linked.opacity;
 
             // Créer la connexion
             const connection = createConnection(p1, p2, opacity);
