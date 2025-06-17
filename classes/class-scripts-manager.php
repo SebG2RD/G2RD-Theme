@@ -172,4 +172,17 @@ class ScriptsManager
             );
         }
     }
+
+    /**
+     * Charge le CSS du bloc countdown côté front
+     */
+    public static function enqueue_g2rd_countdown_css() {
+        $css_path = get_template_directory_uri() . '/blocks/g2rd-countdown/build/index.css';
+        if (file_exists(get_template_directory() . '/blocks/g2rd-countdown/build/index.css')) {
+            wp_enqueue_style('g2rd-countdown-front', $css_path, array(), filemtime(get_template_directory() . '/blocks/g2rd-countdown/build/index.css'));
+        }
+    }
 }
+
+// Enregistrement du hook pour charger le CSS countdown côté front
+\add_action('wp_enqueue_scripts', [\G2RD\ScriptsManager::class, 'enqueue_g2rd_countdown_css']);

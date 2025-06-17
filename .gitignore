@@ -1,0 +1,40 @@
+# Node modules et dépendances JS
+node_modules/
+
+# Dossiers de build temporaires
+build/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers de configuration d'IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Fichiers de sauvegarde
+*~
+*.swp
+
+# Fichiers de cache
+.cache/
+
+# Fichiers de compilation
+*.map
+
+# Fichiers d'environnement
+.env
+.env.*
+
+# Fichiers de test
+coverage/
+
+# Fichiers de configuration locaux
+local-config.php

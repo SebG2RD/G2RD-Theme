@@ -1,8 +1,68 @@
 {
   "$schema": "https://schemas.wp.org/trunk/theme.json",
   "version": 3,
-  "settings": {},
-  "styles": {},
+  "settings": {
+    "blocks": {
+      "g2rd/countdown": {
+        "color": {
+          "background": true,
+          "text": true
+        },
+        "spacing": {
+          "margin": true,
+          "padding": true
+        },
+        "typography": {
+          "fontSize": true,
+          "fontFamily": true,
+          "fontWeight": true,
+          "lineHeight": true
+        },
+        "border": {
+          "color": true,
+          "radius": true,
+          "style": true,
+          "width": true
+        },
+        "shadow": true
+      }
+    }
+  },
+  "styles": {
+    "blocks": {
+      "g2rd/countdown": {
+        "color": {
+          "background": "var(--wp--preset--color--white)",
+          "text": "var(--wp--preset--color--primary)"
+        },
+        "spacing": {
+          "margin": {
+            "top": "var(--wp--preset--spacing--m)",
+            "bottom": "var(--wp--preset--spacing--m)"
+          },
+          "padding": {
+            "top": "var(--wp--preset--spacing--s)",
+            "bottom": "var(--wp--preset--spacing--s)",
+            "left": "var(--wp--preset--spacing--s)",
+            "right": "var(--wp--preset--spacing--s)"
+          }
+        },
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--m)",
+          "fontFamily": "var(--wp--preset--font-family--rubik)",
+          "fontWeight": "400",
+          "lineHeight": "1.5"
+        },
+        "border": {
+          "radius": "var(--wp--custom--radius--m)",
+          "width": "1px",
+          "style": "solid",
+          "color": "var(--wp--preset--color--secondary)"
+        },
+        "shadow": "var(--wp--preset--shadow--light)"
+      }
+    }
+  },
   "customTemplates": [
     {
       "name": "page-full-width",

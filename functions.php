@@ -14,6 +14,8 @@
 
 namespace G2RD;
 
+use WP_Block_Type_Registry;
+
 // Définition de la clé API SureCart
 if (!defined('G2RD_SURECART_API_KEY')) {
     define('G2RD_SURECART_API_KEY', '');
