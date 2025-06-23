@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "g2rd/toggle-content",
+  "version": "0.1.0",
+  "title": "G2RD Toggle Content",
+  "category": "g2rd-bloks",
+  "icon": "leftright",
+  "description": "Un bloc avec un interrupteur pour afficher l'un ou l'autre de deux groupes de contenu.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "g2rd",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./build/style-index.css",
+  "attributes": {
+    "showLeft": {
+      "type": "boolean",
+      "default": true
+    },
+    "toggleAlign": {
+      "type": "string",
+      "default": "center"
+    },
+    "toggleStyle": {
+      "type": "string",
+      "default": "default"
+    },
+    "toggleColorActive": {
+      "type": "string"
+    },
+    "toggleColorInactive": {
+      "type": "string"
+    },
+    "blockId": {
+      "type": "string"
+    }
+  }
+}

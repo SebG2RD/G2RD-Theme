@@ -1,0 +1,109 @@
+/* --- Editor Styles --- */
+.wp-block-g2rd-toggle-content
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:nth-child(2) {
+  display: none;
+}
+.wp-block-g2rd-toggle-content.show-right
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:first-child {
+  display: none;
+}
+.wp-block-g2rd-toggle-content.show-right
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:nth-child(2) {
+  display: block;
+}
+
+/* --- Frontend & Editor Preview --- */
+.g2rd-toggle-switch-preview,
+.g2rd-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.g2rd-toggle-slider-preview,
+.g2rd-toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--g2rd-toggle-inactive-color, #ccc);
+  transition: 0.4s;
+}
+
+.g2rd-toggle-slider-preview::before,
+.g2rd-toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+/* Rounded Style */
+.g2rd-toggle-switch-preview.rounded .g2rd-toggle-slider-preview,
+.g2rd-toggle-switch.is-style-rounded .g2rd-toggle-slider {
+  border-radius: 34px;
+}
+.g2rd-toggle-switch-preview.rounded .g2rd-toggle-slider-preview::before,
+.g2rd-toggle-switch.is-style-rounded .g2rd-toggle-slider::before {
+  border-radius: 50%;
+}
+
+/* --- Frontend Logic --- */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:checked
+  + .g2rd-toggle-container
+  + .g2rd-toggle-content-container
+  > .wp-block-group:first-child {
+  display: block;
+}
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:checked
+  + .g2rd-toggle-container
+  + .g2rd-toggle-content-container
+  > .wp-block-group:last-child {
+  display: none;
+}
+
+/* Par défaut (non coché), on montre le deuxième bloc */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:not(:checked)
+  + .g2rd-toggle-container
+  + .g2rd-toggle-content-container
+  > .wp-block-group:first-child {
+  display: none;
+}
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:not(:checked)
+  + .g2rd-toggle-container
+  + .g2rd-toggle-content-container
+  > .wp-block-group:last-child {
+  display: block;
+}
+
+/* Appliquer la couleur active et la transformation quand la case est cochée */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:checked
+  + .g2rd-toggle-container
+  .g2rd-toggle-slider {
+  background-color: var(--g2rd-toggle-active-color, #2196f3);
+}
+
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-checkbox:checked
+  + .g2rd-toggle-container
+  .g2rd-toggle-slider::before {
+  transform: translateX(26px);
+}
