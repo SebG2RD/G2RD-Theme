@@ -1,7 +1,9 @@
+/* Fichier temporairement vidé pour tester la compilation */
+
 .g2rd-countdown {
   display: flex;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -21,14 +23,34 @@
   position: relative;
   overflow: hidden;
 }
+
 .countdown-container {
   display: flex;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   width: 100%;
   gap: 20px;
+}
+
+.countdown-layout-column {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.countdown-layout-column .countdown-item {
+  margin-bottom: 10px;
+}
+
+.countdown-layout-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.countdown-layout-row .countdown-item {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .countdown-item:hover {
@@ -36,7 +58,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Animation de pulse */
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -53,7 +74,6 @@
   animation: pulse 1s infinite;
 }
 
-/* Animation de flip */
 @keyframes flip {
   0% {
     transform: rotateX(0);
@@ -68,7 +88,6 @@
   transform-style: preserve-3d;
 }
 
-/* Animation de fade */
 @keyframes fade {
   0% {
     opacity: 0;
@@ -82,7 +101,6 @@
   animation: fade 0.5s ease-in-out;
 }
 
-/* Animation de bounce */
 @keyframes bounce {
   0%,
   100% {
@@ -106,7 +124,6 @@
   transition: all 0.3s ease;
 }
 
-/* Style Digital */
 .countdown-item.digital .countdown-value {
   font-family: "Digital-7", "Courier New", monospace;
   background: #000;
@@ -116,7 +133,6 @@
   text-shadow: 0 0 5px #0f0;
 }
 
-/* Style Neon */
 .countdown-item.neon .countdown-value {
   font-family: "Arial", sans-serif;
   color: #fff;
@@ -128,21 +144,18 @@
     0 0 40px #0ff;
 }
 
-/* Style Retro */
 .countdown-item.retro .countdown-value {
   font-family: "Press Start 2P", cursive;
   color: #ff6b6b;
   text-shadow: 2px 2px 0 #000;
 }
 
-/* Style Minimal */
 .countdown-item.minimal .countdown-value {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 300;
   letter-spacing: 2px;
 }
 
-/* Style Bold */
 .countdown-item.bold .countdown-value {
   font-family: "Impact", sans-serif;
   font-weight: 900;
@@ -157,7 +170,6 @@
   transition: all 0.3s ease;
 }
 
-/* Animation du label */
 .countdown-item:hover .countdown-label {
   transform: scale(1.1);
   color: #333;
@@ -176,21 +188,17 @@
   animation: fade 0.5s ease-in-out;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .g2rd-countdown {
     gap: 10px;
   }
-
   .countdown-item {
     min-width: 60px;
     padding: 10px;
   }
-
   .countdown-value {
     font-size: 1.5em;
   }
-
   .countdown-label {
     font-size: 0.8em;
   }
@@ -200,16 +208,13 @@
   .g2rd-countdown {
     gap: 5px;
   }
-
   .countdown-item {
     min-width: 50px;
     padding: 8px;
   }
-
   .countdown-value {
     font-size: 1.2em;
   }
-
   .countdown-label {
     font-size: 0.7em;
   }

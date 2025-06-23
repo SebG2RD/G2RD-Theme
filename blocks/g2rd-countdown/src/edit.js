@@ -34,6 +34,7 @@ export default function Edit({ attributes, setAttributes }) {
     timerStyle,
     animation,
     animationSpeed,
+    layout,
   } = attributes;
 
   const blockProps = useBlockProps();
@@ -125,7 +126,9 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl
             label={__("Title", "g2rd")}
             value={title}
-            onChange={(value) => setAttributes({ title })}
+            placeholder="Test modifiable"
+            onChange={(value) => setAttributes({ title: value })}
+            __next40pxDefaultSize={true}
           />
         </PanelBody>
 
@@ -163,6 +166,15 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
 
         <PanelBody title={__("Style Settings", "g2rd")}>
+          <SelectControl
+            label={__("Layout", "g2rd")}
+            value={layout}
+            options={[
+              { label: __("Row (Horizontal)", "g2rd"), value: "row" },
+              { label: __("Column (Vertical)", "g2rd"), value: "column" },
+            ]}
+            onChange={(value) => setAttributes({ layout: value })}
+          />
           <SelectControl
             label={__("Timer Style", "g2rd")}
             value={timerStyle}
@@ -247,8 +259,9 @@ export default function Edit({ attributes, setAttributes }) {
           className="g2rd-countdown"
           style={{
             display: "flex",
+            flexDirection: layout === "column" ? "column" : "row",
             justifyContent: "center",
-            flexWrap: "wrap",
+            flexWrap: layout === "column" ? "nowrap" : "wrap",
             gap: itemSpacing,
           }}
         >

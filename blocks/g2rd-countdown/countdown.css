@@ -1,7 +1,7 @@
 .g2rd-countdown {
   display: flex;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -23,12 +23,33 @@
 }
 .countdown-container {
   display: flex;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   width: 100%;
   gap: 20px;
+}
+
+/* Layout en colonne */
+.countdown-layout-column {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.countdown-layout-column .countdown-item {
+  margin-bottom: 10px;
+}
+
+/* Layout en ligne (par défaut) */
+.countdown-layout-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.countdown-layout-row .countdown-item {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .countdown-item:hover {

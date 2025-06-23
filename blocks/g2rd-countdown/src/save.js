@@ -21,6 +21,7 @@ export default function Save({ attributes }) {
     timerStyle,
     animation,
     animationSpeed,
+    layout,
   } = attributes;
 
   const blockProps = useBlockProps.save({
@@ -54,7 +55,7 @@ export default function Save({ attributes }) {
   return (
     <div {...blockProps} data-end-date={endDate}>
       {title && <h2 className="countdown-title">{title}</h2>}
-      <div className="countdown-container">
+      <div className={`countdown-container countdown-layout-${layout}`}>
         {renderTimeUnit(showYears, "00", "Years")}
         {renderTimeUnit(showMonths, "00", "Months")}
         {renderTimeUnit(showDays, "00", "Days")}

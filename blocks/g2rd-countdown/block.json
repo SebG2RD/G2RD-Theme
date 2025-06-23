@@ -22,7 +22,7 @@
   "textdomain": "g2rd",
   "editorScript": "file:./build/index.js",
   "editorStyle": "file:./build/index.css",
-  "style": "file:./build/style-index.css",
+  "style": "file:./src/countdown.css",
   "viewScript": "file:./build/countdown-frontend.js",
   "render": "file:./build/save.js",
   "attributes": {
@@ -93,6 +93,10 @@
     "animationSpeed": {
       "type": "string",
       "default": "normal"
+    },
+    "layout": {
+      "type": "string",
+      "default": "row"
     }
   }
 }
