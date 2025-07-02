@@ -1,8 +1,9 @@
 # Node modules et dépendances JS
 node_modules/
 
-# Dossiers de build temporaires
+# Dossiers de build temporaires (build JS/CSS des blocs)
 build/
+.cache/
 
 # Fichiers système
 .DS_Store
@@ -19,22 +20,18 @@ yarn-error.log*
 *.sublime-workspace
 *.sublime-project
 
-# Fichiers de sauvegarde
+# Fichiers de sauvegarde/temporaires
 *~
 *.swp
 
-# Fichiers de cache
-.cache/
-
-# Fichiers de compilation
-*.map
-
-# Fichiers d'environnement
-.env
-.env.*
-
-# Fichiers de test
+# Fichiers de cache de test
 coverage/
 
-# Fichiers de configuration locaux
+# Fichiers d'environnement et de config locale
+.env
+.env.*
 local-config.php
+
+# Fichiers de test (si tu en ajoutes)
+tests/
+__tests__/

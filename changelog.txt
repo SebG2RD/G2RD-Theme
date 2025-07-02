@@ -1,3 +1,15 @@
+= 1.0.5 =
+* Création d'un bloc "Toggle Content" pour afficher/masquer deux groupes de blocs.
+* Ajout d'options de personnalisation pour le bloc Toggle : alignement, style et couleurs.
+* Le bloc Toggle utilise une technique 100% CSS (pas de JS en frontend) pour la performance.
+* Création d'une catégorie de blocs "G2RD Bloks" pour regrouper les blocs du thème.
+
+= 1.0.4 =
+* Correction du champ titre éditable dans le bloc countdown
+* Ajout/fiabilisation de l'option d'orientation (ligne/colonne) pour le timer
+* Chargement du CSS du bloc via block.json (compatibilité build)
+* Amélioration du .gitignore pour le dépôt GitHub 
+
 = 1.0.0 =
 * Version initiale
 * Support complet du Full Site Editing

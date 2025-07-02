@@ -372,7 +372,7 @@
     const themePath = getThemePath();
 
     btn.innerHTML = `
-      <img src="${themePath}/assets/img/g2rd-accessibilite-50.png" alt="Accessibilité" width="32" height="32" style="display:block; margin:auto;" />
+      <span style="font-size: 24px; line-height: 1; display: block; text-align: center;">Ⓐ</span>
     `;
     document.body.appendChild(btn);
     return btn;
@@ -388,7 +388,7 @@
     const themePath = getThemePath();
 
     btn.innerHTML = `
-      <img src="${themePath}/assets/img/g2rd-vers-le-haut-80.png" alt="Remonter en haut" width="32" height="32" style="display:block; margin:auto;" />
+      <span style="font-size: 24px; line-height: 1; display: block; text-align: center;">⇪</span>
     `;
     btn.style.display = "none";
     document.body.appendChild(btn);

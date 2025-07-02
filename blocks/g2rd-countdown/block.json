@@ -4,7 +4,7 @@
   "name": "g2rd/countdown",
   "version": "1.0.0",
   "title": "G2RD Countdown",
-  "category": "widgets",
+  "category": "g2rd-bloks",
   "icon": "clock",
   "description": "A customizable countdown timer block",
   "supports": {

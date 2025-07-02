@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.0.2
+Stable tag: 1.0.5
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -30,6 +30,7 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * Section "Qui sommes nous" avec gestion avancée des membres
 * Sélecteur de médias WordPress pour les icônes personnalisées
 * Interface d'administration optimisée avec classes natives WordPress
+* **Toggle Content Block**: Un interrupteur pour afficher l'un ou l'autre de deux groupes de contenu, avec options de style.
 
 = Blocs personnalisés =
 
@@ -96,6 +97,12 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.0.5 =
+* Création d'un bloc "Toggle Content" pour afficher/masquer deux groupes de blocs.
+* Ajout d'options de personnalisation pour le bloc Toggle : alignement, style et couleurs.
+* Le bloc Toggle utilise une technique 100% CSS (pas de JS en frontend) pour la performance.
+* Création d'une catégorie de blocs "G2RD Bloks" pour regrouper les blocs du thème.
 
 = 1.0.2 =
 * Correction des erreurs de linter
