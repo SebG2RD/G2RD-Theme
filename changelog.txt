@@ -1,3 +1,18 @@
+= 1.0.6 =
+* Création d'un bloc "G2RD Info" similaire au bloc info d'Astra
+* Support complet des icônes WordPress (Dashicons) et images personnalisées
+* 4 layouts possibles : gauche, droite, haut, bas
+* Personnalisation complète : couleurs, typographie, espacement, bordures, ombres
+* Effets de survol : scale, lift, glow
+* Design responsive et accessible
+* Intégration native avec les classes WordPress
+* Sélecteur d'icônes visuel avec aperçu des Dashicons
+* Plus de 100 icônes organisées par catégories
+* Contrôle d'espacement (gap) dynamique entre icône et texte
+* Optimisation du code avec factorisation et commentaires complets
+* Correction des conflits CSS/inline styles
+* Amélioration de l'alignement et du positionnement des icônes
+
 = 1.0.5 =
 * Création d'un bloc "Toggle Content" pour afficher/masquer deux groupes de blocs.
 * Ajout d'options de personnalisation pour le bloc Toggle : alignement, style et couleurs.

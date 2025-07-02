@@ -127,3 +127,8 @@ bootstrap_theme();
 
 // Inclusion explicite de la page d'options (hors namespace, à la fin)
 require_once get_template_directory() . '/includes/license-init.php';
+
+// Forcer Dashicons dans l'éditeur Gutenberg
+add_action('enqueue_block_editor_assets', function() {
+    wp_enqueue_style('dashicons');
+});

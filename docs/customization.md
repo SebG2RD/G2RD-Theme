@@ -37,6 +37,48 @@ Ce guide explique comment personnaliser le thème G2RD au-delà des options de l
 - **Exemple** :
   Créez `/src/blocks/mon-bloc/` avec un fichier `block.json` et le JS associé.
 
+## Personnaliser le bloc G2RD Info _(v1.0.6)_
+
+Le bloc G2RD Info peut être personnalisé de plusieurs façons :
+
+### Ajouter des icônes personnalisées
+
+- Ajoutez vos propres icônes dans la liste des Dashicons disponibles
+- Modifiez le fichier `blocks/g2rd-info/src/edit.js` pour étendre la liste d'icônes :
+  ```javascript
+  const customIcons = [
+    { name: "mon-icone", label: "Mon Icône Custom", category: "Custom" },
+  ];
+  ```
+
+### Personnaliser les styles CSS
+
+- Surchargez les styles dans votre fichier CSS :
+
+  ```css
+  .wp-block-g2rd-info {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .wp-block-g2rd-info .dashicons {
+    transition: transform 0.3s ease;
+  }
+
+  .wp-block-g2rd-info:hover .dashicons {
+    transform: scale(1.1);
+  }
+  ```
+
+### Ajouter des layouts personnalisés
+
+- Étendez les options de layout en modifiant le `block.json` et `edit.js`
+- Exemple pour ajouter un layout diagonal :
+  ```javascript
+  { label: 'Diagonal', value: 'icon-diagonal' }
+  ```
+
 ## Ressources utiles
 
 - [Documentation WordPress FSE](https://developer.wordpress.org/block-editor/full-site-editing/)
+- [Documentation des blocs personnalisés](blocks.md)

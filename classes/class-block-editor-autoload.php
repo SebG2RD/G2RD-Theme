@@ -59,6 +59,11 @@ class BlockEditorAutoload
         \add_action('init', [$this, 'registerCustomBlocks']);
         \add_action('init', [$this, 'registerBlocksAssets']);
         \add_filter('wp_theme_json_data_theme', [$this, 'composeThemeJson']);
+        
+        // Forcer le rechargement des blocs en mode développement
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            \add_action('admin_init', [$this, 'clearBlockCache']);
+        }
     }
 
     /**
@@ -73,7 +78,18 @@ class BlockEditorAutoload
 
         foreach ($folders as $folder) {
             $block = basename($folder);
-            \register_block_type(dirname(__DIR__) . "/blocks/$block");
+            $block_path = \get_template_directory() . "/blocks/$block";
+            
+            // Debug: Log the block registration
+            error_log("Tentative d'enregistrement du bloc: $block_path");
+            
+            $result = \register_block_type($block_path);
+            
+            if ($result) {
+                error_log("✅ Bloc enregistré avec succès: $block");
+            } else {
+                error_log("❌ Échec de l'enregistrement du bloc: $block");
+            }
         }
     }
 
@@ -155,5 +171,22 @@ class BlockEditorAutoload
 
         # Mettre à jour le theme.json de WordPress
         return $theme_json->update_with($new_data);
+    }
+
+    /**
+     * Vide le cache des blocs pour forcer le rechargement
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function clearBlockCache(): void
+    {
+        // Vider le cache des blocs
+        \wp_cache_flush();
+        
+        // Forcer la régénération des assets
+        if (function_exists('wp_clean_themes_cache')) {
+            \wp_clean_themes_cache();
+        }
     }
 }
