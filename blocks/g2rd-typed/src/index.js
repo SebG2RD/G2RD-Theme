@@ -1,10 +1,9 @@
 import { registerBlockType } from "@wordpress/blocks";
-import edit from "./edit";
-import save from "./save";
-import metadata from "../block.json";
+import { __ } from "@wordpress/i18n";
+import Edit from "./edit";
+import Save from "./save";
 
-registerBlockType(metadata.name, {
-  ...metadata,
-  edit,
-  save,
+registerBlockType("g2rd/typed", {
+  edit: Edit,
+  save: Save,
 });

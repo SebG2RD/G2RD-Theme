@@ -1,3 +1,12 @@
+= 1.0.9 =
+* Création d'un bloc "G2RD Typed" pour créer des effets de texte animé avec frappe automatique
+* Intégration de la bibliothèque Typed.js pour des animations de texte fluides
+* Interface d'édition complète avec gestion des textes animés, texte avant/après, et paramètres d'animation
+* Support de tous les paramètres Typed.js : vitesse, délais, boucle, curseur, etc.
+* Chargement automatique de Typed.js depuis CDN pour optimiser les performances
+* Design responsive et accessible avec styles CSS personnalisés
+* Intégration native avec l'éditeur Gutenberg et les contrôles WordPress
+
 = 1.0.8 =
 * Amélioration : l'effet particules est automatiquement désactivé lors de l'analyse par Google PageSpeed Insights et Lighthouse, ce qui améliore le score de performance sans impacter l'expérience utilisateur réelle.
 * Technique : nettoyage du JS pour compatibilité WordPress, sans prise en compte des avertissements linter non pertinents. 

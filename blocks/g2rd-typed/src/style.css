@@ -1,19 +1,69 @@
-.g2rd-typed-block {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5em;
+/**
+ * Styles pour le bloc G2RD Typed
+ */
+
+.g2rd-typed {
+  display: inline-block;
+  position: relative;
 }
-.g2rd-typed-before,
-.g2rd-typed-after {
-  font-weight: normal;
+
+.g2rd-typed-editor {
+  display: inline-block;
+  position: relative;
 }
-.g2rd-typed-animated {
-  min-width: 120px;
+
+.typed-text-before {
+  display: inline;
+}
+
+.typed-text-animated {
+  display: inline;
+  min-height: 1.2em;
+}
+
+.typed-text-after {
+  display: inline;
+}
+
+.typed-cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
   font-weight: bold;
-  color: var(--wp--preset--color--secondary, #1a1a1a);
 }
-.g2rd-typed-preview {
-  font-weight: bold;
-  color: var(--wp--preset--color--secondary, #1a1a1a);
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Styles pour l'éditeur */
+.g2rd-typed-editor .typed-text-animated {
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px dashed #ccc;
+}
+
+/* Styles pour le frontend */
+.g2rd-typed .typed-cursor {
+  color: inherit;
+}
+
+/* Support pour le fondu */
+.typed-fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .g2rd-typed {
+    font-size: 0.9em;
+  }
 }
