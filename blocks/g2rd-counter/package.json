@@ -1,0 +1,16 @@
+{
+  "name": "g2rd-counter",
+  "version": "1.0.0",
+  "description": "G2RD Counter Block - Animated counter with multiple layouts",
+  "author": "G2RD Agence Web",
+  "license": "GPL-2.0-or-later",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  }
+}

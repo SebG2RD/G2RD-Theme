@@ -1,3 +1,12 @@
+= 1.0.8 =
+* Amélioration : l'effet particules est automatiquement désactivé lors de l'analyse par Google PageSpeed Insights et Lighthouse, ce qui améliore le score de performance sans impacter l'expérience utilisateur réelle.
+* Technique : nettoyage du JS pour compatibilité WordPress, sans prise en compte des avertissements linter non pertinents. 
+
+= 1.0.7 =
+* Correction : le préfixe et le suffixe du bloc Counter ne sont plus dupliqués en front (JS d'animation).
+* Ajout : possibilité de personnaliser la taille de l'icône ou de l'image dans le bloc Counter (contrôle dans l'éditeur).
+* Correction : effet glass (verre) fusionne désormais correctement le style inline (padding, etc.) au lieu de l'écraser.
+
 = 1.0.6 =
 * Création d'un bloc "G2RD Info" similaire au bloc info d'Astra
 * Support complet des icônes WordPress (Dashicons) et images personnalisées

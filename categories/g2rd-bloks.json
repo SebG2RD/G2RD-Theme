@@ -2,5 +2,6 @@
   "slug": "g2rd-bloks",
   "label": "G2RD Bloks",
   "description": "Les blocs personnalisés pour le thème G2RD.",
-  "icon": "star-filled"
+  "icon": "star-filled",
+  "priority": 1
 }

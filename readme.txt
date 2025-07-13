@@ -16,6 +16,8 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 
 [Voir la démo](https://g2rd.fr)
 
+> Depuis la version 1.0.8, l'effet particules est automatiquement désactivé pour Google PageSpeed Insights et Lighthouse afin d'améliorer le score de performance, sans impacter l'expérience utilisateur réelle.
+
 = Fonctionnalités principales =
 
 * Full Site Editing (FSE) intégré avec support complet de l'éditeur de site
@@ -98,11 +100,41 @@ Oui, le thème est conçu pour être compatible avec les standards FSE de WordPr
 
 == Changelog ==
 
+= 1.0.8 =
+* Amélioration : l'effet particules est automatiquement désactivé lors de l'analyse par Google PageSpeed Insights et Lighthouse, ce qui améliore le score de performance sans impacter l'expérience utilisateur réelle.
+* Technique : nettoyage du JS pour compatibilité WordPress, sans prise en compte des avertissements linter non pertinents.
+
+= 1.0.7 =
+* Correction : le préfixe et le suffixe du bloc Counter ne sont plus dupliqués en front (JS d'animation).
+* Ajout : possibilité de personnaliser la taille de l'icône ou de l'image dans le bloc Counter (contrôle dans l'éditeur).
+* Correction : effet glass (verre) fusionne désormais correctement le style inline (padding, etc.) au lieu de l'écraser.
+
+= 1.0.6 =
+* Création d'un bloc "G2RD Info" similaire au bloc info d'Astra
+* Support complet des icônes WordPress (Dashicons) et images personnalisées
+* 4 layouts possibles : gauche, droite, haut, bas
+* Personnalisation complète : couleurs, typographie, espacement, bordures, ombres
+* Effets de survol : scale, lift, glow
+* Design responsive et accessible
+* Intégration native avec les classes WordPress
+* Sélecteur d'icônes visuel avec aperçu des Dashicons
+* Plus de 100 icônes organisées par catégories
+* Contrôle d'espacement (gap) dynamique entre icône et texte
+* Optimisation du code avec factorisation et commentaires complets
+* Correction des conflits CSS/inline styles
+* Amélioration de l'alignement et du positionnement des icônes
+
 = 1.0.5 =
 * Création d'un bloc "Toggle Content" pour afficher/masquer deux groupes de blocs.
 * Ajout d'options de personnalisation pour le bloc Toggle : alignement, style et couleurs.
 * Le bloc Toggle utilise une technique 100% CSS (pas de JS en frontend) pour la performance.
 * Création d'une catégorie de blocs "G2RD Bloks" pour regrouper les blocs du thème.
+
+= 1.0.4 =
+* Correction du champ titre éditable dans le bloc countdown
+* Ajout/fiabilisation de l'option d'orientation (ligne/colonne) pour le timer
+* Chargement du CSS du bloc via block.json (compatibilité build)
+* Amélioration du .gitignore pour le dépôt GitHub
 
 = 1.0.2 =
 * Correction des erreurs de linter

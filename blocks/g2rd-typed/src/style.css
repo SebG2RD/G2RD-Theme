@@ -1,0 +1,19 @@
+.g2rd-typed-block {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.g2rd-typed-before,
+.g2rd-typed-after {
+  font-weight: normal;
+}
+.g2rd-typed-animated {
+  min-width: 120px;
+  font-weight: bold;
+  color: var(--wp--preset--color--secondary, #1a1a1a);
+}
+.g2rd-typed-preview {
+  font-weight: bold;
+  color: var(--wp--preset--color--secondary, #1a1a1a);
+}

@@ -88,14 +88,16 @@ class BlockCategories
 
     /**
      * Enregistre les catégories de blocs dans l'éditeur
+     * Les catégories personnalisées sont placées en premier
      */
     public function registerBlockCategories(array $categories, \WP_Block_Editor_Context $context): array
     {
         $custom_categories = $this->getBlockCategories();
+        $custom_categories_formatted = [];
 
         foreach ($custom_categories as $category) {
             if ($this->isValidCategory($category)) {
-                $categories[] = [
+                $custom_categories_formatted[] = [
                     'slug' => $category['slug'],
                     'title' => $category['label'],
                     'description' => $category['description'] ?? '',
@@ -104,7 +106,8 @@ class BlockCategories
             }
         }
 
-        return $categories;
+        // Placer les catégories personnalisées en premier
+        return array_merge($custom_categories_formatted, $categories);
     }
 
     /**
@@ -145,10 +148,16 @@ class BlockCategories
                     'label' => $category_data['label'],
                     'description' => $category_data['description'] ?? '',
                     'icon' => $category_data['icon'] ?? null,
-                    'keywords' => $category_data['keywords'] ?? []
+                    'keywords' => $category_data['keywords'] ?? [],
+                    'priority' => $category_data['priority'] ?? 999
                 ];
             }
         }
+
+        // Trier les catégories par priorité (plus faible = plus haut)
+        usort($categories, function($a, $b) {
+            return ($a['priority'] ?? 999) <=> ($b['priority'] ?? 999);
+        });
 
         return $categories;
     }

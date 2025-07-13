@@ -1,0 +1,29 @@
+{
+  "apiVersion": 2,
+  "name": "g2rd/typed",
+  "title": "Texte animé (Typed.js)",
+  "category": "g2rd-bloks",
+  "icon": "info",
+  "description": "Affiche un texte animé avec effet de machine à écrire (Typed.js)",
+  "attributes": {
+    "texteAvant": { "type": "string", "default": "" },
+    "phrases": {
+      "type": "array",
+      "default": ["Phrase animée 1", "Phrase animée 2"],
+      "items": { "type": "string" }
+    },
+    "texteApres": { "type": "string", "default": "" },
+    "typeSpeed": { "type": "number", "default": 70 },
+    "backSpeed": { "type": "number", "default": 35 },
+    "loop": { "type": "boolean", "default": true },
+    "showCursor": { "type": "boolean", "default": true },
+    "typedColor": { "type": "string", "default": "#1a1a1a" }
+  },
+  "supports": {
+    "align": ["wide", "full"],
+    "html": false
+  },
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./src/style.css",
+  "style": "file:./src/style.css"
+}

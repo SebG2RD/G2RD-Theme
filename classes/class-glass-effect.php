@@ -125,8 +125,8 @@ class GlassEffect
             $border_color = $block['attrs']['glassBorderColor'] ?? 'rgba(255, 255, 255, 0.3)';
             $shadow_color = $block['attrs']['glassShadowColor'] ?? 'rgba(0, 0, 0, 0.1)';
 
-            // Créer le style inline avec les attributs personnalisés
-            $style = sprintf(
+            // Style glass à ajouter
+            $glass_style = sprintf(
                 'background: rgba(255, 255, 255, %s); border-radius: %spx; box-shadow: 0 4px 30px %s; backdrop-filter: blur(%spx); -webkit-backdrop-filter: blur(%spx); border: 1px solid %s;',
                 $opacity,
                 $border_radius,
@@ -136,13 +136,35 @@ class GlassEffect
                 $border_color
             );
 
-            // Ajouter l'attribut data-glass et le style inline
-            $block_content = preg_replace(
-                '/<div/',
-                '<div data-glass="true" style="' . esc_attr($style) . '"',
-                $block_content,
-                1
-            );
+            if (preg_match('/<div([^>]*)style="([^"]*)"/i', $block_content)) {
+                // Il y a déjà un style inline, on fusionne
+                $block_content = preg_replace_callback(
+                    '/<div([^>]*)style="([^"]*)"/i',
+                    function ($matches) use ($glass_style) {
+                        $new_style = trim($matches[2]);
+                        if (substr($new_style, -1) !== ';') {
+                            $new_style .= ';';
+                        }
+                        $new_style .= ' ' . $glass_style;
+                        // Ajoute data-glass="true" si absent
+                        if (strpos($matches[1], 'data-glass="true"') === false) {
+                            return '<div' . $matches[1] . 'style="' . $new_style . '" data-glass="true"';
+                        } else {
+                            return '<div' . $matches[1] . 'style="' . $new_style . '"';
+                        }
+                    },
+                    $block_content,
+                    1
+                );
+            } else {
+                // Pas de style inline, on ajoute le style glass uniquement
+                $block_content = preg_replace(
+                    '/<div/',
+                    '<div data-glass="true" style="' . esc_attr($glass_style) . '"',
+                    $block_content,
+                    1
+                );
+            }
         }
 
         return $block_content;
