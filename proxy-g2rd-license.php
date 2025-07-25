@@ -6,9 +6,11 @@
  * et logge tous les accès dans g2rd-license-proxy.log
  */
 
-// Définir la clé secrète de façon sécurisée (idéalement dans wp-config.php)
+// La clé secrète DOIT être définie dans wp-config.php pour des raisons de sécurité
 if (!defined('G2RD_SURECART_SECRET')) {
-    define('G2RD_SURECART_SECRET', 'st_QgvAkqxVM4Nm1c83rWNYHtMT');
+    // Si la clé n'est pas définie, afficher une erreur et arrêter l'exécution
+    error_log('G2RD License Proxy: G2RD_SURECART_SECRET non définie dans wp-config.php');
+    return;
 }
 
 add_action('rest_api_init', function () {
