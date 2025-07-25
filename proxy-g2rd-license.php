@@ -8,7 +8,7 @@
 
 // Définir la clé secrète de façon sécurisée (idéalement dans wp-config.php)
 if (!defined('G2RD_SURECART_SECRET')) {
-    define('G2RD_SURECART_SECRET', 'st_nWcJ62azecmGCtdkAMGgxhnN');
+    define('G2RD_SURECART_SECRET', 'st_QgvAkqxVM4Nm1c83rWNYHtMT');
 }
 
 add_action('rest_api_init', function () {

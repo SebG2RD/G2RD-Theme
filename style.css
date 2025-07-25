@@ -17,6 +17,14 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
 */
 
+/* Logo TranslatePress plugin */
+.trp-language-switcher > div {
+  background-color: transparent !important;
+}
+.trp-language-switcher > div > a {
+  color: var(--wp--preset--color--secondary) !important;
+}
+
 /* Erreur avec l'activation de surecart */
 .wp-block-buttons {
   width: auto !important;
