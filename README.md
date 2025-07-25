@@ -173,6 +173,12 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.0
+
+- Création d'un bloc "G2RD Carousel" pour afficher un carrousel d'images ou de contenus personnalisés (pages, articles, CPT) avec Swiper.js
+- Personnalisation avancée : nombre de slides visibles, couleurs, effets, navigation, pagination, légendes, box-shadow, etc.
+- Compatible avec l'éditeur Gutenberg (back et front), responsive, et entièrement traduisible
+
 ### 1.0.9
 
 - Création d'un bloc "G2RD Typed" pour créer des effets de texte animé avec frappe automatique

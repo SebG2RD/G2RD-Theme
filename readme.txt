@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -42,6 +42,7 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * **Contact Block** : Formulaire de contact personnalisable
 * **Testimonials Block** : Affichez les témoignages de vos clients
 * **Typed Block** : Créez des effets de texte animé avec frappe automatique
+* **Carousel Block** : Affiche un carrousel d'images ou de contenus personnalisés avec de nombreuses options de personnalisation
 
 = Installation =
 
@@ -100,6 +101,11 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.0 =
+* Création d'un bloc "G2RD Carousel" pour afficher un carrousel d'images ou de contenus personnalisés (pages, articles, CPT) avec Swiper.js
+* Personnalisation avancée : nombre de slides visibles, couleurs, effets, navigation, pagination, légendes, box-shadow, etc.
+* Compatible avec l'éditeur Gutenberg (back et front), responsive, et entièrement traduisible
 
 = 1.0.9 =
 * Création d'un bloc "G2RD Typed" pour créer des effets de texte animé avec frappe automatique

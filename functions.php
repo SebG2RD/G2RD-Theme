@@ -41,6 +41,7 @@ require_once __DIR__ . '/classes/class-block-patterns.php';
 require_once __DIR__ . '/classes/class-block-styles.php';
 require_once __DIR__ . '/classes/class-block-categories.php';
 require_once __DIR__ . '/classes/class-glass-effect.php';
+require_once __DIR__ . '/classes/class-carousel-assets.php';
 
 /**
  * Affiche un avertissement si la clé API n'est pas configurée
@@ -105,6 +106,7 @@ function bootstrap_theme()
         \G2RD\Shortcode::class,
         \G2RD\JsonConfig::class,
         \G2RD\GlassEffect::class,
+        \G2RD\CarouselAssets::class, // Ajout du gestionnaire d'assets carrousel
     ];
 
     // Initialiser d'abord le gestionnaire de licences
