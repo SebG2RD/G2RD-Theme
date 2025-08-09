@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -30,6 +30,7 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * Gestion avancée des types de contenu personnalisés
 * Intégration de portfolio professionnel avec galerie
 * Section "Qui sommes nous" avec gestion avancée des membres
+* **CPT Prestations** avec 5 sections personnalisables et éditeur classique
 * Sélecteur de médias WordPress pour les icônes personnalisées
 * Interface d'administration optimisée avec classes natives WordPress
 * **Toggle Content Block**: Un interrupteur pour afficher l'un ou l'autre de deux groupes de contenu, avec options de style.
@@ -101,6 +102,16 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.1 =
+* **Nouveau CPT Prestations** : Création d'un type de contenu personnalisé pour les prestations avec 5 sections configurables
+* **Champs personnalisés** : Titre, description (éditeur classique) et image pour chaque section
+* **Shortcodes intégrés** : 15 shortcodes pour afficher les contenus dans les templates
+* **Template full-width** : Template single-prestations.html avec support full-width et structure responsive
+* **Éditeur classique** : Remplacement des textarea par l'éditeur TinyMCE pour une meilleure expérience d'édition
+* **Sélecteur de médias** : Interface native WordPress pour la sélection des images
+* **Structure HTML optimisée** : Correction des problèmes de duplication de contenu et de balises main
+* **Interface d'administration** : Meta box intuitive avec prévisualisation des images
 
 = 1.1.0 =
 * Création d'un bloc "G2RD Carousel" pour afficher un carrousel d'images ou de contenus personnalisés (pages, articles, CPT) avec Swiper.js

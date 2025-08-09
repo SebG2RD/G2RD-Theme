@@ -21,9 +21,19 @@ Ce thème offre une expérience d'édition complète avec des blocs personnalis�
 - Types de contenu personnalisés
 - Portfolio professionnel
 - Section "Qui sommes nous" avec gestion des icônes
+- **CPT Prestations** avec champs personnalisés et éditeur classique
 - Effet particules automatiquement désactivé pour Google PageSpeed Insights et Lighthouse (depuis 1.0.8) pour optimiser le score de performance sans impacter l'expérience utilisateur réelle.
 
 ## Fonctionnalités détaillées
+
+### CPT Prestations
+
+- **5 sections personnalisables** avec titre, description et image
+- **Éditeur classique WordPress** (TinyMCE) pour chaque description
+- **Sélecteur de médias intégré** pour les images de chaque section
+- **Shortcodes personnalisés** pour affichage dans les templates
+- **Template full-width** avec structure responsive
+- **Interface d'administration intuitive** avec prévisualisation des images
 
 ### Section "Qui sommes nous"
 
@@ -172,6 +182,17 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 - **LICENSE** et **license.txt** : Licences du projet, à la racine.
 
 ## Changelog
+
+### 1.1.1
+
+- **Nouveau CPT Prestations** : Création d'un type de contenu personnalisé pour les prestations avec 5 sections configurables
+- **Champs personnalisés** : Titre, description (éditeur classique) et image pour chaque section
+- **Shortcodes intégrés** : 15 shortcodes pour afficher les contenus dans les templates
+- **Template full-width** : Template `single-prestations.html` avec support full-width et structure responsive
+- **Éditeur classique** : Remplacement des textarea par l'éditeur TinyMCE pour une meilleure expérience d'édition
+- **Sélecteur de médias** : Interface native WordPress pour la sélection des images
+- **Structure HTML optimisée** : Correction des problèmes de duplication de contenu et de balises main
+- **Interface d'administration** : Meta box intuitive avec prévisualisation des images
 
 ### 1.1.0
 
