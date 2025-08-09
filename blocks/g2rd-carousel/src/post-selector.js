@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { useState, useEffect } from "@wordpress/element";
 import { Button, Spinner, Notice } from "@wordpress/components";
-// import apiFetch from "@wordpress/api-fetch"; // Temporarily commented out
+import apiFetch from "@wordpress/api-fetch";
 
 export default function PostSelector({ contentType, selectedPosts, onSelect }) {
   const [posts, setPosts] = useState([]);
@@ -9,7 +9,6 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Temporarily disable fetching posts/pages/CPT
     if (contentType !== "images") {
       fetchPosts();
     }
@@ -19,16 +18,59 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
     setLoading(true);
     setError(null);
 
-    // Solution temporaire : afficher un message informatif
-    setTimeout(() => {
+    try {
+      let endpoint = "/wp/v2/";
+
+      // Déterminer l'endpoint selon le type de contenu
+      switch (contentType) {
+        case "posts":
+          endpoint += "posts";
+          break;
+        case "pages":
+          endpoint += "pages";
+          break;
+        case "portfolio":
+          endpoint += "portfolio";
+          break;
+        case "prestations":
+          endpoint += "prestations";
+          break;
+        case "qui-sommes-nous":
+          endpoint += "qui-sommes-nous";
+          break;
+        default:
+          endpoint += "posts";
+      }
+
+      const response = await apiFetch({
+        path: `${endpoint}?per_page=50&_embed`,
+      });
+
+      const formattedPosts = response.map((post) => ({
+        id: post.id,
+        title: post.title.rendered,
+        excerpt: post.excerpt.rendered,
+        link: post.link,
+        featuredImage:
+          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
+        featuredImageAlt:
+          post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
+        date: post.date,
+        type: contentType,
+      }));
+
+      setPosts(formattedPosts);
       setLoading(false);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
       setError(
         __(
-          "La sélection de posts/pages sera disponible prochainement. Utilisez le type 'Images' pour l'instant.",
+          `Erreur lors du chargement des ${contentType}. Vérifiez que le type de contenu existe.`,
           "g2rd-carousel"
         )
       );
-    }, 500);
+      setLoading(false);
+    }
   };
 
   const handlePostSelect = (post) => {
@@ -57,7 +99,7 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
       {loading && (
         <div className="post-selector-loading">
           <Spinner />
-          <p>{__("Loading content...", "g2rd-carousel")}</p>
+          <p>{__("Chargement du contenu...", "g2rd-carousel")}</p>
         </div>
       )}
 
@@ -65,7 +107,7 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
         <Notice status="warning" isDismissible={false}>
           <p>{error}</p>
           <Button isSmall onClick={fetchPosts}>
-            {__("Retry", "g2rd-carousel")}
+            {__("Réessayer", "g2rd-carousel")}
           </Button>
         </Notice>
       )}
@@ -73,7 +115,10 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
       {!loading && !error && (
         <div className="post-selector-content">
           <p className="post-selector-description">
-            {__("Select content to display in the carousel:", "g2rd-carousel")}
+            {__(
+              `Sélectionnez des ${contentType} à afficher dans le carousel:`,
+              "g2rd-carousel"
+            )}
           </p>
 
           <div className="post-selector-grid">
@@ -87,25 +132,17 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
                   }`}
                   onClick={() => handlePostSelect(post)}
                 >
-                  {post.featured_media && (
+                  {post.featuredImage && (
                     <div className="post-selector-image">
                       <img
-                        src={post.featured_media_url}
-                        alt={post.title.rendered}
+                        src={post.featuredImage}
+                        alt={post.featuredImageAlt || post.title}
                       />
                     </div>
                   )}
                   <div className="post-selector-info">
-                    <h4
-                      dangerouslySetInnerHTML={{
-                        __html: post.title.rendered,
-                      }}
-                    />
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: post.excerpt.rendered,
-                      }}
-                    />
+                    <h4>{post.title}</h4>
+                    <p dangerouslySetInnerHTML={{ __html: post.excerpt }} />
                   </div>
                 </div>
               );
@@ -114,16 +151,16 @@ export default function PostSelector({ contentType, selectedPosts, onSelect }) {
 
           {selectedPosts.length > 0 && (
             <div className="post-selector-selected">
-              <h4>{__("Selected content:", "g2rd-carousel")}</h4>
+              <h4>{__("Contenu sélectionné:", "g2rd-carousel")}</h4>
               <div className="selected-posts">
                 {selectedPosts.map((post) => (
                   <span key={post.id} className="selected-post">
-                    {post.title.rendered}
+                    {post.title}
                   </span>
                 ))}
               </div>
               <Button isSmall onClick={handleDeselectAll}>
-                {__("Deselect all", "g2rd-carousel")}
+                {__("Tout désélectionner", "g2rd-carousel")}
               </Button>
             </div>
           )}

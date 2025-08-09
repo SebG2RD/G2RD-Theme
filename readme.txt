@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -102,6 +102,13 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.2 =
+* Bloc G2RD Carousel – Mobile (<768px): 4 images fixes en grille 2×2, sans autoplay, sans loop, sans swipe, sans pagination/navigation. Effet forcé « slide » pour éviter les artefacts 3D.
+* Desktop/Tablette: effets et autoplay conservés selon les réglages.
+* Respect de « Show Captions »: l’overlay `.carousel-post-info` n’est plus rendu quand l’option est désactivée.
+* Robustesse front: fallback lorsque le HTML ne contient pas les slides (contentData/contentIds dans data-config + récupération REST si nécessaire).
+* CSS mobile: surcharges pour neutraliser les largeurs 33.33% et forcer la grille 2×2.
 
 = 1.1.1 =
 * **Nouveau CPT Prestations** : Création d'un type de contenu personnalisé pour les prestations avec 5 sections configurables

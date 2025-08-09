@@ -1,130 +1,142 @@
-# G2RD Carousel Block
+# G2RD Carousel - Bloc WordPress
 
-Un block WordPress personnalisé pour créer des carrousels d'images interactifs avec Swiper.js.
+Un bloc de carousel moderne et responsive pour WordPress, utilisant Swiper.js pour des animations fluides et une expérience utilisateur optimale.
 
-## Fonctionnalités
+## 🚀 Fonctionnalités
 
-- **Effets multiples** : Coverflow, Slide, Fade, Cube, Flip
-- **Navigation** : Boutons précédent/suivant personnalisables
-- **Pagination** : Points de navigation cliquables
-- **Autoplay** : Défilement automatique configurable
-- **Responsive** : Adaptation automatique aux différentes tailles d'écran
-- **Gestion d'images** : Upload multiple via la bibliothèque WordPress
-- **Légendes** : Support des légendes d'images
-- **Badge** : Badge personnalisable pour mettre en valeur le contenu
+### Responsive Design
+- **Mobile (320px+)**: 1 slide visible, effet slide pour les performances
+- **Tablette (768px+)**: 2 slides visibles, navigation optimisée
+- **Desktop (1024px+)**: 3 slides visibles, effets avancés
+- **Grand écran (1200px+)**: Configuration complète avec effet coverflow
 
-## Installation
+### Effets Visuels
+- **Slide**: Transition simple et fluide
+- **Coverflow**: Effet 3D avec perspective
+- **Fade**: Transition en fondu
+- **Cube**: Rotation 3D (si supporté)
 
-1. Assurez-vous que Swiper.js est chargé sur votre site
-2. Le block sera automatiquement disponible dans l'éditeur WordPress
+### Navigation
+- Boutons de navigation personnalisables
+- Pagination avec bullets
+- Navigation tactile optimisée
+- Autoplay avec pause au survol
 
-## Utilisation
+### Contenu
+- Support des images avec légendes
+- Intégration des posts WordPress
+- Lazy loading pour les performances
+- Accessibilité améliorée (ARIA labels)
 
-### Dans l'éditeur WordPress
+## 📱 Responsive Breakpoints
 
-1. Ajoutez le block "G2RD Carousel" à votre page
-2. Sélectionnez les images via la bibliothèque WordPress
-3. Configurez les paramètres dans le panneau latéral :
-   - **Carousel Settings** : Titre, description, badge
-   - **Images** : Gestion des images sélectionnées
-   - **Animation Settings** : Effet, délai, navigation, pagination
-   - **Coverflow Settings** : Paramètres spécifiques à l'effet coverflow
-
-### Paramètres disponibles
-
-#### Carousel Settings
-
-- **Title** : Titre du carrousel
-- **Description** : Description du carrousel
-- **Show Badge** : Afficher/masquer le badge
-- **Badge Text** : Texte du badge
-
-#### Animation Settings
-
-- **Effect** : Type d'effet (Coverflow, Slide, Fade, Cube, Flip)
-- **Autoplay Delay** : Délai entre les transitions automatiques (ms)
-- **Space Between** : Espacement entre les slides
-- **Show Pagination** : Afficher/masquer la pagination
-- **Show Navigation** : Afficher/masquer les boutons de navigation
-- **Centered Slides** : Centrer les slides
-- **Loop** : Boucle infinie
-- **Grab Cursor** : Curseur de préhension
-
-#### Coverflow Settings (si l'effet coverflow est sélectionné)
-
-- **Rotate** : Rotation des slides
-- **Stretch** : Étirement des slides
-- **Depth** : Profondeur de l'effet 3D
-- **Modifier** : Modificateur de l'effet
-
-## Développement
-
-### Structure des fichiers
-
-```
-g2rd-carousel/
-├── block.json          # Configuration du block
-├── package.json        # Dépendances et scripts
-├── webpack.config.js   # Configuration Webpack
-├── src/
-│   ├── index.js        # Point d'entrée principal
-│   ├── edit.js         # Composant d'édition
-│   ├── save.js         # Composant de sauvegarde
-│   ├── carousel.css    # Styles CSS
-│   └── carousel-frontend.js # JavaScript frontend
-└── build/              # Fichiers compilés
-```
-
-### Scripts disponibles
-
-```bash
-# Développement
-npm run start
-
-# Production
-npm run build
-
-# Linting
-npm run lint:js
-npm run lint:css
-```
-
-### Dépendances
-
-- `@wordpress/scripts` : Outils de développement WordPress
-- `swiper` : Bibliothèque de carrousel (externe)
-
-## Personnalisation
-
-### CSS
-
-Les styles peuvent être personnalisés en modifiant le fichier `src/carousel.css`. Les classes principales sont :
-
-- `.g2rd-carousel` : Conteneur principal
-- `.carousel-header` : En-tête avec titre et badge
-- `.carousel-container` : Conteneur du carrousel
-- `.swiper-container` : Conteneur Swiper
-- `.carousel-slide` : Slide individuel
-
-### JavaScript
-
-Le JavaScript frontend peut être étendu en modifiant `src/carousel-frontend.js`. L'objet global `G2RDCarousel` fournit des méthodes utilitaires :
+Le carousel s'adapte automatiquement à la taille d'écran :
 
 ```javascript
-// Obtenir l'instance Swiper d'un carrousel
-const swiper = G2RDCarousel.getInstance(carouselElement);
-
-// Obtenir toutes les instances
-const allSwipers = G2RDCarousel.getAllInstances();
-
-// Détruire un carrousel
-G2RDCarousel.destroy(carouselElement);
+// Configuration responsive automatique
+320: { slidesPerView: 1, spaceBetween: 15, effect: 'slide' }
+768: { slidesPerView: 2, spaceBetween: 25, effect: 'slide' }
+1024: { slidesPerView: 3, spaceBetween: 30, effect: 'slide' }
+1200: { slidesPerView: 3, spaceBetween: 50, effect: 'coverflow' }
 ```
 
-## Support
+## 🎨 Personnalisation
 
-Pour toute question ou problème, consultez la documentation du thème G2RD ou contactez l'équipe de développement.
+### Couleurs du thème
+Le carousel utilise automatiquement les couleurs de votre thème WordPress :
+- Couleurs primaires et secondaires
+- Support des gradients
+- Adaptation aux modes sombre/clair
 
-## Licence
+### Styles CSS
+```css
+/* Personnalisation des boutons de navigation */
+.swiper-button-prev,
+.swiper-button-next {
+  background: var(--wp--preset--color--primary);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
 
-Ce block fait partie du thème G2RD et suit la même licence que le thème principal.
+/* Adaptation mobile */
+@media (max-width: 768px) {
+  .swiper-slide {
+    width: 280px !important;
+    height: 200px !important;
+  }
+}
+```
+
+## 🔧 Installation
+
+1. Copiez le dossier `g2rd-carousel` dans votre thème
+2. Assurez-vous que Swiper.js est chargé
+3. Le bloc sera automatiquement disponible dans l'éditeur
+
+## 📋 Utilisation
+
+### Dans l'éditeur WordPress
+1. Ajoutez le bloc "G2RD Carousel"
+2. Configurez les images ou sélectionnez des posts
+3. Ajustez les paramètres d'affichage
+4. Le responsive est automatique !
+
+### Programmatiquement
+```php
+// Afficher un carousel dans votre thème
+echo do_blocks('<!-- wp:g2rd/carousel {"images":[...]} /-->');
+```
+
+## ⚡ Performance
+
+### Optimisations incluses
+- **Lazy loading** des images
+- **Détection tactile** pour désactiver les effets lourds
+- **Debouncing** des événements de redimensionnement
+- **Mise à jour intelligente** de Swiper
+
+### Mobile First
+- Effets simplifiés sur mobile
+- Navigation tactile optimisée
+- Chargement progressif
+- Gestion de l'orientation
+
+## 🎯 Accessibilité
+
+- Labels ARIA pour la navigation
+- Support du clavier
+- Contraste des couleurs respecté
+- Structure sémantique
+
+## 🔄 Mise à jour
+
+Le carousel se met à jour automatiquement lors des changements de taille d'écran :
+- Redimensionnement de fenêtre
+- Changement d'orientation mobile
+- Rotation d'écran
+
+## 🐛 Dépannage
+
+### Problèmes courants
+1. **Images qui ne s'affichent pas** : Vérifiez les URLs et les permissions
+2. **Navigation qui ne fonctionne pas** : Assurez-vous que Swiper.js est chargé
+3. **Problèmes sur mobile** : Vérifiez la console pour les erreurs JavaScript
+
+### Debug
+```javascript
+// Accéder aux instances Swiper
+window.G2RDCarousel.getAllInstances();
+
+// Mettre à jour manuellement
+window.G2RDCarousel.updateAllResponsive();
+```
+
+## 📄 Licence
+
+Ce bloc fait partie du thème G2RD et suit les mêmes conditions de licence.
+
+---
+
+**Version**: 1.0.0  
+**Dernière mise à jour**: Responsive complet  
+**Compatibilité**: WordPress 5.0+, Swiper.js 8+

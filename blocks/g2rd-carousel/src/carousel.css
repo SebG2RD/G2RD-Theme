@@ -100,7 +100,6 @@
     opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Box shadow désactivé */
 .carousel-slide.no-shadow {
   box-shadow: none;
 }
@@ -109,13 +108,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  display: block;
 }
 
 .carousel-slide:hover .carousel-image {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .carousel-caption {
@@ -123,41 +120,52 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
   color: white;
-  padding: 10px;
-  margin: 0;
-  font-size: 14px;
-  text-align: center;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Styles pour les informations des posts */
+.carousel-slide:hover .carousel-caption {
+  transform: translateY(0);
+}
+
 .carousel-post-info {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
   color: white;
-  padding: 20px 15px 15px;
-  margin: 0;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide:hover .carousel-post-info {
+  transform: translateY(0);
 }
 
 .carousel-post-title {
-  margin: 0 0 8px 0;
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: 600;
+  margin-bottom: 8px;
   line-height: 1.3;
-  color: white;
 }
 
 .carousel-post-excerpt {
-  margin: 0;
-  font-size: 13px;
+  font-size: 0.9rem;
   line-height: 1.4;
   opacity: 0.9;
   display: -webkit-box;
@@ -166,22 +174,25 @@
   overflow: hidden;
 }
 
-/* Navigation Styles - Design moderne */
+/* Navigation Buttons */
 .swiper-button-prev,
 .swiper-button-next {
-  background: var(--wp--preset--color--primary, #667eea);
-  border-radius: 50%;
   width: 50px;
   height: 50px;
-  color: var(--wp--preset--color--background, white);
-  box-shadow: 0 8px 25px
-    var(--wp--preset--color--primary, rgba(102, 126, 234, 0.3));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid
-    var(--wp--preset--color--background, rgba(255, 255, 255, 0.2));
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
 }
 
 .swiper-button-prev::before,
@@ -192,22 +203,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 50%;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 12px 35px
-    var(--wp--preset--color--primary, rgba(102, 126, 234, 0.4));
-  background: var(--wp--preset--color--secondary, #5a6fd8);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .swiper-button-prev:hover::before,
@@ -217,319 +223,290 @@
 
 .swiper-button-prev:active,
 .swiper-button-next:active {
-  transform: translateY(0) scale(0.95);
-  box-shadow: 0 4px 15px
-    var(--wp--preset--color--primary, rgba(102, 126, 234, 0.3));
+  transform: translateY(-50%) scale(0.95);
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  font-size: 20px;
-  font-weight: 600;
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 2px solid #333;
+  border-top: none;
+  border-right: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Flèche précédente personnalisée */
 .swiper-button-prev::after {
-  content: "‹";
-  font-size: 32px;
-  line-height: 1;
+  transform: rotate(45deg);
+  margin-left: 4px;
 }
 
-/* Flèche suivante personnalisée */
 .swiper-button-next::after {
-  content: "›";
-  font-size: 32px;
-  line-height: 1;
+  transform: rotate(225deg);
+  margin-right: 4px;
 }
 
-/* Animation d'entrée pour les flèches */
 .swiper-button-prev,
 .swiper-button-next {
-  animation: slideInButtons 0.6s ease-out;
+  animation: slideInButtons 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes slideInButtons {
   from {
     opacity: 0;
-    transform: translateX(20px) scale(0.8);
+    transform: translateY(-50%) translateX(20px);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translateY(-50%) translateX(0);
   }
 }
 
-/* Styles pour les couleurs personnalisées du thème */
+/* Couleurs personnalisées pour les boutons */
 .has-primary-color .swiper-button-prev,
 .has-primary-color .swiper-button-next {
-  background: var(--wp--preset--color--primary);
+  background: var(--wp--preset--color--primary, #007cba);
 }
 
 .has-secondary-color .swiper-button-prev,
 .has-secondary-color .swiper-button-next {
-  background: var(--wp--preset--color--secondary);
+  background: var(--wp--preset--color--secondary, #6c757d);
 }
 
 .has-primary-background-color .swiper-button-prev,
 .has-primary-background-color .swiper-button-next {
-  color: var(--wp--preset--color--primary);
+  background: var(--wp--preset--color--primary, #007cba);
 }
 
 .has-secondary-background-color .swiper-button-prev,
 .has-secondary-background-color .swiper-button-next {
-  color: var(--wp--preset--color--secondary);
+  background: var(--wp--preset--color--secondary, #6c757d);
 }
 
-/* Pagination avec couleurs du thème */
-.has-primary-color .swiper-pagination-bullet-active {
-  background: var(--wp--preset--color--primary);
-}
-
-.has-secondary-color .swiper-pagination-bullet-active {
-  background: var(--wp--preset--color--secondary);
-}
-
-/* Responsive pour les flèches */
-@media (max-width: 768px) {
-  .swiper-button-prev,
-  .swiper-button-next {
-    width: 45px;
-    height: 45px;
-  }
-
-  .swiper-button-prev::after,
-  .swiper-button-next::after {
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 480px) {
-  .swiper-button-prev,
-  .swiper-button-next {
-    width: 40px;
-    height: 40px;
-  }
-
-  .swiper-button-prev::after,
-  .swiper-button-next::after {
-    font-size: 24px;
-  }
-}
-
-/* Pagination Styles */
+/* Pagination */
 .swiper-pagination {
+  position: absolute;
   bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .swiper-pagination-bullet {
-  background: var(--wp--preset--color--text, rgba(0, 0, 0, 0.3));
-  opacity: 1;
-  transition: all 0.3s ease;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .swiper-pagination-bullet-active {
-  background: var(--wp--preset--color--primary, #007cba);
+  background: #007cba;
   transform: scale(1.2);
 }
 
-/* Coverflow Effect Styles */
+/* Effets 3D et Coverflow */
 .swiper-3d .swiper-slide-shadow-left,
 .swiper-3d .swiper-slide-shadow-right {
-  background: none;
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0)
+  );
 }
 
-/* Amélioration de l'effet Coverflow */
 .swiper-effect-coverflow .swiper-slide {
-  width: 280px;
-  height: 350px;
+  transition-property: transform;
   transform-style: preserve-3d;
+  transform-origin: center;
+  backface-visibility: hidden;
   perspective: 1000px;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Assurer que les slides se suivent */
-  position: relative;
-  z-index: 1;
 }
 
-/* Ajustement de l'espacement selon le nombre de slides visibles */
+/* Responsive pour différents nombres de slides */
 .swiper[data-slides-per-view="1"] .swiper-slide {
-  width: 100%;
-  max-width: 400px;
+  width: 100% !important;
 }
 
 .swiper[data-slides-per-view="3"] .swiper-slide {
-  width: 280px;
+  width: calc(33.333% - 20px) !important;
 }
 
 .swiper[data-slides-per-view="5"] .swiper-slide {
-  width: 200px;
+  width: calc(20% - 16px) !important;
 }
 
 .swiper[data-slides-per-view="7"] .swiper-slide {
-  width: 150px;
+  width: calc(14.285% - 14px) !important;
 }
 
+/* Effet Coverflow amélioré */
 .swiper-effect-coverflow .swiper-slide-active {
-  transform: scale(1.1) translateZ(0);
-  z-index: 3;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 1;
+  transform: scale(1.1) translateZ(0) !important;
+  z-index: 2;
 }
 
 .swiper-effect-coverflow .swiper-slide-prev,
 .swiper-effect-coverflow .swiper-slide-next {
-  transform: scale(0.85) translateZ(-100px);
+  transform: scale(0.85) translateZ(-100px) !important;
   opacity: 0.7;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 2;
-}
-
-/* Slides plus éloignées - défilement progressif */
-.swiper-effect-coverflow .swiper-slide-prev + .swiper-slide,
-.swiper-effect-coverflow .swiper-slide + .swiper-slide-next {
-  transform: scale(0.7) translateZ(-200px);
-  opacity: 0.4;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
 }
 
-/* Toutes les autres slides */
-.swiper-effect-coverflow
-  .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(
-    .swiper-slide-next
-  ) {
-  transform: scale(0.6) translateZ(-300px);
-  opacity: 0.2;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+.swiper-effect-coverflow .swiper-slide-prev + .swiper-slide,
+.swiper-effect-coverflow .swiper-slide-next + .swiper-slide {
+  transform: scale(0.7) translateZ(-200px) !important;
+  opacity: 0.4;
   z-index: 0;
 }
 
-/* Alignement Wide et Full */
+.swiper-effect-coverflow .swiper-slide-prev + .swiper-slide + .swiper-slide,
+.swiper-effect-coverflow .swiper-slide-next + .swiper-slide + .swiper-slide {
+  transform: scale(0.55) translateZ(-300px) !important;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+/* Alignement WordPress */
 .wp-block-g2rd-carousel.alignwide {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .wp-block-g2rd-carousel.alignfull {
-  max-width: none !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
-  position: relative !important;
-  left: 50% !important;
-  right: 50% !important;
-  margin-left: -50% !important;
-  margin-right: -50% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  overflow-x: hidden !important;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
 }
 
-/* Gestion des conflits avec les styles WordPress globaux */
 .has-global-padding > .wp-block-g2rd-carousel.alignfull {
-  margin-left: -50% !important;
-  margin-right: -50% !important;
+  width: 100vw;
+  max-width: 100vw;
 }
 
-/* Assurer que le contenu interne respecte la pleine largeur */
 .wp-block-g2rd-carousel.alignfull .g2rd-carousel {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 20px 0 !important;
-  overflow-x: hidden !important;
+  max-width: none;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
-/* S'assurer que le conteneur Swiper ne déborde pas */
 .wp-block-g2rd-carousel.alignfull .swiper {
-  overflow: hidden !important;
-  width: 100% !important;
+  width: 100%;
+  max-width: none;
 }
 
-/* Gestion responsive pour alignfull */
-@media (max-width: 768px) {
-  .wp-block-g2rd-carousel.alignfull {
-    width: 100% !important;
-    margin-left: -50% !important;
-    margin-right: -50% !important;
+/* Responsive Styles - Améliorés */
+@media (max-width: 1200px) {
+  .g2rd-carousel {
+    max-width: 100%;
+    padding: 15px;
   }
 
-  /* Ajuster les slides visibles en responsive */
-  .swiper[data-slides-per-view="3"] .swiper-slide,
-  .swiper[data-slides-per-view="5"] .swiper-slide,
-  .swiper[data-slides-per-view="7"] .swiper-slide {
-    width: 280px !important;
+  .swiper-slide {
+    width: 300px;
+    height: 300px;
   }
 }
 
-@media (max-width: 480px) {
-  /* Forcer 1 slide visible sur très petit écran */
-  .swiper[data-slides-per-view="3"] .swiper-slide,
-  .swiper[data-slides-per-view="5"] .swiper-slide,
-  .swiper[data-slides-per-view="7"] .swiper-slide {
-    width: 250px !important;
-  }
-
-  /* Éviter le dépassement sur très petit écran */
-  .wp-block-g2rd-carousel.alignfull {
-    width: 100% !important;
-    margin-left: -25% !important;
-    margin-right: -25% !important;
-  }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .g2rd-carousel {
     padding: 15px;
   }
 
+  .swiper-slide {
+    width: 280px;
+    height: 280px;
+  }
+
   .carousel-title h2 {
-    font-size: inherit;
+    font-size: 1.8rem;
   }
 
   .carousel-title p {
     font-size: 1rem;
   }
+}
 
-  /* Ajuster les slides pour mobile */
+@media (max-width: 768px) {
+  .g2rd-carousel {
+    padding: 8px;
+  }
+
+  .carousel-title h2 {
+    font-size: 1.4rem;
+  }
+
+  .carousel-title p {
+    font-size: 0.85rem;
+  }
+
+  /* Ajuster les slides pour mobile - GRILLE 2x2 OPTIMISÉE */
   .swiper-slide {
-    width: 280px !important;
-    height: 200px !important;
+    width: calc(50% - 5px) !important; /* 2 images par ligne avec espacement */
+    height: 140px !important; /* Hauteur optimisée pour mobile */
+    margin-right: 10px !important; /* Espacement horizontal */
+    margin-bottom: 10px !important; /* Espacement vertical */
+  }
+
+  /* Configuration spécifique pour la grille 2x2 */
+  .swiper-grid-column .swiper-slide {
+    height: calc((100% - 10px) / 2) !important; /* Hauteur pour 2 rangées */
+  }
+
+  /* Optimiser la taille des images sur mobile */
+  .carousel-slide {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 8px; /* Coins arrondis pour mobile */
+    overflow: hidden;
+  }
+
+  .carousel-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: center;
   }
 
   .carousel-badge {
-    left: 15px;
-    top: 15px;
-    font-size: 11px;
-    padding: 5px 10px;
+    left: 6px;
+    top: 6px;
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 4px;
   }
 
   .carousel-title {
-    padding-top: 40px;
+    padding-top: 20px;
     text-align: center;
   }
 
   /* Ajuster l'espacement */
   .swiper {
-    padding-bottom: 40px;
+    padding-bottom: 20px;
   }
 
   /* Optimiser les boutons de navigation */
   .swiper-button-prev,
   .swiper-button-next {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
   }
 
   .swiper-button-prev::after,
   .swiper-button-next::after {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   /* Optimiser l'effet Coverflow pour mobile */
@@ -542,11 +519,66 @@
     transform: scale(0.9) translateZ(-50px) !important;
     opacity: 0.8;
   }
+
+  /* Masquer les boutons de navigation sur mobile si nécessaire */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: flex;
+  }
+
+  /* Améliorer la navigation tactile sur mobile */
+  .swiper {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  /* Optimiser les légendes pour mobile */
+  .carousel-caption {
+    padding: 5px;
+    font-size: 0.65rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  }
+
+  .carousel-caption h3 {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+    line-height: 1.1;
+  }
+
+  .carousel-caption p {
+    font-size: 0.6rem;
+    line-height: 1;
+    margin: 0;
+  }
+
+  /* Optimiser la pagination pour mobile */
+  .swiper-pagination {
+    bottom: 5px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+  }
+
+  /* Masquer les boutons de navigation sur mobile (pas de défilement) */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important; /* Masquer complètement sur mobile */
+  }
+
+  /* Masquer la pagination sur mobile (pas de défilement) */
+  .swiper-pagination {
+    display: none !important; /* Masquer complètement sur mobile */
+  }
 }
 
 @media (max-width: 480px) {
   .g2rd-carousel {
-    padding: 10px;
+    padding: 8px;
   }
 
   .swiper-slide {
@@ -555,11 +587,11 @@
   }
 
   .carousel-title h2 {
-    font-size: inherit;
+    font-size: 1.3rem;
   }
 
   .carousel-title p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .carousel-badge {
@@ -589,6 +621,63 @@
   .swiper {
     padding-bottom: 35px;
   }
+
+  /* Masquer les boutons sur très petit écran si nécessaire */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: flex;
+  }
+
+  /* Améliorer l'espacement des slides sur mobile */
+  .swiper-slide {
+    margin-right: 10px;
+  }
+
+  /* Assurer une meilleure visibilité des slides */
+  .carousel-slide {
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .g2rd-carousel {
+    padding: 5px;
+  }
+
+  .swiper-slide {
+    width: 220px !important;
+    height: 160px !important;
+  }
+
+  .carousel-title h2 {
+    font-size: 1.2rem;
+  }
+
+  .carousel-title p {
+    font-size: 0.8rem;
+  }
+
+  /* Masquer les boutons sur très petit écran */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+
+  /* Optimiser l'espacement pour très petit écran */
+  .swiper-slide {
+    margin-right: 8px;
+  }
+
+  /* Améliorer la pagination sur très petit écran */
+  .swiper-pagination {
+    bottom: 5px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+  }
 }
 
 /* Editor Preview Styles */
@@ -607,43 +696,48 @@
 }
 
 .g2rd-carousel-preview .carousel-slide {
-  flex: 0 0 200px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  height: 150px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .g2rd-carousel-preview .carousel-navigation {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   margin-top: 20px;
 }
 
 .g2rd-carousel-preview .carousel-nav-prev,
 .g2rd-carousel-preview .carousel-nav-next {
+  width: 40px;
+  height: 40px;
   background: #007cba;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 18px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .g2rd-carousel-preview .carousel-pagination {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 20px;
+  gap: 5px;
+  margin-top: 15px;
 }
 
 .g2rd-carousel-preview .pagination-dot {
   width: 8px;
   height: 8px;
+  background: #ccc;
   border-radius: 50%;
-  background: #ddd;
   cursor: pointer;
 }
 
@@ -651,36 +745,79 @@
   background: #007cba;
 }
 
-/* Fix pour l'ancienne version de Swiper */
+/* Styles pour les anciennes versions de Swiper */
 .swiper-container {
   width: 100%;
-  padding-bottom: 50px;
+  height: 100%;
 }
 
-/* Amélioration de l'affichage des images */
 .swiper-slide img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-/* Styles pour différents effets */
+/* Effets spécifiques */
 .swiper-effect-slide .swiper-slide {
-  width: 300px;
+  transition: transform 0.3s ease;
 }
 
 .swiper-effect-coverflow .swiper-slide {
-  width: 300px;
-  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .swiper-effect-fade .swiper-slide {
-  width: 100%;
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.6s ease;
 }
 
 .swiper-effect-fade .swiper-slide-active {
   opacity: 1;
+}
+
+/* Styles pour les liens d'images */
+.carousel-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.carousel-image-link:hover {
+  transform: scale(1.02);
+}
+
+.carousel-image-link:focus {
+  outline: 2px solid #007cba;
+  outline-offset: 2px;
+}
+
+/* Assurer que l'image dans le lien occupe tout l'espace */
+.carousel-image-link .carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  /* Forcer la grille 2x2 en mobile et neutraliser les largeurs 33.33% */
+  .g2rd-carousel .swiper[data-slides-per-view="3"] .swiper-slide,
+  .g2rd-carousel .swiper .swiper-wrapper .swiper-slide {
+    width: calc(50% - 8px) !important;
+    margin-right: 8px !important;
+    margin-bottom: 10px !important;
+    height: 150px !important;
+  }
+
+  /* S'assurer que l'image remplit bien la vignette */
+  .g2rd-carousel .carousel-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+  }
 }

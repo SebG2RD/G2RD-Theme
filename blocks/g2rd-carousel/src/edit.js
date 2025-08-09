@@ -78,21 +78,11 @@ export default function Edit({ attributes, setAttributes }) {
             value={currentContentType}
             options={[
               { label: __("Images", "g2rd-carousel"), value: "images" },
-              {
-                label: __("Posts (coming soon)", "g2rd-carousel"),
-                value: "posts",
-                disabled: true,
-              },
-              {
-                label: __("Pages (coming soon)", "g2rd-carousel"),
-                value: "pages",
-                disabled: true,
-              },
-              {
-                label: __("Custom Post Types (coming soon)", "g2rd-carousel"),
-                value: "cpt",
-                disabled: true,
-              },
+              { label: __("Posts", "g2rd-carousel"), value: "posts" },
+              { label: __("Pages", "g2rd-carousel"), value: "pages" },
+              { label: __("Portfolio", "g2rd-carousel"), value: "portfolio" },
+              { label: __("Prestations", "g2rd-carousel"), value: "prestations" },
+              { label: __("Qui sommes-nous", "g2rd-carousel"), value: "qui-sommes-nous" },
             ]}
             onChange={(value) => setAttributes({ contentType: value })}
           />

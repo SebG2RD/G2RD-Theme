@@ -8,13 +8,25 @@ Description: Un thème Full Site Editing (FSE) moderne et flexible pour les agen
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Version: 1.1.1
+ Version: 1.1.2
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD-theme
 Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors, custom-menu, custom-logo, featured-images, footer-widgets, portfolio, blog, translation-ready, rtl-language-support, threaded-comments, accessibility-ready
 
 GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
+*/
+
+/*
+  1.1.2 – Améliorations du bloc G2RD Carousel
+  - Mobile (<768px) : affichage fixe 2×2 (4 images) sans autoplay, sans loop, sans swipe,
+    sans pagination/navigation. Effet forcé « slide » pour éviter les artefacts 3D.
+  - Desktop/Tablette : comportement intact (effets, autoplay et loop selon réglages).
+  - Respect strict de « Show Captions » : l’overlay .carousel-post-info n’est plus rendu quand
+    l’option est désactivée.
+  - Robustesse front : fallback si le HTML n’a pas de slides (contentData/contentIds dans
+    data-config + récupération REST si besoin).
+  - CSS mobile : neutralise les largeurs 33.33% pour forcer 2×2 (50%).
 */
 
 /* Logo TranslatePress plugin */
@@ -180,7 +192,9 @@ ul {
   height: 2.5px;
   opacity: 0.7;
   z-index: -1;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  transition:
+    transform 0.15s ease-out,
+    opacity 0.15s ease-out;
   will-change: transform, left, top;
 }
 
@@ -257,6 +271,12 @@ ul {
   }
   .wp-block-group-is-layout-flex {
     flex-direction: column;
+  }
+  .wp-container-core-social-links-is-layout-d445cf74 {
+    justify-content: center;
+  }
+  li.wp-social-link {
+    width: 10%;
   }
 
   /* Adaptation du CSS pour la verision mobile */

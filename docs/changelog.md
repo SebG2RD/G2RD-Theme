@@ -1,5 +1,14 @@
 # Changelog du thème G2RD
 
+## 1.1.2
+
+- Bloc G2RD Carousel
+  - Mobile (<768px): affichage fixe 2×2 (4 images), sans autoplay, sans loop, sans swipe, sans pagination/navigation, effet forcé « slide ».
+  - Desktop/Tablette: comportement intact (effets, autoplay et loop selon réglages).
+  - Respect de « Show Captions »: l’overlay `.carousel-post-info` n’est plus rendu quand l’option est désactivée.
+  - Fallback frontend: `contentData` et `contentIds` embarqués en data-config + récupération REST si nécessaire.
+  - CSS mobile: surcharges pour neutraliser les largeurs 33.33% et forcer 50% (2×2).
+
 ## 1.0.6
 
 - **Nouveautés** :

@@ -183,6 +183,15 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.2
+
+- Bloc G2RD Carousel: comportement mobile revu
+  - Mobile (<768px): grille 2×2 fixe (4 images), aucune animation (pas d’autoplay), pas de loop, navigation/pagination désactivées, swipe désactivé, effet forcé « slide ».
+  - Desktop/Tablette: effets et autoplay conservés selon la configuration du bloc.
+- Respect de l’option « Show Captions »: suppression conditionnelle de l’overlay `.carousel-post-info` quand désactivé.
+- Robustesse frontend: fallback si le HTML ne contient pas les slides (embarque `contentData` et `contentIds` dans `data-config`, récupération via REST si nécessaire).
+- CSS mobile: neutralisation des largeurs 33.33% issues des attributs pour garantir la grille 2×2.
+
 ### 1.1.1
 
 - **Nouveau CPT Prestations** : Création d'un type de contenu personnalisé pour les prestations avec 5 sections configurables

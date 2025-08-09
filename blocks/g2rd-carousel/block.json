@@ -29,7 +29,6 @@
   "editorStyle": "file:./build/index.css",
   "style": "file:./src/carousel.css",
   "viewScript": "file:./build/carousel-frontend.js",
-  "render": "file:./build/save.js",
   "attributes": {
     "images": {
       "type": "array",
