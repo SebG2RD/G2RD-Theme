@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gestion des shortcodes personnalisés
  * 
@@ -51,6 +52,22 @@ class Shortcode
         add_shortcode('methodologie', [$this, 'methodologieShortcode']);
         add_shortcode('objectif', [$this, 'objectifShortcode']);
         add_shortcode('icones_images', [$this, 'iconesImagesShortcode']);
+        // Prestations
+        add_shortcode('prestation_title_1', [$this, 'prestationTitle1Shortcode']);
+        add_shortcode('prestation_title_2', [$this, 'prestationTitle2Shortcode']);
+        add_shortcode('prestation_title_3', [$this, 'prestationTitle3Shortcode']);
+        add_shortcode('prestation_title_4', [$this, 'prestationTitle4Shortcode']);
+        add_shortcode('prestation_title_5', [$this, 'prestationTitle5Shortcode']);
+        add_shortcode('prestation_description_1', [$this, 'prestationDescription1Shortcode']);
+        add_shortcode('prestation_description_2', [$this, 'prestationDescription2Shortcode']);
+        add_shortcode('prestation_description_3', [$this, 'prestationDescription3Shortcode']);
+        add_shortcode('prestation_description_4', [$this, 'prestationDescription4Shortcode']);
+        add_shortcode('prestation_description_5', [$this, 'prestationDescription5Shortcode']);
+        add_shortcode('prestation_image_1', [$this, 'prestationImage1Shortcode']);
+        add_shortcode('prestation_image_2', [$this, 'prestationImage2Shortcode']);
+        add_shortcode('prestation_image_3', [$this, 'prestationImage3Shortcode']);
+        add_shortcode('prestation_image_4', [$this, 'prestationImage4Shortcode']);
+        add_shortcode('prestation_image_5', [$this, 'prestationImage5Shortcode']);
     }
 
     // === Shortcodes Portfolio ===
@@ -254,4 +271,290 @@ class Shortcode
         }
         return $output;
     }
-} 
+
+    // === Shortcodes Prestations ===
+    /**
+     * Affiche le titre 1 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationTitle1Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $title = get_post_meta($post_id, '_prestation_title_1', true);
+        if (empty($title)) {
+            return 'Aucun titre spécifié';
+        }
+        return wp_kses_post($title);
+    }
+
+    /**
+     * Affiche le titre 2 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationTitle2Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $title = get_post_meta($post_id, '_prestation_title_2', true);
+        if (empty($title)) {
+            return 'Aucun titre spécifié';
+        }
+        return wp_kses_post($title);
+    }
+
+    /**
+     * Affiche le titre 3 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationTitle3Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $title = get_post_meta($post_id, '_prestation_title_3', true);
+        if (empty($title)) {
+            return 'Aucun titre spécifié';
+        }
+        return wp_kses_post($title);
+    }
+
+    /**
+     * Affiche le titre 4 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationTitle4Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $title = get_post_meta($post_id, '_prestation_title_4', true);
+        if (empty($title)) {
+            return 'Aucun titre spécifié';
+        }
+        return wp_kses_post($title);
+    }
+
+    /**
+     * Affiche le titre 5 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationTitle5Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $title = get_post_meta($post_id, '_prestation_title_5', true);
+        if (empty($title)) {
+            return 'Aucun titre spécifié';
+        }
+        return wp_kses_post($title);
+    }
+
+    /**
+     * Affiche la description 1 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationDescription1Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $description = get_post_meta($post_id, '_prestation_description_1', true);
+        if (empty($description)) {
+            return 'Aucune description spécifiée';
+        }
+        return wp_kses_post($description);
+    }
+
+    /**
+     * Affiche la description 2 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationDescription2Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $description = get_post_meta($post_id, '_prestation_description_2', true);
+        if (empty($description)) {
+            return 'Aucune description spécifiée';
+        }
+        return wp_kses_post($description);
+    }
+
+    /**
+     * Affiche la description 3 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationDescription3Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $description = get_post_meta($post_id, '_prestation_description_3', true);
+        if (empty($description)) {
+            return 'Aucune description spécifiée';
+        }
+        return wp_kses_post($description);
+    }
+
+    /**
+     * Affiche la description 4 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationDescription4Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $description = get_post_meta($post_id, '_prestation_description_4', true);
+        if (empty($description)) {
+            return 'Aucune description spécifiée';
+        }
+        return wp_kses_post($description);
+    }
+
+    /**
+     * Affiche la description 5 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationDescription5Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $description = get_post_meta($post_id, '_prestation_description_5', true);
+        if (empty($description)) {
+            return 'Aucune description spécifiée';
+        }
+        return wp_kses_post($description);
+    }
+
+    /**
+     * Affiche l'image 1 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationImage1Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $image = get_post_meta($post_id, '_prestation_image_1', true);
+        if (empty($image)) {
+            return 'Aucune image spécifiée';
+        }
+        return '<div class="wp-block-image"><figure class="aligncenter"><img src="' . esc_url($image) . '" alt="Image prestation" class="wp-image-prestation" /></figure></div>';
+    }
+
+    /**
+     * Affiche l'image 2 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationImage2Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $image = get_post_meta($post_id, '_prestation_image_2', true);
+        if (empty($image)) {
+            return 'Aucune image spécifiée';
+        }
+        return '<div class="wp-block-image"><figure class="aligncenter"><img src="' . esc_url($image) . '" alt="Image prestation" class="wp-image-prestation" /></figure></div>';
+    }
+
+    /**
+     * Affiche l'image 3 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationImage3Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $image = get_post_meta($post_id, '_prestation_image_3', true);
+        if (empty($image)) {
+            return 'Aucune image spécifiée';
+        }
+        return '<div class="wp-block-image"><figure class="aligncenter"><img src="' . esc_url($image) . '" alt="Image prestation" class="wp-image-prestation" /></figure></div>';
+    }
+
+    /**
+     * Affiche l'image 4 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationImage4Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $image = get_post_meta($post_id, '_prestation_image_4', true);
+        if (empty($image)) {
+            return 'Aucune image spécifiée';
+        }
+        return '<div class="wp-block-image"><figure class="aligncenter"><img src="' . esc_url($image) . '" alt="Image prestation" class="wp-image-prestation" /></figure></div>';
+    }
+
+    /**
+     * Affiche l'image 5 de la prestation
+     *
+     * @since 1.0.2
+     * @return string
+     */
+    public function prestationImage5Shortcode(): string
+    {
+        if (!is_singular('prestations')) {
+            return '';
+        }
+        $post_id = get_the_ID();
+        $image = get_post_meta($post_id, '_prestation_image_5', true);
+        if (empty($image)) {
+            return 'Aucune image spécifiée';
+        }
+        return '<div class="wp-block-image"><figure class="aligncenter"><img src="' . esc_url($image) . '" alt="Image prestation" class="wp-image-prestation" /></figure></div>';
+    }
+}

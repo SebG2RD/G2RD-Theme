@@ -25,6 +25,10 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
   color: var(--wp--preset--color--secondary) !important;
 }
 
+ul {
+  list-style: none;
+}
+
 /* Erreur avec l'activation de surecart */
 .wp-block-buttons {
   width: auto !important;
@@ -176,9 +180,7 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
   height: 2.5px;
   opacity: 0.7;
   z-index: -1;
-  transition:
-    transform 0.15s ease-out,
-    opacity 0.15s ease-out;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
   will-change: transform, left, top;
 }
 
