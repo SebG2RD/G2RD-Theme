@@ -578,12 +578,26 @@
 
 @media (max-width: 480px) {
   .g2rd-carousel {
-    padding: 8px;
+    padding: 5px !important; /* Réduire encore plus le padding */
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
-  .swiper-slide {
-    width: 250px !important;
-    height: 180px !important;
+  /* Grille 2x2 optimisée pour très petit écran */
+  .g2rd-carousel .swiper .swiper-wrapper .swiper-slide {
+    width: calc(50% - 3px) !important; /* Encore moins d'espacement */
+    height: 140px !important; /* Hauteur adaptée */
+    margin-right: 6px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Wrapper et slides actives à 100% */
+  .g2rd-carousel .swiper-wrapper {
+    width: 100% !important;
+  }
+
+  .g2rd-carousel .swiper-slide.swiper-slide-active {
+    width: 100% !important;
   }
 
   .carousel-title h2 {
@@ -641,12 +655,26 @@
 
 @media (max-width: 360px) {
   .g2rd-carousel {
-    padding: 5px;
+    padding: 3px !important; /* Padding minimal */
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
-  .swiper-slide {
-    width: 220px !important;
-    height: 160px !important;
+  /* Grille 2x2 pour très très petit écran */
+  .g2rd-carousel .swiper .swiper-wrapper .swiper-slide {
+    width: calc(50% - 2px) !important; /* Espacement minimal */
+    height: 120px !important; /* Hauteur compacte */
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Wrapper et slides actives à 100% */
+  .g2rd-carousel .swiper-wrapper {
+    width: 100% !important;
+  }
+
+  .g2rd-carousel .swiper-slide.swiper-slide-active {
+    width: 100% !important;
   }
 
   .carousel-title h2 {
@@ -804,13 +832,53 @@
 }
 
 @media (max-width: 767px) {
-  /* Forcer la grille 2x2 en mobile et neutraliser les largeurs 33.33% */
+  /* Masquer complètement les slides au-delà de la 4ème sur mobile */
+  .g2rd-carousel .swiper .swiper-wrapper .swiper-slide:nth-child(n + 5) {
+    display: none !important;
+  }
+
+  /* Forcer la grille 2x2 en mobile - PRENDRE TOUTE LA LARGEUR */
   .g2rd-carousel .swiper[data-slides-per-view="3"] .swiper-slide,
   .g2rd-carousel .swiper .swiper-wrapper .swiper-slide {
-    width: calc(50% - 8px) !important;
-    margin-right: 8px !important;
-    margin-bottom: 10px !important;
+    width: calc(50% - 5px) !important; /* Réduire l'espacement */
+    margin-right: 10px !important; /* Espacement entre les colonnes */
+    margin-bottom: 10px !important; /* Espacement entre les rangées */
     height: 150px !important;
+  }
+
+  /* Grille 2x2 spécifique pour mobile */
+  .g2rd-carousel .swiper-grid-column .swiper-slide {
+    width: calc(50% - 5px) !important; /* Réduire l'espacement */
+    height: 150px !important;
+    margin-bottom: 10px !important;
+    transition: none !important; /* Pas d'animation sur mobile */
+  }
+
+  /* Ajuster le conteneur pour prendre toute la largeur */
+  .g2rd-carousel {
+    padding: 8px !important; /* Réduire le padding */
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Ajuster le wrapper pour optimiser l'espace */
+  .g2rd-carousel .swiper-wrapper {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 10px !important;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  /* Forcer les slides actives à prendre toute la largeur */
+  .g2rd-carousel .swiper-slide.swiper-slide-active {
+    width: 100% !important;
+  }
+
+  /* Retirer la hauteur fixe du conteneur sur mobile */
+  .g2rd-carousel .carousel-container {
+    height: auto !important; /* Hauteur automatique au lieu de 400px */
   }
 
   /* S'assurer que l'image remplit bien la vignette */
@@ -819,5 +887,28 @@
     height: 100% !important;
     object-fit: cover !important;
     display: block;
+  }
+
+  /* Désactiver les animations sur mobile */
+  .g2rd-carousel .swiper-slide,
+  .g2rd-carousel .carousel-slide {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* Masquer la navigation et pagination sur mobile */
+  .g2rd-carousel .swiper-button-prev,
+  .g2rd-carousel .swiper-button-next,
+  .g2rd-carousel .swiper-pagination {
+    display: none !important;
+  }
+
+  /* Masquer complètement le débordement sur mobile */
+  .g2rd-carousel .swiper {
+    overflow: hidden !important;
+  }
+
+  .g2rd-carousel .swiper-wrapper {
+    overflow: hidden !important;
   }
 }

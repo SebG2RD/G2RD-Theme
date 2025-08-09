@@ -53,7 +53,19 @@ function initializeCarousels() {
       } = options;
       const wrapper = ensureWrapper();
 
-      items.forEach((item) => {
+      console.log(
+        "G2RD Carousel Mobile Debug - Building slides for",
+        items.length,
+        "items"
+      );
+
+      items.forEach((item, index) => {
+        // Sur mobile seulement, ne créer que 4 slides maximum pour la grille 2x2
+        const isMobile = window.innerWidth < 768;
+        if (isMobile && index >= 4) {
+          return;
+        }
+
         const slide = document.createElement("div");
         slide.className = "swiper-slide";
 
@@ -137,8 +149,48 @@ function initializeCarousels() {
 
       // 1) contentData immédiat
       if (Array.isArray(contentData) && contentData.length > 0) {
-        const items =
-          window.innerWidth < 768 ? contentData.slice(0, 4) : contentData;
+        console.log(
+          `G2RD Carousel Debug - contentData received:`,
+          contentData.length,
+          contentData.map((item) => ({
+            id: item.id,
+            title: item.title || item.caption,
+          }))
+        );
+
+        // Filtrer les doublons et prendre les 4 premiers sur mobile
+        const uniqueItems = [];
+        const seenIds = new Set();
+
+        contentData.forEach((item) => {
+          if (!seenIds.has(item.id)) {
+            seenIds.add(item.id);
+            uniqueItems.push(item);
+          }
+        });
+
+        console.log(
+          `G2RD Carousel Debug - Unique items from contentData:`,
+          uniqueItems.length,
+          uniqueItems.map((item) => ({
+            id: item.id,
+            title: item.title || item.caption,
+          }))
+        );
+
+        // Sur mobile seulement, limiter à 4 items pour la grille 2x2
+        const isMobile = window.innerWidth < 768;
+        const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
+        console.log(
+          `G2RD Carousel Debug - ${
+            isMobile ? "Mobile" : "Desktop"
+          } - Final items to display (contentData):`,
+          items.length,
+          items.map((item) => ({
+            id: item.id,
+            title: item.title || item.caption,
+          }))
+        );
         buildFromItems(items, { showCaptions, showBoxShadow, contentType });
         return;
       }
@@ -157,20 +209,68 @@ function initializeCarousels() {
           }wp/v2/${endpointType}?include=${contentIds.join(",")}&per_page=${
             contentIds.length
           }&_embed`;
+          console.log(
+            `G2RD Carousel Debug - Fetching contentIds from URL: ${url}`
+          );
           const r = await fetch(url);
           const data = await r.json();
-          let items = (data || []).map((post) => ({
-            type: "post",
-            id: post.id,
-            title: post.title?.rendered || "",
-            excerpt: post.excerpt?.rendered || "",
-            link: post.link || "",
-            featuredImage:
-              post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
-            featuredImageAlt:
-              post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
-          }));
-          if (window.innerWidth < 768) items = items.slice(0, 4);
+
+          console.log(
+            `G2RD Carousel Debug - contentIds data received:`,
+            data?.length || 0,
+            data?.map((post) => ({
+              id: post.id,
+              title: post.title?.rendered,
+              date: post.date,
+            }))
+          );
+
+          // Filtrer les doublons et prendre les 4 premiers sur mobile
+          const uniqueItems = [];
+          const seenIds = new Set();
+
+          (data || []).forEach((post) => {
+            if (!seenIds.has(post.id)) {
+              seenIds.add(post.id);
+              uniqueItems.push({
+                type: "post",
+                id: post.id,
+                title: post.title?.rendered || "",
+                excerpt: post.excerpt?.rendered || "",
+                link: post.link || "",
+                featuredImage:
+                  post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
+                featuredImageAlt:
+                  post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
+                date: post.date || "",
+              });
+            }
+          });
+
+          console.log(
+            `G2RD Carousel Debug - Unique items from contentIds:`,
+            uniqueItems.length,
+            uniqueItems.map((item) => ({
+              id: item.id,
+              title: item.title,
+              date: item.date,
+            }))
+          );
+
+          // Sur mobile seulement, limiter à 4 items pour la grille 2x2
+          const isMobile = window.innerWidth < 768;
+          const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
+          console.log(
+            `G2RD Carousel Debug - ${
+              isMobile ? "Mobile" : "Desktop"
+            } - Final items to display (contentIds):`,
+            items.length,
+            items.map((item) => ({
+              id: item.id,
+              title: item.title,
+              date: item.date,
+            }))
+          );
           buildFromItems(items, { showCaptions, showBoxShadow, contentType });
           return;
         } catch (err) {
@@ -185,21 +285,84 @@ function initializeCarousels() {
       if (contentType !== "images") {
         try {
           const endpointType = contentType;
-          const perPage = window.innerWidth < 768 ? 4 : 8;
-          const url = `/wp-json/wp/v2/${endpointType}?per_page=${perPage}&_embed`;
-          const r = await fetch(url);
+          // Sur mobile, récupérer exactement 4 publications pour la grille 2x2
+          // Sur desktop, récupérer plus d'items pour avoir un carousel complet
+          const perPage = window.innerWidth < 768 ? 8 : 12; // Récupérer plus pour avoir assez d'items uniques
+
+          // Utiliser l'URL correcte de l'API WordPress
+          const apiRoot = window?.wpApiSettings?.root || "/wp-json/";
+          const url = `${apiRoot}wp/v2/${endpointType}?per_page=${perPage}&_embed&orderby=date&order=desc`;
+          console.log(`G2RD Carousel Debug - Fetching from URL: ${url}`);
+
+          const r = await fetch(url, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!r.ok) {
+            throw new Error(`HTTP error! status: ${r.status}`);
+          }
+
           const data = await r.json();
-          const items = (data || []).map((post) => ({
-            type: "post",
-            id: post.id,
-            title: post.title?.rendered || "",
-            excerpt: post.excerpt?.rendered || "",
-            link: post.link || "",
-            featuredImage:
-              post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
-            featuredImageAlt:
-              post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
-          }));
+
+          console.log(
+            `G2RD Carousel Debug - Raw data received:`,
+            data?.length || 0,
+            data?.map((post) => ({
+              id: post.id,
+              title: post.title?.rendered,
+              date: post.date,
+            }))
+          );
+
+          // Filtrer les doublons et prendre les 4 premiers
+          const uniqueItems = [];
+          const seenIds = new Set();
+
+          (data || []).forEach((post) => {
+            if (!seenIds.has(post.id)) {
+              seenIds.add(post.id);
+              uniqueItems.push({
+                type: "post",
+                id: post.id,
+                title: post.title?.rendered || "",
+                excerpt: post.excerpt?.rendered || "",
+                link: post.link || "",
+                featuredImage:
+                  post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
+                featuredImageAlt:
+                  post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
+                date: post.date || "",
+              });
+            }
+          });
+
+          console.log(
+            `G2RD Carousel Debug - Unique items after filtering:`,
+            uniqueItems.length,
+            uniqueItems.map((item) => ({
+              id: item.id,
+              title: item.title,
+              date: item.date,
+            }))
+          );
+
+          // Sur mobile seulement, limiter à 4 items pour la grille 2x2
+          const isMobile = window.innerWidth < 768;
+          const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
+          console.log(
+            `G2RD Carousel Debug - ${
+              isMobile ? "Mobile" : "Desktop"
+            } - Final items to display (fallback):`,
+            items.length,
+            items.map((item) => ({
+              id: item.id,
+              title: item.title,
+              date: item.date,
+            }))
+          );
           buildFromItems(items, { showCaptions, showBoxShadow, contentType });
           return;
         } catch (err) {
@@ -264,7 +427,7 @@ function initializeCarousels() {
           // Mobile (320px et plus) - GRILLE 2x2 FIXE (4 images seulement)
           320: {
             slidesPerView: 2, // 2 images par ligne
-            slidesPerGroup: 4, // Groupe de 4 images (pas de défilement)
+            slidesPerGroup: 2, // Groupe de 2 images pour éviter les conflits
             spaceBetween: 10, // Petit espacement sur mobile
             centeredSlides: false, // Désactivé pour affichage en grille
             effect: "slide", // Effet slide sur mobile pour de meilleures performances
@@ -273,6 +436,7 @@ function initializeCarousels() {
             allowTouchMove: false, // Désactiver le défilement tactile sur mobile
             simulateTouch: false, // Désactiver complètement le défilement
             touchEventsTarget: "none", // Désactiver les événements tactiles
+            speed: 0, // Pas d'animation sur mobile
             grid: {
               rows: 2, // 2 rangées
               fill: "row", // Remplir par rangée
@@ -303,9 +467,9 @@ function initializeCarousels() {
             slidesPerView: Math.min(3, baseSlidesPerView),
             slidesPerGroup: 1, // Défile une image à la fois
             spaceBetween: finalConfig.spaceBetween,
-            centeredSlides: finalConfig.centeredSlides,
+            centeredSlides: false, // Désactiver le centrage pour éviter le décalage
             effect: finalConfig.effect,
-            loop: true, // Boucle activée sur desktop
+            loop: false, // Désactiver le loop pour éviter le décalage
             allowTouchMove: true, // Activer le défilement tactile
             autoplay: finalConfig.autoplayDelay
               ? {
@@ -313,7 +477,7 @@ function initializeCarousels() {
                   disableOnInteraction: false,
                   pauseOnMouseEnter: true,
                   waitForTransition: true,
-                  stopOnLastSlide: false,
+                  stopOnLastSlide: true, // Arrêter sur la dernière slide
                   reverseDirection: false,
                 }
               : false,
@@ -323,9 +487,9 @@ function initializeCarousels() {
             slidesPerView: baseSlidesPerView,
             slidesPerGroup: 1, // Défile une image à la fois
             spaceBetween: finalConfig.spaceBetween,
-            centeredSlides: finalConfig.centeredSlides,
+            centeredSlides: false, // Désactiver le centrage pour éviter le décalage
             effect: finalConfig.effect,
-            loop: true, // Boucle activée sur grand écran
+            loop: false, // Désactiver le loop pour éviter le décalage
             allowTouchMove: true, // Activer le défilement tactile
             autoplay: finalConfig.autoplayDelay
               ? {
@@ -333,7 +497,7 @@ function initializeCarousels() {
                   disableOnInteraction: false,
                   pauseOnMouseEnter: true,
                   waitForTransition: true,
-                  stopOnLastSlide: false,
+                  stopOnLastSlide: true, // Arrêter sur la dernière slide
                   reverseDirection: false,
                 }
               : false,
@@ -341,10 +505,23 @@ function initializeCarousels() {
         };
       };
 
+      // Vérifier le nombre de slides disponibles
+      const slidesCount =
+        swiperContainer.querySelectorAll(".swiper-slide").length;
+
+      // Désactiver le loop s'il n'y a pas assez de slides
+      if (
+        slidesCount <= parseInt(finalConfig.slidesPerView) ||
+        slidesCount < 3
+      ) {
+        finalConfig.loop = false;
+      }
+
       // En mobile, forcer désactivation nav/pagination/autoplay/touch + loop false
       if (window.innerWidth < 768) {
         finalConfig.showNavigation = false;
         finalConfig.showPagination = false;
+        finalConfig.loop = false; // Toujours désactiver le loop sur mobile
       }
 
       // Préparer les modules Swiper disponibles
@@ -364,13 +541,16 @@ function initializeCarousels() {
         const swiperConfig = {
           modules: modulesForSwiper,
           effect: window.innerWidth < 768 ? "slide" : finalConfig.effect,
-          speed: 800,
+          speed: window.innerWidth < 768 ? 0 : 800, // Pas d'animation sur mobile
           easing: "ease-out",
           slidesPerView: parseInt(finalConfig.slidesPerView) || 3,
           spaceBetween: finalConfig.spaceBetween,
-          centeredSlides: finalConfig.centeredSlides,
+          centeredSlides: window.innerWidth < 768 ? false : false, // Désactiver le centrage sur desktop
           loop: window.innerWidth < 768 ? false : finalConfig.loop,
           grabCursor: finalConfig.grabCursor,
+          // Configuration simplifiée pour éviter le décalage
+          loopAdditionalSlides: 0, // Pas de slides supplémentaires
+          loopedSlides: 0, // Pas de slides dupliquées
           breakpoints: getResponsiveConfig(),
           pagination: (window.innerWidth < 768 ? false : showPaginationEnabled)
             ? {
@@ -411,6 +591,14 @@ function initializeCarousels() {
 
         // Initialiser Swiper
         const swiper = new Swiper(swiperContainer, swiperConfig);
+
+        // Vérifier que l'initialisation a réussi
+        if (!swiper || !swiper.slides || swiper.slides.length === 0) {
+          console.error(
+            "G2RD Carousel: Swiper initialization failed or no slides found"
+          );
+          return;
+        }
 
         // Stocker l'instance Swiper sur l'élément pour un accès futur
         carousel.swiperInstance = swiper;
@@ -547,19 +735,14 @@ function initializeCarousels() {
           document.dispatchEvent(event);
         });
 
-        // Gestion du redimensionnement de la fenêtre avec protection
+        // Gestion simple du redimensionnement
         const handleResize = () => {
-          if (swiper && !swiper.destroyed && !swiper.animating) {
-            // Attendre que l'animation en cours soit terminée
-            setTimeout(() => {
-              if (swiper && !swiper.destroyed) {
-                swiper.update();
-                swiper.updateSize();
-                swiper.updateSlides();
-                swiper.updateProgress();
-                swiper.updateSlidesClasses();
-              }
-            }, 100);
+          if (swiper && !swiper.destroyed) {
+            try {
+              swiper.update();
+            } catch (error) {
+              // Ignorer les erreurs de mise à jour
+            }
           }
         };
 
@@ -567,12 +750,7 @@ function initializeCarousels() {
         let resizeTimeout;
         window.addEventListener("resize", () => {
           clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(handleResize, 250);
-        });
-
-        // Écouter les changements d'orientation sur mobile
-        window.addEventListener("orientationchange", () => {
-          setTimeout(handleResize, 300);
+          resizeTimeout = setTimeout(handleResize, 500);
         });
 
         // Optimisation pour mobile : désactiver certains effets sur les appareils tactiles
@@ -685,26 +863,15 @@ window.G2RDCarousel = {
     }
   },
 
-  // Nouvelle fonction pour mettre à jour la configuration responsive
+  // Fonction simple pour mettre à jour la configuration responsive
   updateResponsiveConfig: function (carouselElement) {
     const swiper = carouselElement.swiperInstance;
-    if (swiper && !swiper.destroyed && !swiper.animating) {
-      const responsiveConfig = getResponsiveConfigForScreen();
-
-      // Attendre que l'animation en cours soit terminée
-      setTimeout(() => {
-        if (swiper && !swiper.destroyed) {
-          // Mettre à jour la configuration
-          Object.assign(swiper.params, responsiveConfig);
-
-          // Forcer la mise à jour de manière sécurisée
-          swiper.update();
-          swiper.updateSize();
-          swiper.updateSlides();
-          swiper.updateProgress();
-          swiper.updateSlidesClasses();
-        }
-      }, 50);
+    if (swiper && !swiper.destroyed) {
+      try {
+        swiper.update();
+      } catch (error) {
+        // Ignorer les erreurs
+      }
     }
   },
 
@@ -725,5 +892,5 @@ window.addEventListener("resize", function () {
     if (window.G2RDCarousel) {
       window.G2RDCarousel.updateAllResponsive();
     }
-  }, 250); // Délai pour éviter trop d'appels
+  }, 1000); // Délai plus long pour éviter trop d'appels
 });
