@@ -37,8 +37,7 @@ class ScriptsManager
      */
     private array $defer_scripts = [
         'g2rd-particles',
-        'g2rd-clickable-articles',
-        'g2rd-block-scripts'
+        'g2rd-clickable-articles'
     ];
 
     /**
@@ -128,14 +127,14 @@ class ScriptsManager
             true
         );
 
-        // Script pour les blocs
-        \wp_enqueue_script(
-            'g2rd-block-scripts',
-            \get_template_directory_uri() . '/assets/js/blocks.js',
-            [],
-            $this->theme_version,
-            true
-        );
+        // Script pour les blocs (gsap-block-controls.js est géré par la classe GSAP_Animations)
+        // \wp_enqueue_script(
+        //     'g2rd-block-scripts',
+        //     \get_template_directory_uri() . '/assets/js/blocks.js',
+        //     [],
+        //     $this->theme_version,
+        //     true
+        // );
 
         // Ajouter les données localisées pour les scripts
         wp_localize_script('g2rd-particles', 'g2rdData', [
