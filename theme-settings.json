@@ -186,6 +186,36 @@
           ]
         },
         {
+          "fontFamily": "Inter, sans-serif",
+          "name": "Inter",
+          "slug": "inter",
+          "fontFace": [
+            {
+              "fontFamily": "Inter",
+              "fontDisplay": "block",
+              "fontStretch": "normal",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/Inter_28pt-Regular.woff2"]
+            }
+          ]
+        },
+        {
+          "fontFamily": "Plus Jakarta Sans, sans-serif",
+          "name": "Plus Jakarta Sans",
+          "slug": "plus-jakarta-sans",
+          "fontFace": [
+            {
+              "fontFamily": "Plus Jakarta Sans",
+              "fontDisplay": "block",
+              "fontStretch": "normal",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/PlusJakartaSans-Regular.woff2"]
+            }
+          ]
+        },
+        {
           "name": "Source Sans Pro",
           "slug": "source-sans-pro",
           "fontFamily": "Source Sans Pro, sans-serif"

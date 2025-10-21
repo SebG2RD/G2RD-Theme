@@ -49,7 +49,7 @@
         },
         "typography": {
           "fontSize": "var(--wp--preset--font-size--m)",
-          "fontFamily": "var(--wp--preset--font-family--rubik)",
+          "fontFamily": "var(--wp--preset--font-family--inter)",
           "fontWeight": "400",
           "lineHeight": "1.5"
         },

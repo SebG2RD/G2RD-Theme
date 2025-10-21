@@ -170,13 +170,16 @@ th {
   z-index: 9999;
   background: var(--wp--preset--color--white);
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(47, 66, 93, 0.18),
+  box-shadow:
+    0 8px 32px rgba(47, 66, 93, 0.18),
     0 1.5px 4px rgba(47, 66, 93, 0.1);
-  font-family: var(--wp--preset--font-family--rubik);
+  font-family: var(--wp--preset--font-family--inter);
   max-width: 320px;
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .accessibility-panel:not(.is-open) {
@@ -197,7 +200,10 @@ th {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
   position: absolute;
   top: -30px;
   right: 0;
@@ -231,7 +237,10 @@ th {
   cursor: pointer;
   font-size: var(--wp--preset--font-size--m);
   color: var(--wp--preset--color--primary);
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .accessibility-panel__button:hover,
@@ -359,7 +368,9 @@ pre {
   box-shadow: 0 2px 12px rgba(47, 66, 93, 0.1);
   pointer-events: none;
   z-index: 99999;
-  transition: top 0.15s, background 0.2s;
+  transition:
+    top 0.15s,
+    background 0.2s;
 }
 
 .accessibility-floating-btn {
@@ -378,7 +389,10 @@ pre {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
   font-size: 20px;
 }
 
@@ -423,7 +437,11 @@ pre {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s, opacity 0.2s,
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    color 0.2s,
+    opacity 0.2s,
     border-color 0.2s;
   font-size: 20px;
   opacity: 1;
