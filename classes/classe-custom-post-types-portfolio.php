@@ -28,6 +28,11 @@ class CPT_Portfolio
      */
     public function registerHooks(): void
     {
+        // Vérifier si le CPT est activé avant d'enregistrer les hooks
+        if (\get_option('g2rd_cpt_portfolio_enabled', '1') !== '1') {
+            return;
+        }
+        
         add_action('init', [$this, 'registerPostType']);
         add_action('add_meta_boxes', [$this, 'addMetaBox']);
         add_action('save_post_portfolio', [$this, 'saveMeta']);
@@ -45,13 +50,22 @@ class CPT_Portfolio
      */
     public function registerPostType(): void
     {
+        // Vérifier si le CPT est activé
+        if (\get_option('g2rd_cpt_portfolio_enabled', '1') !== '1') {
+            return;
+        }
+        
+        // Récupérer le nom personnalisé ou utiliser le nom par défaut
+        $custom_name = \get_option('g2rd_cpt_portfolio_name', 'Portfolio');
+        $singular_name = 'Projet'; // On peut aussi personnaliser ça plus tard si besoin
+        
         $labels = [
-            'name' => 'Portfolio',
+            'name' => $custom_name,
             'all_items' => 'Tous les projets',
-            'singular_name' => 'Projet',
-            'add_new_item' => 'Ajouter un projet',
-            'edit_item' => 'Modifier le projet',
-            'menu_name' => 'Portfolio'
+            'singular_name' => $singular_name,
+            'add_new_item' => 'Ajouter un ' . \strtolower($singular_name),
+            'edit_item' => 'Modifier le ' . \strtolower($singular_name),
+            'menu_name' => $custom_name
         ];
         $args = [
             'labels' => $labels,

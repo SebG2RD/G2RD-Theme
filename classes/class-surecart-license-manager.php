@@ -30,7 +30,8 @@ use function esc_html;
 use function submit_button;
 use function settings_fields;
 
-class SureCartLicenseManager {
+class SureCartLicenseManager
+{
     /**
      * URL de l'API SureCart
      *
@@ -53,7 +54,8 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @param string $api_key Clé API SureCart
      */
-    public function __construct($api_key) {
+    public function __construct($api_key)
+    {
         $this->api_key = $api_key;
         $this->registerHooks();
     }
@@ -64,15 +66,22 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function registerHooks() {
+    public function registerHooks()
+    {
         // Un seul menu : G2RD License
         \add_action('admin_menu', [$this, 'addLicenseMenu']);
         \add_action('admin_init', [$this, 'registerLicenseSettings']);
         \add_action('admin_notices', [$this, 'displayLicenseNotices']);
-        
+
         // Ajouter les actions AJAX pour la vérification manuelle
         \add_action('wp_ajax_g2rd_verify_license', [$this, 'ajaxVerifyLicense']);
-        
+
+        // Ajouter l'action AJAX pour sauvegarder l'état des CPT
+        \add_action('wp_ajax_g2rd_toggle_cpt', [$this, 'ajaxToggleCpt']);
+
+        // Ajouter l'action AJAX pour sauvegarder le nom d'un CPT
+        \add_action('wp_ajax_g2rd_save_cpt_name', [$this, 'ajaxSaveCptName']);
+
         // Ajouter le script JavaScript
         \add_action('admin_enqueue_scripts', [$this, 'enqueueLicenseScripts']);
     }
@@ -83,7 +92,8 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function addLicenseMenu() {
+    public function addLicenseMenu()
+    {
         \add_submenu_page(
             'themes.php',
             'G2RD License',
@@ -100,9 +110,20 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function registerLicenseSettings() {
+    public function registerLicenseSettings()
+    {
         \register_setting('g2rd_license', 'g2rd_license_key');
         // Ne plus enregistrer la clé API côté client
+
+        // Enregistrer les paramètres pour chaque CPT
+        \register_setting('g2rd_license', 'g2rd_cpt_prestations_enabled');
+        \register_setting('g2rd_license', 'g2rd_cpt_qui_sommes_nous_enabled');
+        \register_setting('g2rd_license', 'g2rd_cpt_portfolio_enabled');
+
+        // Enregistrer les noms personnalisés pour chaque CPT
+        \register_setting('g2rd_license', 'g2rd_cpt_prestations_name');
+        \register_setting('g2rd_license', 'g2rd_cpt_qui_sommes_nous_name');
+        \register_setting('g2rd_license', 'g2rd_cpt_portfolio_name');
     }
 
     /**
@@ -111,13 +132,14 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function displayLicenseNotices() {
+    public function displayLicenseNotices()
+    {
         if (!$this->isLicenseValid()) {
-            ?>
+?>
             <div class="notice notice-warning">
                 <p><?php \_e('Votre licence G2RD Theme n\'est pas active. Veuillez activer votre licence pour bénéficier des mises à jour.', 'g2rd'); ?></p>
             </div>
-            <?php
+        <?php
         }
     }
 
@@ -127,23 +149,24 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return bool
      */
-    public function testDirectSureCartAPI() {
+    public function testDirectSureCartAPI()
+    {
         $license_key = \get_option('g2rd_license_key');
-        
+
         if (empty($license_key)) {
             return false;
         }
-        
+
         // Utiliser la clé API directement (à utiliser seulement pour les tests)
         $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-        
+
         if (empty($api_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No API key configured for direct test');
             }
             return false;
         }
-        
+
         // Essayer d'abord l'endpoint de base pour voir la structure
         $response = \wp_remote_get('https://api.surecart.com/v1/licenses', [
             'headers' => [
@@ -153,21 +176,21 @@ class SureCartLicenseManager {
             ],
             'timeout' => 30
         ]);
-        
+
         if (\is_wp_error($response)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - Direct API test failed: ' . $response->get_error_message());
             }
             return false;
         }
-        
+
         $status_code = \wp_remote_retrieve_response_code($response);
         $body = \wp_remote_retrieve_body($response);
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - Direct API response: ' . $status_code . ' - ' . $body);
         }
-        
+
         // Si on obtient une réponse 200, l'API est accessible
         return $status_code === 200;
     }
@@ -178,31 +201,32 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return bool
      */
-    public function isLicenseValid() {
+    public function isLicenseValid()
+    {
         $license_key = \get_option('g2rd_license_key');
-        
+
         // Debug: Vérifier si la clé de licence est présente
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - License Key: ' . ($license_key ? substr($license_key, 0, 8) . '...' : 'EMPTY'));
         }
-        
+
         if (empty($license_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No license key found in database');
             }
             return false;
         }
-        
+
         // Utiliser directement l'API SureCart
         $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-        
+
         if (empty($api_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No API key configured');
             }
             return false;
         }
-        
+
         // Appel direct à l'API SureCart
         $response = \wp_remote_get('https://api.surecart.com/v1/licenses', [
             'headers' => [
@@ -212,64 +236,64 @@ class SureCartLicenseManager {
             ],
             'timeout' => 30
         ]);
-        
+
         if (\is_wp_error($response)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - API Error: ' . $response->get_error_message());
             }
             return false;
         }
-        
+
         $status_code = \wp_remote_retrieve_response_code($response);
         $body = \wp_remote_retrieve_body($response);
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - API Response: ' . $status_code . ' - ' . $body);
         }
-        
+
         if ($status_code !== 200) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - API returned status: ' . $status_code);
             }
             return false;
         }
-        
+
         // Parser la réponse JSON
         $licenses = json_decode($body, true);
-        
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - JSON parse error: ' . json_last_error_msg());
             }
             return false;
         }
-        
+
         // Gérer la structure de réponse SureCart (avec 'data' wrapper)
         if (isset($licenses['data']) && is_array($licenses['data'])) {
             $licenses = $licenses['data'];
         }
-        
+
         // Chercher la licence dans la liste
         if (is_array($licenses)) {
             foreach ($licenses as $license) {
                 if (isset($license['key']) && $license['key'] === $license_key) {
                     // La licence existe dans l'API = licence valide
                     $status = isset($license['status']) ? $license['status'] : 'unknown';
-                    
+
                     if (defined('WP_DEBUG') && WP_DEBUG) {
                         error_log('G2RD License Debug - License found with status: ' . $status . ' - Considering as VALID');
                     }
-                    
+
                     // Si la licence existe dans l'API SureCart, elle est valide
                     return true;
                 }
             }
         }
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - License not found in API response');
         }
-        
+
         return false;
     }
 
@@ -280,34 +304,35 @@ class SureCartLicenseManager {
      * @param string $license_key
      * @return bool
      */
-    public function activateLicense($license_key) {
+    public function activateLicense($license_key)
+    {
         $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-        
+
         if (empty($api_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No API key configured for activation');
             }
             return false;
         }
-        
+
         // Trouver l'ID de la licence d'abord
         $licenses = $this->getUserLicenses();
         $license_id = null;
-        
+
         foreach ($licenses as $license) {
             if (isset($license['key']) && $license['key'] === $license_key) {
                 $license_id = $license['id'];
                 break;
             }
         }
-        
+
         if (!$license_id) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - License ID not found for activation');
             }
             return false;
         }
-        
+
         // Activer la licence
         $response = \wp_remote_post('https://api.surecart.com/v1/licenses/' . $license_id . '/activate', [
             'headers' => [
@@ -321,21 +346,21 @@ class SureCartLicenseManager {
             ]),
             'timeout' => 30
         ]);
-        
+
         if (\is_wp_error($response)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - Activation API Error: ' . $response->get_error_message());
             }
             return false;
         }
-        
+
         $status_code = \wp_remote_retrieve_response_code($response);
         $body = \wp_remote_retrieve_body($response);
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - Activation response: ' . $status_code . ' - ' . $body);
         }
-        
+
         return $status_code === 200;
     }
 
@@ -345,16 +370,17 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return array
      */
-    public function getUserLicenses() {
+    public function getUserLicenses()
+    {
         $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-        
+
         if (empty($api_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No API key configured for getUserLicenses');
             }
             return [];
         }
-        
+
         // Appel direct à l'API SureCart
         $response = \wp_remote_get('https://api.surecart.com/v1/licenses', [
             'headers' => [
@@ -368,7 +394,7 @@ class SureCartLicenseManager {
             'sslverify' => true,
             'httpversion' => '1.1'
         ]);
-        
+
         if (\is_wp_error($response)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - getUserLicenses API Error: ' . $response->get_error_message());
@@ -377,39 +403,39 @@ class SureCartLicenseManager {
             }
             return [];
         }
-        
+
         $status_code = \wp_remote_retrieve_response_code($response);
         $body = \wp_remote_retrieve_body($response);
         $headers = \wp_remote_retrieve_headers($response);
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - getUserLicenses API Response Code: ' . $status_code);
             error_log('G2RD License Debug - getUserLicenses API Response Headers: ' . json_encode($headers));
             error_log('G2RD License Debug - getUserLicenses API Response Body: ' . $body);
         }
-        
+
         if ($status_code !== 200) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - getUserLicenses API returned status: ' . $status_code);
             }
             return [];
         }
-        
+
         // Parser la réponse JSON
         $licenses = json_decode($body, true);
-        
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - getUserLicenses JSON parse error: ' . json_last_error_msg());
             }
             return [];
         }
-        
+
         // Gérer la structure de réponse SureCart (avec 'data' wrapper)
         if (isset($licenses['data']) && is_array($licenses['data'])) {
             $licenses = $licenses['data'];
         }
-        
+
         // Filtrer les licences pour le thème G2RD
         $g2rd_licenses = [];
         if (is_array($licenses)) {
@@ -419,11 +445,11 @@ class SureCartLicenseManager {
                 $g2rd_licenses[] = $license;
             }
         }
-        
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('G2RD License Debug - Found ' . count($g2rd_licenses) . ' licenses (all licenses accepted for now)');
         }
-        
+
         return $g2rd_licenses;
     }
 
@@ -433,7 +459,8 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function renderLicensePage() {
+    public function renderLicensePage()
+    {
         ?>
         <div class="wrap">
             <h1><?php \_e('G2RD License', 'g2rd'); ?></h1>
@@ -460,7 +487,7 @@ class SureCartLicenseManager {
                 // Utiliser getUserLicenses() au lieu de isLicenseValid() pour être cohérent avec les tests qui fonctionnent
                 $licenses = $this->getUserLicenses();
                 $is_valid = false;
-                
+
                 // Vérifier si la licence existe dans la liste récupérée
                 if (!empty($license_key) && !empty($licenses)) {
                     foreach ($licenses as $license) {
@@ -490,7 +517,7 @@ class SureCartLicenseManager {
                             <?php else: ?>
                                 <span style="color: red;">✗ <?php \_e('Licence invalide ou expirée', 'g2rd'); ?></span>
                             <?php endif; ?>
-                            
+
                             <br><br>
                             <button type="button" id="verify-license-btn" class="button button-primary">
                                 <?php \_e('Vérifier la licence maintenant', 'g2rd'); ?>
@@ -501,7 +528,7 @@ class SureCartLicenseManager {
                     <tr>
                         <th><?php \_e('Test de connexion à l\'API SureCart', 'g2rd'); ?></th>
                         <td>
-                            <?php 
+                            <?php
                             $api_key = defined('G2RD_SURECART_API_KEY') ? 'Configurée' : 'Non configurée';
                             $api_status = defined('G2RD_SURECART_API_KEY') ? '✓' : '✗';
                             $api_color = defined('G2RD_SURECART_API_KEY') ? 'green' : 'red';
@@ -512,6 +539,94 @@ class SureCartLicenseManager {
                 </table>
             </div>
 
+            <!-- Section de gestion des CPT -->
+            <h2><?php \_e('Gestion des types de contenu personnalisés (CPT)', 'g2rd'); ?></h2>
+            <div class="card">
+                <p class="description"><?php \_e('Activez ou désactivez les types de contenu personnalisés et personnalisez leurs noms selon vos besoins.', 'g2rd'); ?></p>
+
+                <div class="g2rd-cpt-container" style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                    <?php
+                    // Définir les CPT avec leurs icônes et valeurs par défaut
+                    $cpts = [
+                        'prestations' => [
+                            'label' => 'Prestations',
+                            'icon' => 'dashicons-clipboard',
+                            'default_name' => 'Prestations'
+                        ],
+                        'qui-sommes-nous' => [
+                            'label' => 'Qui sommes-nous',
+                            'icon' => 'dashicons-groups',
+                            'default_name' => 'Qui sommes nous'
+                        ],
+                        'portfolio' => [
+                            'label' => 'Portfolio',
+                            'icon' => 'dashicons-admin-appearance',
+                            'default_name' => 'Portfolio'
+                        ]
+                    ];
+
+                    foreach ($cpts as $cpt_key => $cpt_data):
+                        $enabled = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_enabled', '1');
+                        $custom_name = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_name', $cpt_data['default_name']);
+                    ?>
+                        <div class="g2rd-cpt-item postbox" style="flex: 1; min-width: 300px; margin: 0; border: 1px solid #c3c4c7; box-shadow: 0 1px 1px rgba(0,0,0,.04);">
+                            <div class="postbox-header" style="border-bottom: 1px solid #c3c4c7; padding: 12px 15px; background: #f6f7f7;">
+                                <h3 class="hndle" style="margin: 0; padding: 0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <span class="dashicons <?php echo \esc_attr($cpt_data['icon']); ?>" style="font-size: 18px; width: 18px; height: 18px; color: #2271b1;"></span>
+                                    <?php echo \esc_html($custom_name); ?>
+                                </h3>
+                            </div>
+                            <div class="inside" style="padding: 15px;">
+                                <!-- Toggle Activation -->
+                                <div class="g2rd-cpt-toggle-section" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #dcdcde;">
+                                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                        <label class="g2rd-toggle-switch" style="margin: 0;">
+                                            <input type="checkbox"
+                                                id="cpt-<?php echo \esc_attr($cpt_key); ?>-toggle"
+                                                data-cpt="<?php echo \esc_attr($cpt_key); ?>"
+                                                <?php checked($enabled, '1'); ?>>
+                                            <span class="g2rd-toggle-slider"></span>
+                                        </label>
+                                        <label for="cpt-<?php echo \esc_attr($cpt_key); ?>-toggle" style="margin: 0; font-weight: 500; cursor: pointer;">
+                                            <?php \_e('Activer ce type de contenu', 'g2rd'); ?>
+                                        </label>
+                                        <span class="g2rd-cpt-status" id="cpt-<?php echo \esc_attr($cpt_key); ?>-status" style="margin-left: auto;"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Nom personnalisé -->
+                                <div class="g2rd-cpt-name-section">
+                                    <label for="cpt-<?php echo \esc_attr($cpt_key); ?>-name" style="display: block; margin-bottom: 8px; font-weight: 500;">
+                                        <span class="dashicons dashicons-edit" style="font-size: 16px; vertical-align: middle; color: #646970;"></span>
+                                        <?php \_e('Nom personnalisé', 'g2rd'); ?>
+                                    </label>
+                                    <div style="display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;">
+                                        <input type="text"
+                                            id="cpt-<?php echo \esc_attr($cpt_key); ?>-name"
+                                            data-cpt="<?php echo \esc_attr($cpt_key); ?>"
+                                            value="<?php echo \esc_attr($custom_name); ?>"
+                                            class="regular-text g2rd-cpt-name-input"
+                                            placeholder="<?php echo \esc_attr($cpt_data['default_name']); ?>"
+                                            style="flex: 1; min-width: 200px;">
+                                        <button type="button"
+                                            class="button button-primary g2rd-save-cpt-name"
+                                            data-cpt="<?php echo \esc_attr($cpt_key); ?>"
+                                            style="white-space: nowrap;">
+                                            <span class="dashicons dashicons-yes-alt" style="font-size: 16px; vertical-align: middle; margin-right: 4px;"></span>
+                                            <?php \_e('Sauvegarder', 'g2rd'); ?>
+                                        </button>
+                                    </div>
+                                    <p class="description" style="margin-top: 8px; margin-bottom: 0;">
+                                        <?php \_e('Le nom personnalisé remplacera le nom par défaut dans le menu WordPress et les pages d\'administration.', 'g2rd'); ?>
+                                    </p>
+                                    <span class="g2rd-cpt-name-status" id="cpt-<?php echo \esc_attr($cpt_key); ?>-name-status" style="display: block; margin-top: 8px;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
             <!-- Section des licences -->
             <h2><?php \_e('Vos licences', 'g2rd'); ?></h2>
             <div class="card">
@@ -519,61 +634,74 @@ class SureCartLicenseManager {
                 $licenses = $this->getUserLicenses();
                 if (!empty($licenses)):
                 ?>
-                <table class="wp-list-table widefat fixed striped">
-                    <thead>
-                        <tr>
-                            <th><?php \_e('Clé', 'g2rd'); ?></th>
-                            <th><?php \_e('Statut', 'g2rd'); ?></th>
-                            <th><?php \_e('Date d\'expiration', 'g2rd'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($licenses as $license): ?>
-                        <tr>
-                            <td><?php echo \esc_html($license['key'] ?? ''); ?></td>
-                            <td>
-                                <?php 
-                                $status = $license['status'] ?? 'unknown';
-                                
-                                // Vérifier si la licence n'est pas expirée
-                                $is_expired = false;
-                                if (isset($license['updated_at'])) {
-                                    $updated_at = (int) $license['updated_at'];
-                                    $expiration_timestamp = $updated_at + (365 * 24 * 60 * 60);
-                                    $current_timestamp = \time();
-                                    $is_expired = $current_timestamp > $expiration_timestamp;
-                                }
-                                
-                                // Si la licence existe et n'est pas expirée, elle est active
-                                $status_color = $is_expired ? 'red' : 'green';
-                                $status_text = $is_expired ? \__('Expirée', 'g2rd') : \__('Active', 'g2rd');
-                                ?>
-                                <span style="color: <?php echo $status_color; ?>;"><?php echo \esc_html($status_text); ?></span>
-                            </td>
-                            <td>
-                                <?php
-                                if (isset($license['updated_at'])) {
-                                    // Convertir le timestamp Unix en date
-                                    $updated_at = (int) $license['updated_at'];
-                                    // Ajouter 1 an (365 jours * 24 heures * 60 minutes * 60 secondes)
-                                    $expiration_timestamp = $updated_at + (365 * 24 * 60 * 60);
-                                    $expiration_date = \date('d/m/Y', $expiration_timestamp);
-                                    echo \esc_html($expiration_date);
-                                } else {
-                                    echo \esc_html(\__('Non disponible', 'g2rd'));
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                    <table class="wp-list-table widefat fixed striped">
+                        <thead>
+                            <tr>
+                                <th><?php \_e('Clé', 'g2rd'); ?></th>
+                                <th><?php \_e('Statut', 'g2rd'); ?></th>
+                                <th><?php \_e('Date d\'expiration', 'g2rd'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($licenses as $license): ?>
+                                <tr>
+                                    <td><?php echo \esc_html($license['key'] ?? ''); ?></td>
+                                    <td>
+                                        <?php
+                                        $status = $license['status'] ?? 'unknown';
+
+                                        // Vérifier si la licence n'est pas expirée
+                                        $is_expired = false;
+                                        if (isset($license['updated_at'])) {
+                                            $updated_at = (int) $license['updated_at'];
+                                            $expiration_timestamp = $updated_at + (365 * 24 * 60 * 60);
+                                            $current_timestamp = \time();
+                                            $is_expired = $current_timestamp > $expiration_timestamp;
+                                        }
+
+                                        // Si la licence existe et n'est pas expirée, elle est active
+                                        $status_color = $is_expired ? 'red' : 'green';
+                                        $status_text = $is_expired ? \__('Expirée', 'g2rd') : \__('Active', 'g2rd');
+                                        ?>
+                                        <span style="color: <?php echo $status_color; ?>;"><?php echo \esc_html($status_text); ?></span>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if (isset($license['updated_at'])) {
+                                            // Convertir le timestamp Unix en date
+                                            $updated_at = (int) $license['updated_at'];
+                                            // Ajouter 1 an (365 jours * 24 heures * 60 minutes * 60 secondes)
+                                            $expiration_timestamp = $updated_at + (365 * 24 * 60 * 60);
+                                            $expiration_date = \date('d/m/Y', $expiration_timestamp);
+                                            echo \esc_html($expiration_date);
+                                        } else {
+                                            echo \esc_html(\__('Non disponible', 'g2rd'));
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 <?php else: ?>
-                <p><?php \_e('Aucune licence trouvée.', 'g2rd'); ?></p>
+                    <p><?php \_e('Aucune licence trouvée.', 'g2rd'); ?></p>
                 <?php endif; ?>
             </div>
+
+            <!-- Footer -->
+            <div class="g2rd-license-footer" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #dcdcde; text-align: center; color: #646970; font-size: 13px;">
+                <p style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://g2rd.fr" target="_blank" rel="noopener noreferrer" style="color: #2271b1; text-decoration: none;">
+                        https://g2rd.fr
+                    </a>
+                    <span style="color: #dcdcde;">|</span>
+                    <a href="mailto:contact@g2rd.fr" style="color: #2271b1; text-decoration: none;">
+                        contact@g2rd.fr
+                    </a>
+                </p>
+            </div>
         </div>
-        <?php
+<?php
     }
 
     /**
@@ -582,11 +710,12 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function enqueueLicenseScripts($hook) {
+    public function enqueueLicenseScripts($hook)
+    {
         if ($hook !== 'appearance_page_g2rd-license') {
             return;
         }
-        
+
         \wp_enqueue_script(
             'g2rd-license-admin',
             \get_template_directory_uri() . '/assets/js/license-admin.js',
@@ -594,7 +723,7 @@ class SureCartLicenseManager {
             '1.0.0',
             true
         );
-        
+
         \wp_localize_script('g2rd-license-admin', 'g2rdLicense', [
             'ajaxUrl' => \admin_url('admin-ajax.php'),
             'nonce' => \wp_create_nonce('g2rd_license_nonce'),
@@ -605,8 +734,17 @@ class SureCartLicenseManager {
                 'proxyTest' => \__('Test du proxy en cours...', 'g2rd'),
                 'proxySuccess' => \__('Proxy accessible', 'g2rd'),
                 'proxyError' => \__('Proxy inaccessible', 'g2rd'),
+                'saving' => \__('Sauvegarde en cours...', 'g2rd'),
+                'saved' => \__('Sauvegardé', 'g2rd'),
+                'errorSaving' => \__('Erreur lors de la sauvegarde', 'g2rd'),
+                'nameSaved' => \__('Nom sauvegardé avec succès', 'g2rd'),
+                'nameError' => \__('Erreur lors de la sauvegarde du nom', 'g2rd'),
             ]
         ]);
+
+        // Ajouter le CSS pour les toggles
+        \wp_enqueue_style('wp-admin');
+        \wp_add_inline_style('wp-admin', $this->getToggleCss());
     }
 
     /**
@@ -615,23 +753,24 @@ class SureCartLicenseManager {
      * @since 1.0.0
      * @return void
      */
-    public function ajaxVerifyLicense() {
+    public function ajaxVerifyLicense()
+    {
         \check_ajax_referer('g2rd_license_nonce', 'nonce');
-        
+
         if (!\current_user_can('manage_options')) {
             \wp_die(\__('Permissions insuffisantes', 'g2rd'));
         }
-        
+
         $license_key = \get_option('g2rd_license_key');
-        
+
         if (empty($license_key)) {
             \wp_send_json_error([
                 'message' => \__('Aucune clé de licence enregistrée', 'g2rd')
             ]);
         }
-        
+
         $is_valid = $this->isLicenseValid();
-        
+
         if ($is_valid) {
             \wp_send_json_success([
                 'message' => \__('Licence valide', 'g2rd'),
@@ -644,4 +783,251 @@ class SureCartLicenseManager {
             ]);
         }
     }
-} 
+
+    /**
+     * Action AJAX pour activer/désactiver un CPT
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function ajaxToggleCpt()
+    {
+        \check_ajax_referer('g2rd_license_nonce', 'nonce');
+
+        if (!\current_user_can('manage_options')) {
+            \wp_send_json_error([
+                'message' => \__('Permissions insuffisantes', 'g2rd')
+            ]);
+        }
+
+        $cpt = isset($_POST['cpt']) ? \sanitize_text_field($_POST['cpt']) : '';
+        $enabled = isset($_POST['enabled']) ? \sanitize_text_field($_POST['enabled']) : '0';
+
+        // Liste des CPT valides
+        $valid_cpts = [
+            'prestations' => 'g2rd_cpt_prestations_enabled',
+            'qui-sommes-nous' => 'g2rd_cpt_qui_sommes_nous_enabled',
+            'portfolio' => 'g2rd_cpt_portfolio_enabled'
+        ];
+
+        if (!isset($valid_cpts[$cpt])) {
+            \wp_send_json_error([
+                'message' => \__('CPT invalide', 'g2rd')
+            ]);
+        }
+
+        $option_name = $valid_cpts[$cpt];
+        $enabled_value = ($enabled === '1' || $enabled === 'true') ? '1' : '0';
+
+        // Sauvegarder l'état
+        \update_option($option_name, $enabled_value);
+
+        // Flush les règles de réécriture pour que les changements prennent effet
+        \flush_rewrite_rules();
+
+        \wp_send_json_success([
+            'message' => $enabled_value === '1'
+                ? \__('CPT activé avec succès', 'g2rd')
+                : \__('CPT désactivé avec succès', 'g2rd'),
+            'enabled' => $enabled_value
+        ]);
+    }
+
+    /**
+     * Action AJAX pour sauvegarder le nom d'un CPT
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function ajaxSaveCptName()
+    {
+        \check_ajax_referer('g2rd_license_nonce', 'nonce');
+
+        if (!\current_user_can('manage_options')) {
+            \wp_send_json_error([
+                'message' => \__('Permissions insuffisantes', 'g2rd')
+            ]);
+        }
+
+        $cpt = isset($_POST['cpt']) ? \sanitize_text_field($_POST['cpt']) : '';
+        $name = isset($_POST['name']) ? \sanitize_text_field($_POST['name']) : '';
+
+        // Liste des CPT valides
+        $valid_cpts = [
+            'prestations' => 'g2rd_cpt_prestations_name',
+            'qui-sommes-nous' => 'g2rd_cpt_qui_sommes_nous_name',
+            'portfolio' => 'g2rd_cpt_portfolio_name'
+        ];
+
+        if (!isset($valid_cpts[$cpt])) {
+            \wp_send_json_error([
+                'message' => \__('CPT invalide', 'g2rd')
+            ]);
+        }
+
+        // Vérifier que le nom n'est pas vide
+        if (empty($name)) {
+            \wp_send_json_error([
+                'message' => \__('Le nom ne peut pas être vide', 'g2rd')
+            ]);
+        }
+
+        $option_name = $valid_cpts[$cpt];
+
+        // Sauvegarder le nom
+        \update_option($option_name, $name);
+
+        // Flush les règles de réécriture pour que les changements prennent effet
+        \flush_rewrite_rules();
+
+        \wp_send_json_success([
+            'message' => \__('Nom sauvegardé avec succès', 'g2rd'),
+            'name' => $name
+        ]);
+    }
+
+    /**
+     * Retourne le CSS pour les toggles
+     *
+     * @since 1.0.0
+     * @return string
+     */
+    private function getToggleCss(): string
+    {
+        return '
+        .g2rd-toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .g2rd-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .g2rd-toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .g2rd-toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        .g2rd-toggle-switch input:checked + .g2rd-toggle-slider {
+            background-color: #2271b1;
+        }
+        .g2rd-toggle-switch input:checked + .g2rd-toggle-slider:before {
+            transform: translateX(26px);
+        }
+        .g2rd-toggle-switch input:focus + .g2rd-toggle-slider {
+            box-shadow: 0 0 1px #2271b1;
+        }
+        .g2rd-cpt-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+        .card {
+            max-width: 100%;
+        }
+        .g2rd-cpt-item {
+            transition: box-shadow 0.2s ease;
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .g2rd-cpt-item:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+        .g2rd-cpt-item .inside {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .g2rd-cpt-item .g2rd-cpt-name-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (max-width: 782px) {
+            .g2rd-cpt-container {
+                flex-direction: column;
+            }
+            .g2rd-cpt-item {
+                min-width: 100%;
+            }
+        }
+        .g2rd-cpt-status {
+            font-weight: 500;
+            font-size: 13px;
+            padding: 4px 8px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .g2rd-cpt-status.success {
+            color: #00a32a;
+            background-color: #f0f6fc;
+        }
+        .g2rd-cpt-status.error {
+            color: #d63638;
+            background-color: #fcf0f1;
+        }
+        .g2rd-cpt-name-status {
+            font-weight: 500;
+            font-size: 13px;
+            padding: 6px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .g2rd-cpt-name-status.success {
+            color: #00a32a;
+            background-color: #f0f6fc;
+            border-left: 3px solid #00a32a;
+        }
+        .g2rd-cpt-name-status.error {
+            color: #d63638;
+            background-color: #fcf0f1;
+            border-left: 3px solid #d63638;
+        }
+        .g2rd-cpt-name-input:focus {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
+        }
+        .g2rd-save-cpt-name:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .g2rd-cpt-toggle-section label[for] {
+            user-select: none;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .g2rd-cpt-item .inside {
+            background: #fff;
+        }
+        ';
+    }
+}

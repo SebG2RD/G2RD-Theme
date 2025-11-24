@@ -22,6 +22,7 @@ Ce thème offre une expérience d'édition complète avec des blocs personnalis�
 - Portfolio professionnel
 - Section "Qui sommes nous" avec gestion des icônes
 - **CPT Prestations** avec champs personnalisés et éditeur classique
+- **Gestion des CPT depuis la page de licence** : Activation/désactivation et renommage des CPT
 - Effet particules automatiquement désactivé pour Google PageSpeed Insights et Lighthouse (depuis 1.0.8) pour optimiser le score de performance sans impacter l'expérience utilisateur réelle.
 
 ## Fonctionnalités détaillées
@@ -182,6 +183,18 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 - **LICENSE** et **license.txt** : Licences du projet, à la racine.
 
 ## Changelog
+
+### 1.1.3
+
+- **Gestion des CPT depuis la page de licence** : Ajout d'une interface complète pour gérer les types de contenu personnalisés
+- **Toggles d'activation** : Possibilité d'activer ou désactiver chaque CPT (Prestations, Qui sommes-nous, Portfolio) depuis la page de licence
+- **Renommage des CPT** : Personnalisation du nom de chaque CPT directement depuis l'interface d'administration
+- **Sauvegarde AJAX** : Sauvegarde en temps réel des modifications avec feedback visuel (icônes, animations, messages de statut)
+- **Interface améliorée** : Utilisation des classes WordPress natives (postbox, card, etc.) pour une expérience cohérente
+- **Mise en page flexbox** : Affichage des cartes CPT en ligne sur toute la largeur de l'écran
+- **Icônes Dashicons** : Ajout d'icônes visuelles pour améliorer la lisibilité de l'interface
+- **Footer** : Ajout d'un footer avec lien vers g2rd.fr et email de contact
+- **Responsive** : Adaptation automatique pour les petits écrans (passage en colonne)
 
 ### 1.1.2
 

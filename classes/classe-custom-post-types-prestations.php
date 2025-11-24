@@ -29,6 +29,11 @@ class CPT_Prestations
      */
     public function registerHooks(): void
     {
+        // Vérifier si le CPT est activé avant d'enregistrer les hooks
+        if (\get_option('g2rd_cpt_prestations_enabled', '1') !== '1') {
+            return;
+        }
+        
         add_action('init', [$this, 'registerPostType']);
         add_action('add_meta_boxes', [$this, 'addMetaBox']);
         add_action('save_post_prestations', [$this, 'saveMeta']);
@@ -43,13 +48,22 @@ class CPT_Prestations
      */
     public function registerPostType(): void
     {
+        // Vérifier si le CPT est activé
+        if (\get_option('g2rd_cpt_prestations_enabled', '1') !== '1') {
+            return;
+        }
+        
+        // Récupérer le nom personnalisé ou utiliser le nom par défaut
+        $custom_name = \get_option('g2rd_cpt_prestations_name', 'Prestations');
+        $singular_name = 'Prestation'; // On peut aussi personnaliser ça plus tard si besoin
+        
         $labels = [
-            'name' => 'Prestations',
-            'all_items' => 'Toutes les prestations',
-            'singular_name' => 'Prestation',
-            'add_new_item' => 'Ajouter une prestation',
-            'edit_item' => 'Modifier la prestation',
-            'menu_name' => 'Prestations'
+            'name' => $custom_name,
+            'all_items' => 'Toutes les ' . \strtolower($custom_name),
+            'singular_name' => $singular_name,
+            'add_new_item' => 'Ajouter une ' . \strtolower($singular_name),
+            'edit_item' => 'Modifier la ' . \strtolower($singular_name),
+            'menu_name' => $custom_name
         ];
         $args = [
             'labels' => $labels,

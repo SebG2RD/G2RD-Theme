@@ -55,4 +55,133 @@ jQuery(document).ready(function ($) {
       },
     });
   });
+
+  // Gestion des toggles CPT
+  $(".g2rd-toggle-switch input[type='checkbox']").on("change", function () {
+    var $toggle = $(this);
+    var cpt = $toggle.data("cpt");
+    var enabled = $toggle.is(":checked") ? "1" : "0";
+    var $status = $("#cpt-" + cpt + "-status");
+
+    // Afficher le message de sauvegarde avec icône
+    $status
+      .removeClass("success error")
+      .html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.saving);
+
+    // Désactiver le toggle pendant la sauvegarde
+    $toggle.prop("disabled", true);
+
+    // Appel AJAX
+    $.ajax({
+      url: g2rdLicense.ajaxUrl,
+      type: "POST",
+      data: {
+        action: "g2rd_toggle_cpt",
+        nonce: g2rdLicense.nonce,
+        cpt: cpt,
+        enabled: enabled,
+      },
+      success: function (response) {
+        if (response.success) {
+          $status
+            .removeClass("error")
+            .addClass("success")
+            .html('<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' + response.data.message);
+          // Recharger la page après 1 seconde pour que les changements prennent effet
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          $status
+            .removeClass("success")
+            .addClass("error")
+            .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + (response.data.message || g2rdLicense.strings.errorSaving));
+          // Réactiver le toggle et inverser l'état en cas d'erreur
+          $toggle.prop("checked", !$toggle.prop("checked"));
+          $toggle.prop("disabled", false);
+        }
+      },
+      error: function (xhr, status, error) {
+        $status
+          .removeClass("success")
+          .addClass("error")
+          .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.errorSaving + ": " + error);
+        // Réactiver le toggle et inverser l'état en cas d'erreur
+        $toggle.prop("checked", !$toggle.prop("checked"));
+        $toggle.prop("disabled", false);
+      },
+    });
+  });
+
+  // Gestion de la sauvegarde des noms de CPT
+  $(".g2rd-save-cpt-name").on("click", function () {
+    var $btn = $(this);
+    var cpt = $btn.data("cpt");
+    var $input = $("#cpt-" + cpt + "-name");
+    var $status = $("#cpt-" + cpt + "-name-status");
+    var name = $input.val().trim();
+
+    // Vérifier que le nom n'est pas vide
+    if (name === "") {
+      $status
+        .removeClass("success")
+        .addClass("error")
+        .html("✗ " + "Le nom ne peut pas être vide");
+      return;
+    }
+
+    // Afficher le message de sauvegarde avec icône
+    $status
+      .removeClass("success error")
+      .html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.saving);
+
+    // Désactiver le bouton pendant la sauvegarde
+    $btn.prop("disabled", true).addClass("button-disabled");
+
+    // Appel AJAX
+    $.ajax({
+      url: g2rdLicense.ajaxUrl,
+      type: "POST",
+      data: {
+        action: "g2rd_save_cpt_name",
+        nonce: g2rdLicense.nonce,
+        cpt: cpt,
+        name: name,
+      },
+      success: function (response) {
+        if (response.success) {
+          $status
+            .removeClass("error")
+            .addClass("success")
+            .html('<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' + response.data.message);
+          // Recharger la page après 1 seconde pour que les changements prennent effet
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          $status
+            .removeClass("success")
+            .addClass("error")
+            .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + (response.data.message || g2rdLicense.strings.nameError));
+          $btn.prop("disabled", false).removeClass("button-disabled");
+        }
+      },
+      error: function (xhr, status, error) {
+        $status
+          .removeClass("success")
+          .addClass("error")
+          .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.nameError + ": " + error);
+        $btn.prop("disabled", false).removeClass("button-disabled");
+      },
+    });
+  });
+
+  // Permettre la sauvegarde avec la touche Entrée dans les champs de nom
+  $(".g2rd-cpt-name-input").on("keypress", function (e) {
+    if (e.which === 13) {
+      // Touche Entrée
+      e.preventDefault();
+      $(this).siblings(".g2rd-save-cpt-name").click();
+    }
+  });
 });

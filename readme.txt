@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -34,6 +34,7 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * Sélecteur de médias WordPress pour les icônes personnalisées
 * Interface d'administration optimisée avec classes natives WordPress
 * **Toggle Content Block**: Un interrupteur pour afficher l'un ou l'autre de deux groupes de contenu, avec options de style.
+* **Gestion des CPT depuis la page de licence** : Activation/désactivation et renommage des CPT via une interface intuitive
 
 = Blocs personnalisés =
 
@@ -102,6 +103,17 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.3 =
+* **Gestion des CPT depuis la page de licence** : Ajout d'une interface complète pour gérer les types de contenu personnalisés
+* **Toggles d'activation** : Possibilité d'activer ou désactiver chaque CPT (Prestations, Qui sommes-nous, Portfolio) depuis la page de licence
+* **Renommage des CPT** : Personnalisation du nom de chaque CPT directement depuis l'interface d'administration
+* **Sauvegarde AJAX** : Sauvegarde en temps réel des modifications avec feedback visuel (icônes, animations, messages de statut)
+* **Interface améliorée** : Utilisation des classes WordPress natives (postbox, card, etc.) pour une expérience cohérente
+* **Mise en page flexbox** : Affichage des cartes CPT en ligne sur toute la largeur de l'écran
+* **Icônes Dashicons** : Ajout d'icônes visuelles pour améliorer la lisibilité de l'interface
+* **Footer** : Ajout d'un footer avec lien vers g2rd.fr et email de contact
+* **Responsive** : Adaptation automatique pour les petits écrans (passage en colonne)
 
 = 1.1.2 =
 * Bloc G2RD Carousel – Mobile (<768px): 4 images fixes en grille 2×2, sans autoplay, sans loop, sans swipe, sans pagination/navigation. Effet forcé « slide » pour éviter les artefacts 3D.
