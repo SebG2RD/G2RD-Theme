@@ -184,6 +184,17 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.4
+
+- **Simplification et optimisation du bloc G2RD Carousel** : Refactorisation majeure du code JavaScript
+- **Configuration du loop** : Simplification de la gestion du loop pour améliorer la stabilité et éviter les décalages
+- **Désactivation automatique** : Le loop est automatiquement désactivé si le nombre de slides est insuffisant
+- **Breakpoints responsive** : Configuration simplifiée des breakpoints pour une meilleure performance
+- **Suppression des messages de debug** : Nettoyage des console.log pour éviter la pollution de la console
+- **Optimisation du code** : Réduction de la complexité du code JavaScript pour améliorer les performances
+- **Gestion de l'autoplay** : Amélioration de la gestion de l'autoplay avec configuration adaptée selon le loop
+- **Correction coverflow** : Correction des problèmes de décalage avec l'effet coverflow
+
 ### 1.1.3
 
 - **Gestion des CPT depuis la page de licence** : Ajout d'une interface complète pour gérer les types de contenu personnalisés

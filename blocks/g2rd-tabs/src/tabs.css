@@ -1,0 +1,371 @@
+/* G2RD Tabs Block Styles - Styles proches de WordPress natif */
+
+/* Conteneur principal */
+.g2rd-tabs-block {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation des onglets */
+.g2rd-tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--g2rd-gap, 0);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+}
+
+/* Masquer les bordures si l'option est désactivée */
+.g2rd-tabs-no-border {
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border .g2rd-tabs-nav {
+  border-bottom: none !important;
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border .g2rd-tabs-content {
+  border: none !important;
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border .g2rd-tab-button {
+  border: none !important;
+  border-style: none !important;
+}
+
+/* Masquer les bordures dans les styles spécifiques */
+.g2rd-tabs-no-border.g2rd-tabs-style-pills .g2rd-tab-button {
+  border: none !important;
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border.g2rd-tabs-style-pills .g2rd-tabs-content {
+  border: none !important;
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border.g2rd-tabs-style-bordered .g2rd-tabs-nav {
+  border: none !important;
+  border-style: none !important;
+  padding: 0;
+}
+
+.g2rd-tabs-no-border.g2rd-tabs-style-bordered .g2rd-tab-button {
+  border: none !important;
+  border-style: none !important;
+}
+
+.g2rd-tabs-no-border.g2rd-tabs-style-bordered .g2rd-tabs-content {
+  border: none !important;
+  border-style: none !important;
+}
+
+/* Alignements */
+.g2rd-tabs-align-left {
+  justify-content: flex-start;
+}
+
+.g2rd-tabs-align-center {
+  justify-content: center;
+}
+
+.g2rd-tabs-align-right {
+  justify-content: flex-end;
+}
+
+.g2rd-tabs-align-stretch .g2rd-tab-button {
+  flex: 1;
+}
+
+/* Bouton d'onglet */
+.g2rd-tab-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 24px;
+  background: var(--g2rd-tab-bg, #f0f0f0);
+  color: var(--g2rd-tab-text, #333333);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--g2rd-border-radius, 4px) var(--g2rd-border-radius, 4px) 0 0;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.g2rd-tab-button:hover {
+  background: var(--g2rd-tab-active-bg, #0073aa);
+  color: var(--g2rd-tab-active-text, #ffffff);
+}
+
+.g2rd-tab-button.is-active {
+  background: var(--g2rd-tab-active-bg, #0073aa);
+  color: var(--g2rd-tab-active-text, #ffffff);
+  border-bottom-color: var(--g2rd-tab-active-bg, #0073aa);
+  z-index: 2;
+}
+
+/* Bouton de suppression d'onglet (éditeur uniquement) */
+.g2rd-tab-remove {
+  margin-left: 4px;
+  padding: 4px;
+  min-width: auto;
+  height: auto;
+}
+
+/* Bouton d'ajout d'onglet (éditeur uniquement) */
+.g2rd-tab-add {
+  margin-left: 8px;
+  align-self: center;
+}
+
+/* Contenu des onglets */
+.g2rd-tabs-content {
+  position: relative;
+  background: var(--g2rd-content-bg, #ffffff);
+  color: var(--g2rd-content-text, #333333);
+  padding: 24px;
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-top: none;
+  border-radius: 0 0 var(--g2rd-border-radius, 4px) var(--g2rd-border-radius, 4px);
+}
+
+/* Panneau d'onglet */
+.g2rd-tab-panel {
+  display: none;
+}
+
+.g2rd-tab-panel.is-active {
+  display: block;
+}
+
+.g2rd-tab-panel[hidden] {
+  display: none !important;
+}
+
+/* Contenu d'un onglet */
+.g2rd-tab-content {
+  width: 100%;
+}
+
+/* Style Défaut */
+.g2rd-tabs-style-default .g2rd-tab-button {
+  border-bottom: 2px solid transparent;
+}
+
+.g2rd-tabs-style-default .g2rd-tab-button.is-active {
+  border-bottom-color: var(--g2rd-tab-active-bg, #0073aa);
+}
+
+/* Style Sous-ligné */
+.g2rd-tabs-style-underline .g2rd-tabs-nav {
+  border-bottom: 2px solid var(--g2rd-border-color, #ddd);
+}
+
+.g2rd-tabs-style-underline .g2rd-tab-button {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  border-radius: 0;
+}
+
+.g2rd-tabs-style-underline .g2rd-tab-button.is-active {
+  border-bottom-color: var(--g2rd-tab-active-bg, #0073aa);
+  background: transparent;
+}
+
+/* Style Pillules */
+.g2rd-tabs-style-pills .g2rd-tabs-nav {
+  border: none;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+.g2rd-tabs-style-pills .g2rd-tab-button {
+  border-radius: var(--g2rd-border-radius, 4px);
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+}
+
+.g2rd-tabs-style-pills .g2rd-tab-button.is-active {
+  border-color: var(--g2rd-tab-active-bg, #0073aa);
+}
+
+.g2rd-tabs-style-pills .g2rd-tabs-content {
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-radius: var(--g2rd-border-radius, 4px);
+}
+
+/* Style Bordure */
+.g2rd-tabs-style-bordered .g2rd-tabs-nav {
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-bottom: none;
+  border-radius: var(--g2rd-border-radius, 4px) var(--g2rd-border-radius, 4px) 0 0;
+  padding: 8px 8px 0 8px;
+  background: var(--g2rd-tab-bg, #f0f0f0);
+}
+
+.g2rd-tabs-style-bordered .g2rd-tab-button {
+  border: var(--g2rd-border-width, 1px) solid transparent;
+  border-bottom: none;
+  margin-bottom: -1px;
+}
+
+.g2rd-tabs-style-bordered .g2rd-tab-button.is-active {
+  background: var(--g2rd-content-bg, #ffffff);
+  border-color: var(--g2rd-border-color, #ddd);
+  border-bottom-color: var(--g2rd-content-bg, #ffffff);
+}
+
+.g2rd-tabs-style-bordered .g2rd-tabs-content {
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-top: none;
+}
+
+/* Style Minimal */
+.g2rd-tabs-style-minimal .g2rd-tabs-nav {
+  border: none;
+  gap: 24px;
+  padding-bottom: 8px;
+}
+
+.g2rd-tabs-style-minimal .g2rd-tab-button {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  padding: 8px 0;
+}
+
+.g2rd-tabs-style-minimal .g2rd-tab-button.is-active {
+  border-bottom-color: var(--g2rd-tab-active-bg, #0073aa);
+  background: transparent;
+}
+
+.g2rd-tabs-style-minimal .g2rd-tabs-content {
+  border: none;
+  padding: 16px 0;
+}
+
+/* Intégration avec les classes WordPress natives */
+.wp-block-g2rd-tabs {
+  /* Hérite des styles WordPress */
+}
+
+.wp-block-g2rd-tabs.alignwide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-block-g2rd-tabs.alignfull {
+  max-width: none;
+}
+
+/* Accessibilité */
+.g2rd-tab-button:focus {
+  outline: 2px solid #0073aa;
+  outline-offset: 2px;
+}
+
+.g2rd-tab-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .g2rd-tabs-nav {
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  .g2rd-tabs-align-stretch .g2rd-tab-button {
+    flex: none;
+  }
+
+  .g2rd-tab-button {
+    width: 100%;
+    border-radius: var(--g2rd-border-radius, 4px);
+    border-bottom: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+    margin-bottom: 4px;
+  }
+
+  .g2rd-tabs-style-bordered .g2rd-tabs-nav {
+    border: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  .g2rd-tabs-style-bordered .g2rd-tab-button {
+    border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+    border-radius: var(--g2rd-border-radius, 4px);
+    margin-bottom: 8px;
+  }
+
+  .g2rd-tabs-content {
+    border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+    border-radius: var(--g2rd-border-radius, 4px);
+  }
+}
+
+/* Styles pour l'éditeur */
+.editor-styles-wrapper .g2rd-tabs-block {
+  /* Assure un affichage correct dans l'éditeur */
+}
+
+.editor-styles-wrapper .g2rd-tab-panel {
+  /* Affiche tous les panneaux dans l'éditeur pour l'édition */
+}
+
+.editor-styles-wrapper .g2rd-tab-panel:not(.is-active) {
+  display: none;
+}
+
+/* Dans l'éditeur, afficher uniquement le groupe de l'onglet actif */
+.editor-styles-wrapper .g2rd-tabs-content {
+  position: relative;
+}
+
+.editor-styles-wrapper .g2rd-tabs-content > .wp-block-group {
+  display: none;
+}
+
+/* Afficher le groupe correspondant à l'onglet actif */
+.editor-styles-wrapper .g2rd-tabs-block[data-active-tab] .g2rd-tabs-content > .wp-block-group[data-tab-id] {
+  display: none;
+}
+
+.editor-styles-wrapper .g2rd-tabs-block[data-active-tab] .g2rd-tabs-content > .wp-block-group[data-tab-id].g2rd-tab-active {
+  display: block;
+}
+
+/* Print */
+@media print {
+  .g2rd-tabs-nav {
+    display: none;
+  }
+
+  .g2rd-tab-panel {
+    display: block !important;
+    page-break-inside: avoid;
+    margin-bottom: 1em;
+  }
+
+  .g2rd-tab-panel::before {
+    content: attr(data-tab-title);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5em;
+  }
+}
+

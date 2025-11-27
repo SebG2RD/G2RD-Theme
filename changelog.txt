@@ -1,3 +1,48 @@
+= 1.1.4 =
+* Simplification et optimisation du bloc G2RD Carousel
+* Refactorisation majeure du code JavaScript pour réduire la complexité
+* Simplification de la configuration du loop pour améliorer la stabilité
+* Désactivation automatique du loop si nombre de slides insuffisant
+* Configuration simplifiée des breakpoints responsive
+* Suppression des messages de debug dans la console
+* Optimisation du code pour améliorer les performances
+* Amélioration de la gestion de l'autoplay avec loop désactivé sur desktop
+* Correction des problèmes de décalage avec l'effet coverflow
+
+= 1.1.3 =
+* Gestion des CPT depuis la page de licence
+* Ajout de toggles pour activer/désactiver chaque CPT (Prestations, Qui sommes-nous, Portfolio)
+* Ajout de champs pour personnaliser le nom de chaque CPT
+* Sauvegarde AJAX des états et noms avec feedback visuel
+* Interface améliorée utilisant les classes WordPress natives (postbox, card, etc.)
+* Mise en page flexbox pour afficher les cartes CPT en ligne
+* Ajout d'icônes Dashicons et animations de chargement
+* Footer avec informations de contact (g2rd.fr et email)
+* Styles responsive pour adaptation mobile
+
+= 1.1.2 =
+* Améliorations du bloc G2RD Carousel
+* Mobile (<768px) : affichage fixe 2×2 (4 images) sans autoplay, sans loop, sans swipe, sans pagination/navigation
+* Desktop/Tablette : comportement intact (effets, autoplay et loop selon réglages)
+* Respect strict de « Show Captions » : l'overlay .carousel-post-info n'est plus rendu quand l'option est désactivée
+* Robustesse front : fallback si le HTML n'a pas de slides (contentData/contentIds dans data-config + récupération REST si besoin)
+* CSS mobile : neutralise les largeurs 33.33% pour forcer 2×2 (50%)
+
+= 1.1.1 =
+* Nouveau CPT Prestations : Création d'un type de contenu personnalisé pour les prestations avec 5 sections configurables
+* Champs personnalisés : Titre, description (éditeur classique) et image pour chaque section
+* Shortcodes intégrés : 15 shortcodes pour afficher les contenus dans les templates
+* Template full-width : Template single-prestations.html avec support full-width et structure responsive
+* Éditeur classique : Remplacement des textarea par l'éditeur TinyMCE pour une meilleure expérience d'édition
+* Sélecteur de médias : Interface native WordPress pour la sélection des images
+* Structure HTML optimisée : Correction des problèmes de duplication de contenu et de balises main
+* Interface d'administration : Meta box intuitive avec prévisualisation des images
+
+= 1.1.0 =
+* Création d'un bloc "G2RD Carousel" pour afficher un carrousel d'images ou de contenus personnalisés (pages, articles, CPT) avec Swiper.js
+* Personnalisation avancée : nombre de slides visibles, couleurs, effets, navigation, pagination, légendes, box-shadow, etc.
+* Compatible avec l'éditeur Gutenberg (back et front), responsive, et entièrement traduisible
+
 = 1.0.9 =
 * Création d'un bloc "G2RD Typed" pour créer des effets de texte animé avec frappe automatique
 * Intégration de la bibliothèque Typed.js pour des animations de texte fluides

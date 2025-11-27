@@ -5,10 +5,10 @@ Un bloc de carousel moderne et responsive pour WordPress, utilisant Swiper.js po
 ## 🚀 Fonctionnalités
 
 ### Responsive Design
-- **Mobile (320px+)**: 1 slide visible, effet slide pour les performances
-- **Tablette (768px+)**: 2 slides visibles, navigation optimisée
-- **Desktop (1024px+)**: 3 slides visibles, effets avancés
-- **Grand écran (1200px+)**: Configuration complète avec effet coverflow
+- **Mobile (320px+)**: Grille fixe 2×2 (4 images), sans autoplay, sans loop, sans swipe
+- **Tablette (768px+)**: 2 slides visibles, loop activé, navigation optimisée
+- **Desktop (1024px+)**: 3 slides visibles, loop désactivé pour stabilité, effets avancés
+- **Grand écran (1200px+)**: Configuration complète avec effet coverflow, loop désactivé
 
 ### Effets Visuels
 - **Slide**: Transition simple et fluide
@@ -34,10 +34,37 @@ Le carousel s'adapte automatiquement à la taille d'écran :
 
 ```javascript
 // Configuration responsive automatique
-320: { slidesPerView: 1, spaceBetween: 15, effect: 'slide' }
-768: { slidesPerView: 2, spaceBetween: 25, effect: 'slide' }
-1024: { slidesPerView: 3, spaceBetween: 30, effect: 'slide' }
-1200: { slidesPerView: 3, spaceBetween: 50, effect: 'coverflow' }
+320: { 
+  slidesPerView: 2, 
+  spaceBetween: 10, 
+  effect: 'slide',
+  loop: false,
+  autoplay: false,
+  grid: { rows: 2, fill: 'row' }
+}
+768: { 
+  slidesPerView: 2, 
+  spaceBetween: 30, 
+  effect: 'slide',
+  loop: true,
+  autoplay: true
+}
+1024: { 
+  slidesPerView: 3, 
+  spaceBetween: 30, 
+  effect: 'slide',
+  loop: false,
+  autoplay: true,
+  stopOnLastSlide: true
+}
+1200: { 
+  slidesPerView: 3, 
+  spaceBetween: 50, 
+  effect: 'coverflow',
+  loop: false,
+  autoplay: true,
+  stopOnLastSlide: true
+}
 ```
 
 ## 🎨 Personnalisation
@@ -137,6 +164,15 @@ Ce bloc fait partie du thème G2RD et suit les mêmes conditions de licence.
 
 ---
 
-**Version**: 1.0.0  
-**Dernière mise à jour**: Responsive complet  
-**Compatibilité**: WordPress 5.0+, Swiper.js 8+
+**Version**: 1.1.4  
+**Dernière mise à jour**: Simplification et optimisation du code  
+**Compatibilité**: WordPress 6.5+, Swiper.js 11+
+
+### Notes de version 1.1.4
+- Simplification de la configuration du loop pour améliorer la stabilité
+- Désactivation automatique du loop si nombre de slides insuffisant
+- Configuration simplifiée des breakpoints responsive
+- Suppression des messages de debug dans la console
+- Optimisation du code JavaScript pour réduire la complexité
+- Amélioration de la gestion de l'autoplay avec loop désactivé sur desktop
+- Correction des problèmes de décalage avec l'effet coverflow
