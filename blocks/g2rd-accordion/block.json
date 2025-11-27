@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "g2rd/accordion",
+  "version": "1.0.0",
+  "title": "G2RD Accordéon FAQ",
+  "category": "g2rd-bloks",
+  "icon": "editor-ul",
+  "description": "Un bloc accordéon pour créer des FAQ avec onglets ouvrables/fermables. Permet d'ajouter autant d'onglets que souhaité avec compteur, icône personnalisable et options d'état initial.",
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "align": ["wide", "full"],
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "textdomain": "g2rd-accordion",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./src/accordion.css",
+  "viewScript": "file:./build/accordion-frontend.js",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "item-1",
+          "title": "Question 1",
+          "clientId": ""
+        },
+        {
+          "id": "item-2",
+          "title": "Question 2",
+          "clientId": ""
+        }
+      ]
+    },
+    "initialState": {
+      "type": "string",
+      "default": "first-open"
+    },
+    "iconType": {
+      "type": "string",
+      "default": "chevron"
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "right"
+    },
+    "showCounter": {
+      "type": "boolean",
+      "default": true
+    },
+    "counterPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "allowMultiple": {
+      "type": "boolean",
+      "default": false
+    },
+    "itemBackgroundColor": {
+      "type": "string"
+    },
+    "itemTextColor": {
+      "type": "string"
+    },
+    "itemActiveBackgroundColor": {
+      "type": "string"
+    },
+    "itemActiveTextColor": {
+      "type": "string"
+    },
+    "contentBackgroundColor": {
+      "type": "string"
+    },
+    "contentTextColor": {
+      "type": "string"
+    },
+    "borderColor": {
+      "type": "string"
+    },
+    "borderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 4
+    },
+    "showBorder": {
+      "type": "boolean",
+      "default": true
+    },
+    "gap": {
+      "type": "string",
+      "default": "0"
+    }
+  }
+}
+

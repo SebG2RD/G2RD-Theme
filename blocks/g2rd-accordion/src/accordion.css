@@ -1,0 +1,384 @@
+/* G2RD Accordion Block Styles - Styles proches de WordPress natif */
+
+/* Désactiver les bordures automatiques de WordPress */
+.g2rd-accordion-block :where([style*="border-width"]) {
+  border-style: none !important;
+  border-top-style: none !important;
+  border-right-style: none !important;
+  border-bottom-style: none !important;
+  border-left-style: none !important;
+}
+
+/* Conteneur principal */
+.g2rd-accordion-block {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Liste des items */
+.g2rd-accordion-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g2rd-gap, 0);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Item individuel */
+.g2rd-accordion-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-radius: var(--g2rd-border-radius, 4px);
+  background: var(--g2rd-item-bg, #f0f0f0);
+  transition: all 0.2s ease;
+}
+
+/* Masquer les bordures si l'option est désactivée */
+.g2rd-accordion-no-border .g2rd-accordion-item {
+  border: none !important;
+}
+
+/* En-tête de l'item (bouton cliquable) */
+.g2rd-accordion-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 16px 20px;
+  background: var(--g2rd-item-bg, #f0f0f0);
+  color: var(--g2rd-item-text, #333333);
+  border: none;
+  border-radius: var(--g2rd-border-radius, 4px);
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.g2rd-accordion-item-header:hover {
+  background: var(--g2rd-item-active-bg, #0073aa);
+  color: var(--g2rd-item-active-text, #ffffff);
+}
+
+.g2rd-accordion-item.is-open .g2rd-accordion-item-header {
+  background: var(--g2rd-item-active-bg, #0073aa);
+  color: var(--g2rd-item-active-text, #ffffff);
+  border-radius: var(--g2rd-border-radius, 4px) var(--g2rd-border-radius, 4px) 0 0;
+}
+
+/* Compteur d'onglets */
+.g2rd-accordion-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.g2rd-accordion-item.is-open .g2rd-accordion-item-header .g2rd-accordion-counter {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Position du compteur */
+.g2rd-accordion-counter-left .g2rd-accordion-counter {
+  order: 0;
+}
+
+.g2rd-accordion-counter-right .g2rd-accordion-counter {
+  order: 2;
+}
+
+/* Icône */
+.g2rd-accordion-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.g2rd-accordion-item.is-open .g2rd-accordion-icon {
+  transform: rotate(180deg);
+}
+
+.g2rd-accordion-icon-left .g2rd-accordion-icon {
+  order: 1;
+}
+
+.g2rd-accordion-icon-right .g2rd-accordion-icon {
+  order: 3;
+}
+
+/* Utilisation des Dashicons WordPress natifs */
+.g2rd-accordion-icon.dashicons {
+  font-family: dashicons;
+  font-size: 20px;
+  line-height: 1;
+  speak: never;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Titre de l'item */
+.g2rd-accordion-item-title {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* Bouton de suppression (éditeur uniquement) */
+.g2rd-accordion-item-remove {
+  margin-left: auto;
+  padding: 4px;
+  min-width: auto;
+  height: auto;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.g2rd-accordion-item-remove:hover {
+  opacity: 1;
+}
+
+/* Contenu de l'item */
+.g2rd-accordion-item-content-wrapper {
+  display: none;
+  overflow: hidden;
+  background: var(--g2rd-content-bg, #ffffff);
+  color: var(--g2rd-content-text, #333333);
+  border-top: var(--g2rd-border-width, 1px) solid var(--g2rd-border-color, #ddd);
+  border-radius: 0 0 var(--g2rd-border-radius, 4px) var(--g2rd-border-radius, 4px);
+  transition: all 0.3s ease;
+}
+
+.g2rd-accordion-item-content-wrapper.is-open {
+  display: block;
+}
+
+.g2rd-accordion-item-content-wrapper[hidden] {
+  display: none !important;
+}
+
+.g2rd-accordion-item-content {
+  padding: 20px;
+  width: 100%;
+}
+
+/* Masquer les bordures du contenu si l'option est désactivée */
+.g2rd-accordion-no-border .g2rd-accordion-item-content-wrapper {
+  border-top: none !important;
+}
+
+/* Bouton d'ajout (éditeur uniquement) */
+.g2rd-accordion-add {
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+/* Conteneur pour InnerBlocks (masqué visuellement sur le frontend) */
+.g2rd-accordion-content {
+  display: none;
+}
+
+/* Dans l'éditeur, afficher le conteneur pour permettre l'édition */
+.editor-styles-wrapper .g2rd-accordion-content,
+.block-editor-block-list__layout .g2rd-accordion-content {
+  display: block !important;
+  position: relative;
+  left: auto;
+  visibility: visible;
+  margin-top: 20px;
+  padding: 20px;
+  background: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+}
+
+/* Intégration avec les classes WordPress natives */
+.wp-block-g2rd-accordion {
+  /* Hérite des styles WordPress */
+}
+
+.wp-block-g2rd-accordion.alignwide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-block-g2rd-accordion.alignfull {
+  max-width: none;
+}
+
+/* Accessibilité */
+.g2rd-accordion-item-header:focus {
+  outline: 2px solid #0073aa;
+  outline-offset: 2px;
+}
+
+.g2rd-accordion-item-header:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.g2rd-accordion-item-header:focus-visible {
+  outline: 2px solid #0073aa;
+  outline-offset: 2px;
+}
+
+/* Animations pour l'ouverture/fermeture */
+@keyframes g2rd-accordion-open {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 2000px;
+  }
+}
+
+@keyframes g2rd-accordion-close {
+  from {
+    opacity: 1;
+    max-height: 2000px;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+  }
+}
+
+.g2rd-accordion-item-content-wrapper.is-open {
+  animation: g2rd-accordion-open 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .g2rd-accordion-item-header {
+    padding: 14px 16px;
+    font-size: 0.95em;
+  }
+
+  .g2rd-accordion-item-content {
+    padding: 16px;
+  }
+
+  .g2rd-accordion-counter {
+    min-width: 20px;
+    height: 20px;
+    font-size: 0.8em;
+  }
+
+  .g2rd-accordion-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .g2rd-accordion-item-header {
+    padding: 12px 14px;
+    font-size: 0.9em;
+    gap: 8px;
+  }
+
+  .g2rd-accordion-item-content {
+    padding: 14px;
+  }
+
+  /* Sur très petits écrans, masquer le compteur si nécessaire */
+  .g2rd-accordion-counter {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.75em;
+    padding: 0 4px;
+  }
+}
+
+/* Styles pour l'éditeur */
+.editor-styles-wrapper .g2rd-accordion-block {
+  /* Assure un affichage correct dans l'éditeur */
+}
+
+.editor-styles-wrapper .g2rd-accordion-item-content-wrapper {
+  /* Affiche le contenu ouvert dans l'éditeur */
+}
+
+/* Print */
+@media print {
+  .g2rd-accordion-item-header {
+    cursor: default;
+    page-break-inside: avoid;
+  }
+
+  .g2rd-accordion-item-content-wrapper {
+    display: block !important;
+    page-break-inside: avoid;
+    margin-bottom: 1em;
+  }
+
+  .g2rd-accordion-icon {
+    display: none;
+  }
+
+  .g2rd-accordion-item-header::after {
+    content: ":";
+  }
+}
+
+/* Amélioration de l'apparence avec les styles WordPress natifs */
+.g2rd-accordion-item {
+  /* Utilise les variables CSS WordPress si disponibles */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.g2rd-accordion-item-header {
+  /* Style proche des boutons WordPress */
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.g2rd-accordion-item.is-open {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Support pour le mode sombre WordPress (si activé) */
+@media (prefers-color-scheme: dark) {
+  .g2rd-accordion-item {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .g2rd-accordion-item-header {
+    background: var(--g2rd-item-bg, rgba(255, 255, 255, 0.1));
+    color: var(--g2rd-item-text, rgba(255, 255, 255, 0.9));
+  }
+
+  .g2rd-accordion-item-content-wrapper {
+    background: var(--g2rd-content-bg, rgba(255, 255, 255, 0.05));
+    color: var(--g2rd-content-text, rgba(255, 255, 255, 0.9));
+  }
+}
+

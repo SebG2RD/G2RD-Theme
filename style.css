@@ -8,7 +8,7 @@ Description: Un thème Full Site Editing (FSE) moderne et flexible pour les agen
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
- Version: 1.1.4
+ Version: 1.1.5
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD-theme
@@ -18,6 +18,22 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
 */
 
 /*
+  1.1.5 – Nouveau bloc G2RD Accordéon FAQ
+  - Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables
+  - Ajout/suppression illimitée d'items (onglets)
+  - Compteur d'onglets personnalisable (gauche/droite)
+  - Modification des titres avec RichText
+  - Choix de l'icône (chevron, flèche, plus/moins) et position (gauche/droite)
+  - Choix de l'état initial (tout ouvert, tout fermé, premier ouvert)
+  - Support de plusieurs items ouverts simultanément ou un seul à la fois
+  - Contenu riche avec InnerBlocks pour chaque item (n'importe quel bloc WordPress)
+  - Personnalisation complète : couleurs (items actifs/inactifs, contenu), bordures, espacement
+  - Design responsive et proche du style WordPress natif
+  - Support ARIA pour l'accessibilité
+  - Script frontend pour l'interactivité
+  - Correction du filtre deregisterBlocks pour éviter de bloquer tous les blocs
+  - Compilation de tous les blocs manquants (Counter, Info, Countdown, Typed, Toggle Content, Carousel, Tabs)
+
   1.1.4 – Simplification et optimisation du bloc G2RD Carousel
   - Simplification de la configuration du loop pour améliorer la stabilité
   - Désactivation automatique du loop si nombre de slides insuffisant

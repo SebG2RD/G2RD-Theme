@@ -59,7 +59,8 @@ class JsonConfig
                     \add_action('init', [$this, 'registerPatternsCategories']);
                     break;
                 case 'deregisterBlocks':
-                    \add_filter('allowed_block_types_all', [$this, 'deregisterBlocks']);
+                    // Réactiver le filtre avec la correction qui empêche de bloquer tous les blocs
+                    \add_filter('allowed_block_types_all', [$this, 'deregisterBlocks'], 10, 1);
                     break;
                 case 'deregisterBlocksStylesheets':
                     \add_action('wp_enqueue_scripts', [$this, 'deregisterBlocksStylesheets']);
@@ -120,12 +121,54 @@ class JsonConfig
 
     /**
      * Désactive certains blocs par défaut dans l'éditeur
+     * 
+     * IMPORTANT: Si cette méthode retourne un tableau vide ou null,
+     * TOUS les blocs seront désactivés. On doit donc toujours retourner
+     * un tableau non vide ou null pour autoriser tous les blocs.
      */
-    public function deregisterBlocks(): array
+    public function deregisterBlocks($allowed_blocks = null)
     {
+        // Si aucun bloc n'est passé, autoriser tous les blocs par défaut
+        if ($allowed_blocks === null) {
+            $allowed_blocks = true; // Autoriser tous les blocs
+        }
+        
+        // Si c'est déjà true ou false, retourner tel quel (autoriser tous ou aucun)
+        if (!is_array($allowed_blocks)) {
+            return $allowed_blocks;
+        }
+        
+        // Récupérer la liste des blocs à désactiver depuis la config
         $blocks_to_disable = $this->getConfigDataByKey('deregisterBlocks');
-        $blocks = array_keys(\WP_Block_Type_Registry::get_instance()->get_all_registered());
-        return array_values(array_diff($blocks, $blocks_to_disable));
+        
+        // Si aucun bloc à désactiver, autoriser tous les blocs
+        if (empty($blocks_to_disable) || !is_array($blocks_to_disable)) {
+            return null; // null = autoriser tous les blocs
+        }
+        
+        // Récupérer tous les blocs enregistrés
+        $registry = \WP_Block_Type_Registry::get_instance();
+        if (!$registry) {
+            return null; // En cas d'erreur, autoriser tous les blocs
+        }
+        
+        $all_blocks = array_keys($registry->get_all_registered());
+        
+        // Si aucun bloc n'est enregistré, retourner null pour autoriser tous
+        if (empty($all_blocks)) {
+            return null;
+        }
+        
+        // Retirer les blocs à désactiver de la liste
+        $allowed = array_values(array_diff($all_blocks, $blocks_to_disable));
+        
+        // IMPORTANT: Si le résultat est vide, retourner null pour autoriser tous les blocs
+        // plutôt qu'un tableau vide qui désactiverait tout
+        if (empty($allowed)) {
+            return null; // null = autoriser tous les blocs
+        }
+        
+        return $allowed;
     }
 
     /**

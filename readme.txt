@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: EUPL-1.2
 License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
 
@@ -45,6 +45,7 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * **Testimonials Block** : Affichez les témoignages de vos clients
 * **Typed Block** : Créez des effets de texte animé avec frappe automatique
 * **Carousel Block** : Affiche un carrousel d'images ou de contenus personnalisés avec de nombreuses options de personnalisation
+* **Accordéon FAQ Block** : Créez des FAQ avec onglets ouvrables/fermables, compteur, icônes personnalisables et contenu riche
 
 = Installation =
 
@@ -103,6 +104,22 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.5 =
+* **Nouveau bloc G2RD Accordéon FAQ** : Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables
+* **Ajout/suppression illimitée d'items** : Possibilité d'ajouter autant d'onglets que souhaité avec boutons d'ajout/suppression
+* **Compteur d'onglets personnalisable** : Affichage du numéro de chaque item (gauche ou droite) avec style personnalisable
+* **Modification des titres** : Utilisation de RichText pour éditer les titres directement dans l'éditeur
+* **Choix de l'icône** : 4 types d'icônes disponibles (chevron, flèche, flèche horizontale, plus/moins) avec position personnalisable (gauche/droite)
+* **État initial configurable** : Choix entre tout ouvert, tout fermé, ou premier ouvert au chargement
+* **Plusieurs items ouverts** : Option pour permettre plusieurs items ouverts simultanément ou un seul à la fois
+* **Contenu riche avec InnerBlocks** : Possibilité d'ajouter n'importe quel bloc WordPress natif ou personnalisé dans chaque item
+* **Personnalisation complète** : Couleurs (items actifs/inactifs, contenu), bordures (couleur, épaisseur, rayon), espacement entre items
+* **Design responsive** : Adaptation automatique pour mobile et tablette avec styles optimisés
+* **Accessibilité** : Support ARIA complet (aria-expanded, aria-controls, role="region") pour les lecteurs d'écran
+* **Script frontend** : Interactivité complète avec gestion des états ouverts/fermés et mise à jour des icônes
+* **Correction du filtre deregisterBlocks** : Correction pour éviter de bloquer tous les blocs en cas d'erreur ou configuration vide
+* **Compilation des blocs** : Tous les blocs manquants ont été compilés (Counter, Info, Countdown, Typed, Toggle Content, Carousel, Tabs)
 
 = 1.1.4 =
 * **Simplification et optimisation du bloc G2RD Carousel** : Refactorisation majeure du code JavaScript

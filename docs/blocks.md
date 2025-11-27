@@ -4,9 +4,14 @@ Ce document détaille les blocs FSE personnalisés inclus dans le thème G2RD.
 
 ## Liste des blocs
 
-- **G2RD Info Block** _(Nouveau en v1.0.6)_
+- **G2RD Accordéon FAQ Block** _(Nouveau en v1.1.5)_
+- **G2RD Info Block** _(v1.0.6)_
 - G2RD Countdown Block
 - G2RD Toggle Content Block
+- G2RD Tabs Block
+- G2RD Counter Block
+- G2RD Typed Block
+- G2RD Carousel Block
 - Portfolio Block
 - Team Block
 - Services Block
@@ -123,5 +128,57 @@ Ce document détaille les blocs FSE personnalisés inclus dans le thème G2RD.
   ```
 
 ---
+
+## G2RD Accordéon FAQ Block _(v1.1.5)_
+
+- **Description** : Bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables. Permet d'ajouter autant d'onglets que souhaité avec compteur, icône personnalisable et options d'état initial.
+- **Attributs** :
+  - `items` : tableau des items de l'accordéon (id, title, clientId)
+  - `initialState` : état initial ("first-open", "all-open", "all-closed")
+  - `iconType` : type d'icône ("chevron", "arrow", "arrow-horizontal", "plus")
+  - `iconPosition` : position de l'icône ("left", "right")
+  - `showCounter` : afficher le compteur (boolean)
+  - `counterPosition` : position du compteur ("left", "right")
+  - `allowMultiple` : permettre plusieurs items ouverts simultanément (boolean)
+  - `itemBackgroundColor` : couleur de fond des items inactifs
+  - `itemTextColor` : couleur du texte des items inactifs
+  - `itemActiveBackgroundColor` : couleur de fond des items actifs
+  - `itemActiveTextColor` : couleur du texte des items actifs
+  - `contentBackgroundColor` : couleur de fond du contenu
+  - `contentTextColor` : couleur du texte du contenu
+  - `borderColor` : couleur de la bordure
+  - `borderWidth` : épaisseur de la bordure (nombre)
+  - `borderRadius` : rayon des coins (nombre)
+  - `showBorder` : afficher la bordure (boolean)
+  - `gap` : espacement entre les items (string, ex: "8px", "1rem")
+
+- **Options** :
+  - **Ajout/suppression illimitée** : Boutons pour ajouter/supprimer des items
+  - **Compteur personnalisable** : Affichage du numéro de chaque item (gauche ou droite)
+  - **4 types d'icônes** : Chevron, flèche, flèche horizontale, plus/moins
+  - **Position de l'icône** : Gauche ou droite
+  - **État initial** : Tout ouvert, tout fermé, ou premier ouvert
+  - **Plusieurs items ouverts** : Option pour permettre plusieurs items ouverts simultanément
+  - **Contenu riche** : InnerBlocks pour ajouter n'importe quel bloc WordPress dans chaque item
+  - **Personnalisation complète** : Couleurs, bordures, espacement
+  - **Design responsive** : Adaptation automatique pour mobile et tablette
+  - **Accessibilité** : Support ARIA complet
+
+- **Exemple d'utilisation** :
+  ```
+  <!-- wp:g2rd/accordion {
+    "items": [
+      {"id": "item-1", "title": "Question 1"},
+      {"id": "item-2", "title": "Question 2"}
+    ],
+    "initialState": "first-open",
+    "iconType": "chevron",
+    "iconPosition": "right",
+    "showCounter": true,
+    "counterPosition": "left",
+    "allowMultiple": false
+  } -->
+  <!-- /wp:g2rd/accordion -->
+  ```
 
 Complétez chaque section pour chaque bloc personnalisé du thème.
