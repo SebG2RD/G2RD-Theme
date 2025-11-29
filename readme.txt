@@ -35,6 +35,10 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * Interface d'administration optimisée avec classes natives WordPress
 * **Toggle Content Block**: Un interrupteur pour afficher l'un ou l'autre de deux groupes de contenu, avec options de style.
 * **Gestion des CPT depuis la page de licence** : Activation/désactivation et renommage des CPT via une interface intuitive
+* **Bloc Accordéon FAQ** : Système complet de FAQ avec onglets ouvrables/fermables et contenu riche
+* **Bloc Onglets (Tabs)** : Organisation du contenu en onglets avec personnalisation complète
+* **Bloc Modal (Popup)** : Fenêtres modales interactives pour afficher du contenu important
+* **Bloc Marquee** : Défilement infini pour mettre en avant du contenu avec effet de fondu
 
 = Blocs personnalisés =
 
@@ -46,6 +50,9 @@ Le thème FSE G2RD Agence Web est un thème WordPress moderne conçu spécifique
 * **Typed Block** : Créez des effets de texte animé avec frappe automatique
 * **Carousel Block** : Affiche un carrousel d'images ou de contenus personnalisés avec de nombreuses options de personnalisation
 * **Accordéon FAQ Block** : Créez des FAQ avec onglets ouvrables/fermables, compteur, icônes personnalisables et contenu riche
+* **Onglets (Tabs) Block** : Bloc d'onglets personnalisable permettant d'ajouter du contenu riche dans chaque onglet avec personnalisation complète des styles
+* **Modal (Popup) Block** : Créez des fenêtres modales avec bouton déclencheur personnalisable, contenu riche, options de style complètes et contrôle de l'alignement
+* **Marquee Block** : Créez un défilement infini horizontal ou vertical avec effet de fondu, permet d'ajouter n'importe quel contenu avec options de vitesse et pause au survol
 
 = Installation =
 
@@ -120,6 +127,9 @@ Oui, le thème est conçu pour être compatible avec les standards FSE de WordPr
 * **Script frontend** : Interactivité complète avec gestion des états ouverts/fermés et mise à jour des icônes
 * **Correction du filtre deregisterBlocks** : Correction pour éviter de bloquer tous les blocs en cas d'erreur ou configuration vide
 * **Compilation des blocs** : Tous les blocs manquants ont été compilés (Counter, Info, Countdown, Typed, Toggle Content, Carousel, Tabs)
+* **Nouveau bloc G2RD Onglets (Tabs)** : Bloc d'onglets personnalisable permettant d'ajouter du contenu riche dans chaque onglet avec personnalisation complète des styles (couleurs, bordures, espacement)
+* **Nouveau bloc G2RD Modal (Popup)** : Fenêtre modale avec bouton déclencheur personnalisable, contenu riche, options de style complètes, contrôle de l'alignement et modes d'ouverture (clic, timer)
+* **Nouveau bloc G2RD Marquee** : Défilement infini horizontal ou vertical avec effet de fondu, permet d'ajouter n'importe quel contenu avec contrôle de la vitesse et pause au survol
 
 = 1.1.4 =
 * **Simplification et optimisation du bloc G2RD Carousel** : Refactorisation majeure du code JavaScript

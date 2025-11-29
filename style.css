@@ -18,21 +18,24 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
 */
 
 /*
-  1.1.5 – Nouveau bloc G2RD Accordéon FAQ
+  1.1.5 – Nouveau bloc G2RD Accordéon FAQ et nouveaux blocs
   - Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables
-  - Ajout/suppression illimitée d'items (onglets)
-  - Compteur d'onglets personnalisable (gauche/droite)
-  - Modification des titres avec RichText
-  - Choix de l'icône (chevron, flèche, plus/moins) et position (gauche/droite)
-  - Choix de l'état initial (tout ouvert, tout fermé, premier ouvert)
+  - Ajout/suppression illimitée d'items (onglets) avec boutons d'ajout/suppression
+  - Compteur d'onglets personnalisable (gauche/droite) avec style personnalisable
+  - Modification des titres avec RichText pour éditer directement dans l'éditeur
+  - Choix de l'icône : 4 types disponibles (chevron, flèche, flèche horizontale, plus/moins) avec position personnalisable (gauche/droite)
+  - Choix de l'état initial : tout ouvert, tout fermé, ou premier ouvert au chargement
   - Support de plusieurs items ouverts simultanément ou un seul à la fois
-  - Contenu riche avec InnerBlocks pour chaque item (n'importe quel bloc WordPress)
-  - Personnalisation complète : couleurs (items actifs/inactifs, contenu), bordures, espacement
-  - Design responsive et proche du style WordPress natif
-  - Support ARIA pour l'accessibilité
-  - Script frontend pour l'interactivité
-  - Correction du filtre deregisterBlocks pour éviter de bloquer tous les blocs
-  - Compilation de tous les blocs manquants (Counter, Info, Countdown, Typed, Toggle Content, Carousel, Tabs)
+  - Contenu riche avec InnerBlocks pour chaque item (n'importe quel bloc WordPress natif ou personnalisé)
+  - Personnalisation complète : couleurs (items actifs/inactifs, contenu), bordures (couleur, épaisseur, rayon), espacement entre items
+  - Design responsive : adaptation automatique pour mobile et tablette avec styles optimisés
+  - Accessibilité : support ARIA complet (aria-expanded, aria-controls, role="region") pour les lecteurs d'écran
+  - Script frontend : interactivité complète avec gestion des états ouverts/fermés et mise à jour des icônes
+  - Correction du filtre deregisterBlocks : correction pour éviter de bloquer tous les blocs en cas d'erreur ou configuration vide
+  - Compilation des blocs : tous les blocs manquants ont été compilés (Counter, Info, Countdown, Typed, Toggle Content, Carousel, Tabs)
+  - Nouveau bloc G2RD Onglets (Tabs) : bloc d'onglets personnalisable avec contenu riche dans chaque onglet
+  - Nouveau bloc G2RD Modal (Popup) : fenêtre modale avec bouton déclencheur, contenu riche, options de style complètes et contrôle d'alignement
+  - Nouveau bloc G2RD Marquee : défilement infini horizontal ou vertical avec effet de fondu, permet d'ajouter n'importe quel contenu
 
   1.1.4 – Simplification et optimisation du bloc G2RD Carousel
   - Simplification de la configuration du loop pour améliorer la stabilité
@@ -227,9 +230,7 @@ ul {
   height: 2.5px;
   opacity: 0.7;
   z-index: -1;
-  transition:
-    transform 0.15s ease-out,
-    opacity 0.15s ease-out;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
   will-change: transform, left, top;
 }
 

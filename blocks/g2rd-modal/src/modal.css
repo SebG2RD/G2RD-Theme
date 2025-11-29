@@ -1,0 +1,536 @@
+/* G2RD Modal Block Styles - Styles proches de WordPress natif */
+
+/* Conteneur principal */
+.g2rd-modal-block {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Bouton déclencheur - Style par défaut (héritage du thème) */
+.g2rd-modal-trigger-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Hérite des styles du thème via wp-element-button - pas de styles personnalisés */
+  /* Les styles sont gérés par WordPress et le thème */
+}
+
+/* S'assurer que wp-element-button fonctionne correctement */
+.g2rd-modal-trigger.wp-element-button {
+  /* Réinitialiser uniquement les propriétés nécessaires pour le layout */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Tous les autres styles viennent du thème */
+}
+
+/* S'assurer que les styles de thème s'appliquent même avec des styles inline */
+.g2rd-modal-trigger.wp-element-button[style] {
+  /* Les styles inline sont gérés par le code JavaScript */
+  /* Mais les styles de classe (is-style-*) doivent avoir priorité */
+}
+
+/* Appliquer les styles de boutons WordPress aux boutons modaux */
+/* Ces règles permettent aux styles is-style-{slug} de s'appliquer */
+.g2rd-modal-trigger.wp-element-button.is-style-alt,
+.g2rd-modal-trigger.wp-element-button.is-style-scd,
+.g2rd-modal-trigger.wp-element-button.is-style-transparent,
+.g2rd-modal-trigger.wp-element-button.is-style-neomorphic,
+.g2rd-modal-trigger.wp-element-button.is-style-soft-pressed {
+  /* Les styles sont hérités depuis les styles WordPress */
+  /* WordPress génère automatiquement les styles pour .wp-block-button.is-style-{slug} .wp-block-button__link */
+  /* On doit aussi les appliquer à notre bouton */
+}
+
+/* Règles spécifiques pour chaque style - héritage depuis les styles WordPress */
+/* Ces règles permettent d'hériter des styles définis dans les fichiers JSON du thème */
+/* Style Alternatif */
+.wp-block-button.is-style-alt .wp-block-button__link,
+.g2rd-modal-trigger.wp-element-button.is-style-alt {
+  background-color: var(--wp--preset--color--secondary-hover, var(--wp--custom--color--secondaryhover, #555));
+  color: var(--wp--preset--color--white, #ffffff) !important;
+}
+
+/* Style Secondaire */
+.wp-block-button.is-style-scd .wp-block-button__link,
+.g2rd-modal-trigger.wp-element-button.is-style-scd {
+  background-color: var(--wp--preset--color--secondary, #666) !important;
+  color: var(--wp--preset--color--white, #ffffff) !important;
+}
+
+/* Style Transparent */
+.wp-block-button.is-style-transparent .wp-block-button__link,
+.g2rd-modal-trigger.wp-element-button.is-style-transparent {
+  background-color: transparent !important;
+  color: var(--wp--custom--color--primaryhover, var(--wp--preset--color--primary, #0073aa)) !important;
+  border: 2px solid currentColor !important;
+  padding-top: calc(var(--wp--preset--spacing--xs, 0.5rem) - 2px) !important;
+  padding-bottom: calc(var(--wp--preset--spacing--xs, 0.5rem) - 2px) !important;
+}
+
+/* Style Neomorphic */
+.wp-block-button.is-style-neomorphic .wp-block-button__link,
+.g2rd-modal-trigger.wp-element-button.is-style-neomorphic {
+  background-color: var(--wp--preset--color--primary, #0073aa) !important;
+  color: var(--wp--preset--color--white, #ffffff) !important;
+  border-radius: var(--wp--custom--radius--m, 8px) !important;
+  border: 1px solid var(--wp--preset--color--white, #ffffff) !important;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff !important;
+  font-size: 18px !important;
+  padding: 0.7em 1.7em !important;
+}
+
+.wp-block-button.is-style-neomorphic .wp-block-button__link:hover,
+.g2rd-modal-trigger.wp-element-button.is-style-neomorphic:hover {
+  color: var(--wp--preset--color--white, #ffffff) !important;
+}
+
+.wp-block-button.is-style-neomorphic .wp-block-button__link:active,
+.g2rd-modal-trigger.wp-element-button.is-style-neomorphic:active {
+  color: #666 !important;
+  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff !important;
+}
+
+/* Style Soft Pressed */
+.wp-block-button.is-style-soft-pressed .wp-block-button__link,
+.g2rd-modal-trigger.wp-element-button.is-style-soft-pressed {
+  background-color: var(--wp--preset--color--secondary, #666) !important;
+  color: var(--wp--preset--color--white, #ffffff) !important;
+  border-radius: var(--wp--custom--radius--m, 8px) !important;
+  border: 1px solid var(--wp--preset--color--white, #ffffff) !important;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff !important;
+  font-size: 18px !important;
+  padding: 0.7em 1.7em !important;
+}
+
+/* Bouton déclencheur - Style personnalisé */
+.g2rd-modal-trigger-custom {
+  display: inline-block;
+  margin: 0;
+  padding: var(--g2rd-trigger-padding, 12px 24px);
+  background-color: var(--g2rd-trigger-bg, #0073aa);
+  color: var(--g2rd-trigger-text, #ffffff);
+  border: none;
+  border-radius: var(--g2rd-trigger-border-radius, 4px);
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.g2rd-modal-trigger-custom:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.g2rd-modal-trigger-custom:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.g2rd-modal-trigger-custom:focus {
+  outline: 2px solid #0073aa;
+  outline-offset: 2px;
+}
+
+.g2rd-modal-trigger-custom:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.g2rd-modal-trigger-custom:focus-visible {
+  outline: 2px solid #0073aa;
+  outline-offset: 2px;
+}
+
+/* Structure de base du bouton (pour les deux modes) */
+.g2rd-modal-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  /* Les autres styles sont gérés par le mode (thème ou personnalisé) */
+}
+
+/* Icône dans le bouton */
+.g2rd-modal-trigger .dashicons {
+  font-family: dashicons;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 1;
+  speak: never;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  flex-shrink: 0;
+}
+
+/* Position de l'icône */
+.g2rd-modal-trigger-icon-left {
+  flex-direction: row;
+}
+
+.g2rd-modal-trigger-icon-right {
+  flex-direction: row;
+}
+
+/* Ordre des éléments avec icône à gauche */
+.g2rd-modal-trigger-icon-left .dashicons {
+  order: -1;
+}
+
+/* Ordre des éléments avec icône à droite */
+.g2rd-modal-trigger-icon-right .dashicons {
+  order: 1;
+}
+
+/* Alignement du bouton déclencheur */
+.g2rd-modal-aligned-center .g2rd-modal-trigger {
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.g2rd-modal-aligned-right .g2rd-modal-trigger {
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.g2rd-modal-aligned-left .g2rd-modal-trigger {
+  display: inline-flex;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Overlay (fond sombre) */
+.g2rd-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--g2rd-overlay-bg, rgba(0, 0, 0, 0.5));
+  z-index: 999998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  animation: g2rd-modal-fade-in 0.3s ease;
+}
+
+.g2rd-modal-overlay.is-open {
+  display: flex;
+}
+
+/* Alignement du modal dans l'overlay */
+.g2rd-modal-aligned-center .g2rd-modal-overlay {
+  justify-content: center;
+}
+
+.g2rd-modal-aligned-right .g2rd-modal-overlay {
+  justify-content: flex-end;
+}
+
+.g2rd-modal-aligned-left .g2rd-modal-overlay {
+  justify-content: flex-start;
+}
+
+/* Conteneur du modal */
+.g2rd-modal-container {
+  position: relative;
+  width: var(--g2rd-modal-width, 600px);
+  max-width: 90vw;
+  max-height: 90vh;
+  background-color: var(--g2rd-modal-bg, #ffffff);
+  color: var(--g2rd-modal-text, #333333);
+  border-radius: var(--g2rd-border-radius, 8px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999999;
+  animation: g2rd-modal-slide-in 0.3s ease;
+  margin: auto;
+}
+
+/* Masquer les bordures si l'option est désactivée */
+.g2rd-modal-no-border .g2rd-modal-container {
+  border: none !important;
+}
+
+/* En-tête du modal */
+.g2rd-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.g2rd-modal-title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 1.4;
+  color: inherit;
+  flex: 1;
+}
+
+/* Bouton de fermeture */
+.g2rd-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  margin-left: 16px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.g2rd-modal-close:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.g2rd-modal-close:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.g2rd-modal-close:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.g2rd-modal-close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.g2rd-modal-close .dashicons {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+}
+
+/* Corps du modal */
+.g2rd-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Si pas de titre, ajuster l'en-tête */
+.g2rd-modal-header:has(.g2rd-modal-title:empty) {
+  padding: 0;
+  border-bottom: none;
+}
+
+.g2rd-modal-header:has(.g2rd-modal-title:empty) .g2rd-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  z-index: 1;
+}
+
+/* Animations */
+@keyframes g2rd-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes g2rd-modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes g2rd-modal-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+/* Fermeture avec animation */
+.g2rd-modal-overlay.closing {
+  animation: g2rd-modal-fade-in 0.3s ease reverse;
+}
+
+.g2rd-modal-overlay.closing .g2rd-modal-container {
+  animation: g2rd-modal-slide-out 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .g2rd-modal-container {
+    width: 95vw !important;
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .g2rd-modal-header {
+    padding: 16px 20px;
+  }
+
+  .g2rd-modal-title {
+    font-size: 1.25em;
+  }
+
+  .g2rd-modal-body {
+    padding: 20px;
+  }
+
+  .g2rd-modal-close {
+    width: 28px;
+    height: 28px;
+  }
+
+  .g2rd-modal-close .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .g2rd-modal-container {
+    width: 100vw !important;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .g2rd-modal-header {
+    padding: 14px 16px;
+  }
+
+  .g2rd-modal-title {
+    font-size: 1.1em;
+  }
+
+  .g2rd-modal-body {
+    padding: 16px;
+  }
+}
+
+/* Intégration avec les classes WordPress natives */
+.wp-block-g2rd-modal {
+  /* Hérite des styles WordPress */
+}
+
+.wp-block-g2rd-modal.alignwide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-block-g2rd-modal.alignfull {
+  max-width: none;
+}
+
+/* Accessibilité - Empêcher le scroll du body quand le modal est ouvert */
+body.g2rd-modal-open {
+  overflow: hidden;
+}
+
+/* Styles pour l'éditeur */
+.editor-styles-wrapper .g2rd-modal-block {
+  /* Assure un affichage correct dans l'éditeur */
+}
+
+.editor-styles-wrapper .g2rd-modal-overlay {
+  /* Affiche le modal dans l'éditeur */
+  position: relative;
+  display: flex;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  min-height: 200px;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+}
+
+.editor-styles-wrapper .g2rd-modal-container {
+  position: relative;
+  margin: 20px;
+  max-width: calc(100% - 40px);
+}
+
+/* Support pour le mode sombre WordPress (si activé) */
+@media (prefers-color-scheme: dark) {
+  .g2rd-modal-container {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .g2rd-modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .g2rd-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Print - Masquer le modal à l'impression */
+@media print {
+  .g2rd-modal-overlay {
+    display: none !important;
+  }
+
+  .g2rd-modal-trigger {
+    display: none;
+  }
+}
+
+/* Amélioration de l'apparence avec les styles WordPress natifs */
+.g2rd-modal-container {
+  /* Utilise les variables CSS WordPress si disponibles */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Zone de contenu cachée (utilisée pour InnerBlocks) */
+.g2rd-modal-content {
+  display: none;
+}
+

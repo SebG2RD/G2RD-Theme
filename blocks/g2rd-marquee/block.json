@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "g2rd/marquee",
+  "version": "1.0.0",
+  "title": "G2RD Marquee",
+  "category": "g2rd-bloks",
+  "icon": "move",
+  "description": "Un bloc marquee pour créer un défilement infini horizontal ou vertical avec effet de fondu. Permet d'ajouter n'importe quel contenu.",
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "align": ["wide", "full"],
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "textdomain": "g2rd-marquee",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./src/marquee.css",
+  "viewScript": "file:./build/marquee-frontend.js",
+  "attributes": {
+    "direction": {
+      "type": "string",
+      "default": "horizontal"
+    },
+    "speed": {
+      "type": "number",
+      "default": 50
+    },
+    "fadeEffect": {
+      "type": "boolean",
+      "default": true
+    },
+    "pauseOnHover": {
+      "type": "boolean",
+      "default": false
+    },
+    "duplicateContent": {
+      "type": "boolean",
+      "default": true
+    },
+    "height": {
+      "type": "number",
+      "default": 300
+    },
+    "heightUnit": {
+      "type": "string",
+      "default": "px"
+    }
+  }
+}
+

@@ -1,0 +1,182 @@
+/**
+ * Styles pour le bloc G2RD Marquee
+ * 
+ * Gère le défilement infini horizontal et vertical
+ * avec effet de fondu optionnel
+ */
+
+/* Conteneur principal du marquee */
+.g2rd-marquee-block {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Hauteur pour le défilement vertical */
+.g2rd-marquee-vertical {
+  height: var(--marquee-height, 300px);
+}
+
+/* Wrapper pour le contenu qui défile */
+.g2rd-marquee-wrapper {
+  display: flex;
+}
+
+/* Direction horizontale - wrapper et animation */
+.g2rd-marquee-horizontal .g2rd-marquee-wrapper {
+  flex-direction: row;
+  width: fit-content;
+  min-width: 200%;
+  animation: marquee-horizontal var(--marquee-speed, 50s) linear infinite;
+}
+
+/* Direction verticale - wrapper et animation */
+.g2rd-marquee-vertical .g2rd-marquee-wrapper {
+  flex-direction: column;
+  height: fit-content;
+  min-height: 200%;
+  animation: marquee-vertical var(--marquee-speed, 50s) linear infinite;
+}
+
+/* Contenu du marquee */
+.g2rd-marquee-content {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Direction horizontale - contenu en ligne */
+.g2rd-marquee-horizontal .g2rd-marquee-content {
+  flex-direction: row;
+  white-space: nowrap;
+}
+
+/* Direction verticale - contenu en colonne */
+.g2rd-marquee-vertical .g2rd-marquee-content {
+  flex-direction: column;
+  white-space: normal;
+}
+
+/* Animation de défilement horizontal */
+@keyframes marquee-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Animation de défilement vertical */
+@keyframes marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Effet de fondu - masque sur les bords */
+.g2rd-marquee-fade::before,
+.g2rd-marquee-fade::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fondu horizontal - masque gauche et droite */
+.g2rd-marquee-horizontal.g2rd-marquee-fade::before {
+  background: linear-gradient(to right, var(--marquee-fade-color, rgba(255, 255, 255, 1)), transparent);
+  width: 100px;
+  right: auto;
+}
+
+.g2rd-marquee-horizontal.g2rd-marquee-fade::after {
+  background: linear-gradient(to left, var(--marquee-fade-color, rgba(255, 255, 255, 1)), transparent);
+  width: 100px;
+  left: auto;
+}
+
+/* Fondu vertical - masque haut et bas */
+.g2rd-marquee-vertical.g2rd-marquee-fade::before {
+  background: linear-gradient(to bottom, var(--marquee-fade-color, rgba(255, 255, 255, 1)), transparent);
+  height: 100px;
+  bottom: auto;
+}
+
+.g2rd-marquee-vertical.g2rd-marquee-fade::after {
+  background: linear-gradient(to top, var(--marquee-fade-color, rgba(255, 255, 255, 1)), transparent);
+  height: 100px;
+  top: auto;
+}
+
+/* Ajuster la couleur du fondu selon le fond du bloc */
+.g2rd-marquee-block.has-background.g2rd-marquee-fade::before,
+.g2rd-marquee-block.has-background.g2rd-marquee-fade::after {
+  --marquee-fade-color: var(--wp--preset--color--background, rgba(255, 255, 255, 1));
+}
+
+/* Styles pour l'éditeur */
+.g2rd-marquee-editor {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  min-height: 100px;
+}
+
+.g2rd-marquee-editor-note {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #666;
+}
+
+.g2rd-marquee-editor-note p {
+  margin: 0;
+}
+
+/* Pause au survol */
+.g2rd-marquee-pause-hover .g2rd-marquee-wrapper {
+  animation-play-state: running;
+}
+
+.g2rd-marquee-pause-hover:hover .g2rd-marquee-wrapper {
+  animation-play-state: paused;
+}
+
+/* Responsive - ajuster la vitesse sur mobile si nécessaire */
+@media (max-width: 768px) {
+  .g2rd-marquee-block {
+    /* Optionnel : ralentir légèrement sur mobile */
+  }
+}
+
+/* Améliorer les performances */
+.g2rd-marquee-wrapper {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Espacement entre les éléments du contenu */
+.g2rd-marquee-horizontal .g2rd-marquee-content > * {
+  margin-right: 20px;
+}
+
+.g2rd-marquee-vertical .g2rd-marquee-content > * {
+  margin-bottom: 20px;
+}
+
+/* S'assurer que le contenu dupliqué est identique */
+.g2rd-marquee-content-duplicate {
+  /* Le contenu dupliqué aura exactement les mêmes styles */
+}
+

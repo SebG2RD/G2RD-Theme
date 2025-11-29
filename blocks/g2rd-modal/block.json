@@ -1,0 +1,130 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "g2rd/modal",
+  "version": "1.0.0",
+  "title": "G2RD Modal (Popup)",
+  "category": "g2rd-bloks",
+  "icon": "feedback",
+  "description": "Un bloc modal/popup avec bouton déclencheur personnalisable. Permet de créer des fenêtres modales avec contenu riche, options de style complètes et contrôle de l'alignement.",
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "align": ["left", "center", "right", "wide", "full"],
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "textdomain": "g2rd-modal",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./src/modal.css",
+  "viewScript": "file:./build/modal-frontend.js",
+  "attributes": {
+    "triggerText": {
+      "type": "string",
+      "default": "Ouvrir le modal"
+    },
+    "modalTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "showCloseButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "closeOnOutsideClick": {
+      "type": "boolean",
+      "default": true
+    },
+    "closeOnEscape": {
+      "type": "boolean",
+      "default": true
+    },
+    "modalWidth": {
+      "type": "string",
+      "default": "600px"
+    },
+    "modalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "modalBackgroundColor": {
+      "type": "string"
+    },
+    "modalTextColor": {
+      "type": "string"
+    },
+    "borderColor": {
+      "type": "string"
+    },
+    "borderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 8
+    },
+    "showBorder": {
+      "type": "boolean",
+      "default": true
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 0.5
+    },
+    "triggerButtonBackgroundColor": {
+      "type": "string"
+    },
+    "triggerButtonTextColor": {
+      "type": "string"
+    },
+    "triggerButtonBorderRadius": {
+      "type": "number",
+      "default": 4
+    },
+    "triggerButtonPadding": {
+      "type": "string",
+      "default": "12px 24px"
+    },
+    "useThemeStyles": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "right"
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": ""
+    },
+    "openMode": {
+      "type": "string",
+      "default": "click"
+    },
+    "timerDelay": {
+      "type": "number",
+      "default": 3
+    }
+  }
+}
+
