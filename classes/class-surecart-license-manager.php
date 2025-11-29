@@ -533,7 +533,7 @@ class SureCartLicenseManager
                             $api_status = defined('G2RD_SURECART_API_KEY') ? '✓' : '✗';
                             $api_color = defined('G2RD_SURECART_API_KEY') ? 'green' : 'red';
                             ?>
-                            <span style="color: <?php echo $api_color; ?>;"><?php echo $api_status; ?> <?php echo \esc_html($api_key); ?></span>
+                            <span style="color: <?php echo \esc_attr($api_color); ?>;"><?php echo \esc_html($api_status); ?> <?php echo \esc_html($api_key); ?></span>
                         </td>
                     </tr>
                 </table>
@@ -663,7 +663,7 @@ class SureCartLicenseManager
                                         $status_color = $is_expired ? 'red' : 'green';
                                         $status_text = $is_expired ? \__('Expirée', 'g2rd') : \__('Active', 'g2rd');
                                         ?>
-                                        <span style="color: <?php echo $status_color; ?>;"><?php echo \esc_html($status_text); ?></span>
+                                        <span style="color: <?php echo \esc_attr($status_color); ?>;"><?php echo \esc_html($status_text); ?></span>
                                     </td>
                                     <td>
                                         <?php

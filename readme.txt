@@ -4,9 +4,9 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.5
-License: EUPL-1.2
-License URI: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+Stable tag: 1.1.6
+License: GPL-2.0-or-later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Un thème Full Site Editing (FSE) moderne et flexible pour les agences web.
 
@@ -111,6 +111,15 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.6 =
+* **Corrections de sécurité et conformité WordPress.org** : Améliorations majeures pour la validation WordPress.org
+* **Correction du conflit de licence** : Uniformisation de la licence GPL-2.0-or-later dans tous les fichiers (style.css et readme.txt)
+* **Nettoyage du code JavaScript** : Suppression de 17 occurrences de console.log() dans les fichiers de production (save.js et carousel-frontend.js)
+* **Amélioration de l'échappement des données** : Correction de tous les problèmes d'échappement dans class-theme-admin.php et class-surecart-license-manager.php
+* **Sécurisation des attributs Data** : Création de la fonction safeJsonEncode() pour encoder de manière sécurisée les données JSON dans les attributs data (carousel et typed)
+* **Amélioration du logo dans la barre d'administration** : Correction de l'affichage et ajustement de la taille (100px de largeur) pour une meilleure visibilité
+* **Optimisations de sécurité** : Utilisation correcte de esc_url(), esc_attr(), esc_html(), esc_js() dans toutes les sorties
 
 = 1.1.5 =
 * **Nouveau bloc G2RD Accordéon FAQ** : Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables

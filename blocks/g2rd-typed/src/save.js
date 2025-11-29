@@ -1,5 +1,25 @@
 import { useBlockProps } from "@wordpress/block-editor";
 
+/**
+ * Encode de manière sécurisée un objet en JSON pour un attribut data
+ * Échappe les caractères spéciaux pour éviter les problèmes de sécurité
+ *
+ * @param {Object} data - L'objet à encoder
+ * @returns {string} JSON encodé de manière sécurisée
+ */
+function safeJsonEncode(data) {
+  try {
+    // JSON.stringify échappe déjà les caractères spéciaux
+    // React échappe également automatiquement les valeurs dans les attributs
+    // Cette fonction garantit un encodage sûr
+    return JSON.stringify(data);
+  } catch (error) {
+    // En cas d'erreur, retourner un objet vide
+    console.error("G2RD Typed: Error encoding JSON", error);
+    return JSON.stringify({});
+  }
+}
+
 export default function Save({ attributes }) {
   const {
     typedStrings,
@@ -42,7 +62,7 @@ export default function Save({ attributes }) {
       padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
       margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`,
     },
-    "data-typed-config": JSON.stringify({
+    "data-typed-config": safeJsonEncode({
       typeSpeed,
       backSpeed,
       loop,

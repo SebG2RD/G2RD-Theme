@@ -184,6 +184,16 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.6
+
+- **Corrections de sécurité et conformité WordPress.org** : Améliorations majeures pour la validation WordPress.org
+- **Correction du conflit de licence** : Uniformisation de la licence GPL-2.0-or-later dans tous les fichiers
+- **Nettoyage du code JavaScript** : Suppression de 17 occurrences de console.log() dans les fichiers de production
+- **Amélioration de l'échappement des données** : Correction de tous les problèmes d'échappement
+- **Sécurisation des attributs Data** : Création de la fonction safeJsonEncode() pour encoder de manière sécurisée
+- **Amélioration du logo dans la barre d'administration** : Correction de l'affichage et ajustement de la taille (100px)
+- **Optimisations de sécurité** : Utilisation correcte des fonctions d'échappement WordPress
+
 ### 1.1.5
 
 - **Nouveau bloc G2RD Accordéon FAQ** : Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables

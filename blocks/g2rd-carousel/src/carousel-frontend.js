@@ -23,9 +23,6 @@ function initializeCarousels() {
       console.error("G2RD Carousel: Error parsing config", e);
     }
 
-    // Debug: Afficher la configuration
-    console.log("G2RD Carousel Config:", config);
-
     const swiperContainer = carousel.querySelector(".swiper");
     if (!swiperContainer) {
       console.error("G2RD Carousel: Swiper container not found");
@@ -52,12 +49,6 @@ function initializeCarousels() {
         contentType = "images",
       } = options;
       const wrapper = ensureWrapper();
-
-      console.log(
-        "G2RD Carousel Mobile Debug - Building slides for",
-        items.length,
-        "items"
-      );
 
       items.forEach((item, index) => {
         // Sur mobile seulement, ne créer que 4 slides maximum pour la grille 2x2
@@ -129,10 +120,6 @@ function initializeCarousels() {
 
     const ensureSlidesReady = async () => {
       const initialSlides = swiperContainer.querySelectorAll(".swiper-slide");
-      console.log(
-        "G2RD Carousel: Number of slides found:",
-        initialSlides.length
-      );
 
       if (initialSlides.length > 0) {
         // Slides déjà rendues côté serveur : ne pas modifier le DOM ici
@@ -149,14 +136,6 @@ function initializeCarousels() {
 
       // 1) contentData immédiat
       if (Array.isArray(contentData) && contentData.length > 0) {
-        console.log(
-          `G2RD Carousel Debug - contentData received:`,
-          contentData.length,
-          contentData.map((item) => ({
-            id: item.id,
-            title: item.title || item.caption,
-          }))
-        );
 
         // Filtrer les doublons et prendre les 4 premiers sur mobile
         const uniqueItems = [];
@@ -169,28 +148,9 @@ function initializeCarousels() {
           }
         });
 
-        console.log(
-          `G2RD Carousel Debug - Unique items from contentData:`,
-          uniqueItems.length,
-          uniqueItems.map((item) => ({
-            id: item.id,
-            title: item.title || item.caption,
-          }))
-        );
-
         // Sur mobile seulement, limiter à 4 items pour la grille 2x2
         const isMobile = window.innerWidth < 768;
         const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
-        console.log(
-          `G2RD Carousel Debug - ${
-            isMobile ? "Mobile" : "Desktop"
-          } - Final items to display (contentData):`,
-          items.length,
-          items.map((item) => ({
-            id: item.id,
-            title: item.title || item.caption,
-          }))
-        );
         buildFromItems(items, { showCaptions, showBoxShadow, contentType });
         return;
       }
@@ -209,21 +169,8 @@ function initializeCarousels() {
           }wp/v2/${endpointType}?include=${contentIds.join(",")}&per_page=${
             contentIds.length
           }&_embed`;
-          console.log(
-            `G2RD Carousel Debug - Fetching contentIds from URL: ${url}`
-          );
           const r = await fetch(url);
           const data = await r.json();
-
-          console.log(
-            `G2RD Carousel Debug - contentIds data received:`,
-            data?.length || 0,
-            data?.map((post) => ({
-              id: post.id,
-              title: post.title?.rendered,
-              date: post.date,
-            }))
-          );
 
           // Filtrer les doublons et prendre les 4 premiers sur mobile
           const uniqueItems = [];
@@ -247,30 +194,9 @@ function initializeCarousels() {
             }
           });
 
-          console.log(
-            `G2RD Carousel Debug - Unique items from contentIds:`,
-            uniqueItems.length,
-            uniqueItems.map((item) => ({
-              id: item.id,
-              title: item.title,
-              date: item.date,
-            }))
-          );
-
           // Sur mobile seulement, limiter à 4 items pour la grille 2x2
           const isMobile = window.innerWidth < 768;
           const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
-          console.log(
-            `G2RD Carousel Debug - ${
-              isMobile ? "Mobile" : "Desktop"
-            } - Final items to display (contentIds):`,
-            items.length,
-            items.map((item) => ({
-              id: item.id,
-              title: item.title,
-              date: item.date,
-            }))
-          );
           buildFromItems(items, { showCaptions, showBoxShadow, contentType });
           return;
         } catch (err) {
@@ -292,7 +218,6 @@ function initializeCarousels() {
           // Utiliser l'URL correcte de l'API WordPress
           const apiRoot = window?.wpApiSettings?.root || "/wp-json/";
           const url = `${apiRoot}wp/v2/${endpointType}?per_page=${perPage}&_embed&orderby=date&order=desc`;
-          console.log(`G2RD Carousel Debug - Fetching from URL: ${url}`);
 
           const r = await fetch(url, {
             headers: {
@@ -306,16 +231,6 @@ function initializeCarousels() {
           }
 
           const data = await r.json();
-
-          console.log(
-            `G2RD Carousel Debug - Raw data received:`,
-            data?.length || 0,
-            data?.map((post) => ({
-              id: post.id,
-              title: post.title?.rendered,
-              date: post.date,
-            }))
-          );
 
           // Filtrer les doublons et prendre les 4 premiers
           const uniqueItems = [];
@@ -339,30 +254,9 @@ function initializeCarousels() {
             }
           });
 
-          console.log(
-            `G2RD Carousel Debug - Unique items after filtering:`,
-            uniqueItems.length,
-            uniqueItems.map((item) => ({
-              id: item.id,
-              title: item.title,
-              date: item.date,
-            }))
-          );
-
           // Sur mobile seulement, limiter à 4 items pour la grille 2x2
           const isMobile = window.innerWidth < 768;
           const items = isMobile ? uniqueItems.slice(0, 4) : uniqueItems;
-          console.log(
-            `G2RD Carousel Debug - ${
-              isMobile ? "Mobile" : "Desktop"
-            } - Final items to display (fallback):`,
-            items.length,
-            items.map((item) => ({
-              id: item.id,
-              title: item.title,
-              date: item.date,
-            }))
-          );
           buildFromItems(items, { showCaptions, showBoxShadow, contentType });
           return;
         } catch (err) {

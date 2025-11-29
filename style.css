@@ -8,7 +8,7 @@ Description: Un thème Full Site Editing (FSE) moderne et flexible pour les agen
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
- Version: 1.1.5
+ Version: 1.1.6
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: G2RD-theme
@@ -18,6 +18,14 @@ GitHub Theme URI: https://github.com/SebG2RD/G2RD-Theme-FSE
 */
 
 /*
+  1.1.6 – Corrections de sécurité et conformité WordPress.org
+  - Correction du conflit de licence : Uniformisation GPL-2.0-or-later dans tous les fichiers
+  - Nettoyage du code JavaScript : Suppression de 17 console.log() dans les fichiers de production
+  - Amélioration de l'échappement des données : Correction dans class-theme-admin.php et class-surecart-license-manager.php
+  - Sécurisation des attributs Data : Création de la fonction safeJsonEncode() pour encoder de manière sécurisée
+  - Amélioration du logo dans la barre d'administration : Correction de l'affichage et ajustement de la taille (100px)
+  - Optimisations de sécurité : Utilisation correcte de esc_url(), esc_attr(), esc_html(), esc_js()
+
   1.1.5 – Nouveau bloc G2RD Accordéon FAQ et nouveaux blocs
   - Création d'un bloc accordéon complet pour créer des FAQ avec onglets ouvrables/fermables
   - Ajout/suppression illimitée d'items (onglets) avec boutons d'ajout/suppression

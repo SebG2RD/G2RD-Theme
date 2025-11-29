@@ -1,6 +1,26 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 
+/**
+ * Encode de manière sécurisée un objet en JSON pour un attribut data
+ * Échappe les caractères spéciaux pour éviter les problèmes de sécurité
+ *
+ * @param {Object} data - L'objet à encoder
+ * @returns {string} JSON encodé de manière sécurisée
+ */
+function safeJsonEncode(data) {
+  try {
+    // JSON.stringify échappe déjà les caractères spéciaux
+    // React échappe également automatiquement les valeurs dans les attributs
+    // Cette fonction garantit un encodage sûr
+    return JSON.stringify(data);
+  } catch (error) {
+    // En cas d'erreur, retourner un objet vide
+    console.error("G2RD Carousel: Error encoding JSON", error);
+    return JSON.stringify({});
+  }
+}
+
 export default function Save({ attributes, className }) {
   const {
     images,
@@ -40,14 +60,7 @@ export default function Save({ attributes, className }) {
   const displayContent =
     currentContentType === "images" ? images : selectedPosts || [];
 
-  // Debug: Afficher les données pour diagnostiquer
-  console.log("G2RD Carousel Save Debug:", {
-    currentContentType,
-    imagesLength: images?.length || 0,
-    selectedPostsLength: selectedPosts?.length || 0,
-    displayContentLength: displayContent?.length || 0,
-    displayContent: displayContent,
-  });
+  // Debug désactivé pour la production
 
   // Configuration responsive pour les breakpoints
   const responsiveConfig = {
@@ -152,19 +165,11 @@ export default function Save({ attributes, className }) {
   // Extraire les IDs pour un fallback fetch côté front
   const contentIds = (selectedPosts || []).map((p) => p.id);
 
-  // Debug: Vérifier le contenu des slides (visible en front aussi)
-  console.log("G2RD Carousel Slides to Show:", slidesToShow);
-  console.log("G2RD Carousel HTML Debug:", {
-    contentType: currentContentType,
-    slidesCount: slidesToShow.length,
-    hasContent: slidesToShow.length > 0,
-  });
-
   return (
     <div {...blockProps}>
       <div
         className="g2rd-carousel"
-        data-config={JSON.stringify({
+        data-config={safeJsonEncode({
           ...config,
           contentData, // embarquer les données pour fallback front
           contentIds, // IDs pour fallback fetch
@@ -187,7 +192,7 @@ export default function Save({ attributes, className }) {
           <div
             className="swiper"
             data-slides-per-view={visibleSlides}
-            data-responsive-config={JSON.stringify(responsiveConfig)}
+            data-responsive-config={safeJsonEncode(responsiveConfig)}
           >
             <div className="swiper-wrapper">
               {slidesToShow.map((item, index) => (

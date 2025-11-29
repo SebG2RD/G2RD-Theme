@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Administration du thème
  * 
@@ -32,7 +33,7 @@ class ThemeAdmin
      * @var string
      */
     private const LOGO_PATH = '/assets/img/Nouveau-logo-G2RD-Agence-Web-blanc-Horizontale@3x.png';
-    
+
     /**
      * Chemin de l'image de fond de la page de connexion
      *
@@ -40,7 +41,7 @@ class ThemeAdmin
      * @var string
      */
     private const BACKGROUND_IMAGE_PATH = '/assets/img/g2rd_image_admin.jpg';
-    
+
     /**
      * URL du site G2RD
      *
@@ -48,7 +49,7 @@ class ThemeAdmin
      * @var string
      */
     private const G2RD_WEBSITE = 'https://g2rd.fr';
-    
+
     /**
      * Enregistre tous les hooks nécessaires pour la personnalisation de l'admin
      *
@@ -60,19 +61,19 @@ class ThemeAdmin
         // Hooks pour les styles
         \add_action('admin_enqueue_scripts', [$this, 'registerAdminAssets']);
         \add_action('login_enqueue_scripts', [$this, 'registerLoginAssets']);
-        
+
         // Hooks pour personnaliser le logo de connexion
         \add_filter('login_headerurl', [$this, 'customLoginLogoUrl']);
         \add_filter('login_headertext', [$this, 'customLoginLogoText']);
-        
+
         // Hooks pour personnaliser la structure de la page de connexion
         \add_action('login_head', [$this, 'customLoginLogo']);
         \add_action('login_header', [$this, 'customLoginStructure'], 0);
         \add_action('login_footer', [$this, 'customLoginFooter']);
-        
+
         // Hook pour personnaliser le logo dans l'admin
         \add_action('admin_head', [$this, 'customAdminLogo']);
-        
+
         // Ajouter le bouton après le formulaire
         \add_action('login_footer', [$this, 'addG2RDButton']);
 
@@ -80,7 +81,7 @@ class ThemeAdmin
         \add_filter('manage_posts_columns', [$this, 'addFeaturedImageColumn']);
         \add_action('manage_posts_custom_column', [$this, 'displayFeaturedImageColumn'], 10, 2);
     }
-    
+
     /**
      * Obtient l'URL complète du logo G2RD
      *
@@ -91,7 +92,7 @@ class ThemeAdmin
     {
         return \get_template_directory_uri() . self::LOGO_PATH;
     }
-    
+
     /**
      * Obtient l'URL complète de l'image de fond
      *
@@ -102,7 +103,7 @@ class ThemeAdmin
     {
         return \get_template_directory_uri() . self::BACKGROUND_IMAGE_PATH;
     }
-    
+
     /**
      * Enregistre et charge les styles CSS pour l'interface d'administration
      *
@@ -112,9 +113,9 @@ class ThemeAdmin
     public function registerAdminAssets(): void
     {
         \wp_enqueue_style(
-            'g2rd-admin', 
-            \get_template_directory_uri() . '/assets/css/admin.css', 
-            [], 
+            'g2rd-admin',
+            \get_template_directory_uri() . '/assets/css/admin.css',
+            [],
             \filemtime(\get_template_directory() . '/assets/css/admin.css')
         );
     }
@@ -128,13 +129,13 @@ class ThemeAdmin
     public function registerLoginAssets(): void
     {
         \wp_enqueue_style(
-            'g2rd-login', 
-            \get_template_directory_uri() . '/assets/css/login.css', 
-            [], 
+            'g2rd-login',
+            \get_template_directory_uri() . '/assets/css/login.css',
+            [],
             \filemtime(\get_template_directory() . '/assets/css/login.css')
         );
     }
-    
+
     /**
      * Personnalise le logo et le style de la page de connexion
      *
@@ -145,14 +146,14 @@ class ThemeAdmin
     {
         echo '<style>
             .login h1 a {
-                background-image: url(' . $this->getLogoUrl() . ') !important;
+                background-image: url(' . \esc_url($this->getLogoUrl()) . ') !important;
                 background-size: contain !important;
                 width: 250px !important;
                 height: 70px !important;
                 margin-bottom: 30px !important;
             }
             .login-image {
-                background-image: url(' . $this->getBackgroundImageUrl() . ') !important;
+                background-image: url(' . \esc_url($this->getBackgroundImageUrl()) . ') !important;
             }
             .g2rd-button {
                 display: block;
@@ -198,7 +199,7 @@ class ThemeAdmin
     {
         return \get_bloginfo('name');
     }
-    
+
     /**
      * Ajoute un bouton de redirection vers le site G2RD après le formulaire de connexion
      *
@@ -212,16 +213,16 @@ class ThemeAdmin
                 var loginForm = document.getElementById("loginform");
                 if (loginForm) {
                     var button = document.createElement("a");
-                    button.href = "' . self::G2RD_WEBSITE . '";
+                    button.href = "' . \esc_js(\esc_url(self::G2RD_WEBSITE)) . '";
                     button.target = "_blank";
                     button.className = "g2rd-button";
-                    button.textContent = "Visiter G2RD Agence Web";
+                    button.textContent = "' . \esc_js(\__('Visiter G2RD Agence Web', 'g2rd')) . '";
                     loginForm.insertAdjacentElement("afterend", button);
                 }
             });
         </script>';
     }
-    
+
     /**
      * Ajoute la structure HTML personnalisée pour la page de connexion
      *
@@ -244,7 +245,7 @@ class ThemeAdmin
     {
         echo '</div>'; // Fermeture de login-container
     }
-    
+
     /**
      * Personnalise le logo WordPress dans la barre d'administration
      *
@@ -254,18 +255,37 @@ class ThemeAdmin
     public function customAdminLogo(): void
     {
         echo '<style>
+            #wpadminbar #wp-admin-bar-wp-logo {
+                display: list-item !important;
+            }
+            #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
+                padding: 0 8px !important;
+                display: flex !important;
+                align-items: center !important;
+                height: 32px !important;
+                max-height: 32px !important;
+                overflow: hidden !important;
+            }
+            #wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon {
+                width: 100px !important;
+                height: 32px !important;
+                display: block !important;
+                margin-right: 0 !important;
+                max-height: 32px !important;
+                overflow: hidden !important;
+            }
             #wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
-                background-image: url(' . $this->getLogoUrl() . ') !important;
+                background-image: url(' . \esc_url($this->getLogoUrl()) . ') !important;
                 background-position: center center !important;
                 background-repeat: no-repeat !important;
                 background-size: contain !important;
                 content: "" !important;
                 top: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-            }
-            #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
-                padding-right: 50px !important;
+                left: 0 !important;
+                width: 100px !important;
+                height: 32px !important;
+                max-height: 32px !important;
+                display: block !important;
             }
             #wpadminbar #wp-admin-bar-wp-logo > .ab-sub-wrapper {
                 display: none !important;
@@ -312,4 +332,3 @@ class ThemeAdmin
         }
     }
 }
-
