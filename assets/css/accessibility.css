@@ -430,8 +430,10 @@ pre {
   color: var(--wp--preset--color--white);
   border: 2px solid #fff;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box; /* Inclure la bordure dans les dimensions */
+  padding: 0; /* Pas de padding pour garder la forme ronde */
   box-shadow: 0 4px 16px rgba(47, 66, 93, 0.18);
   display: flex;
   align-items: center;
@@ -445,6 +447,7 @@ pre {
     border-color 0.2s;
   font-size: 20px;
   opacity: 1;
+  overflow: hidden; /* Empêcher le contenu de déborder */
 }
 
 .scroll-to-top-btn:hover,
@@ -462,14 +465,27 @@ pre {
 }
 
 .scroll-to-top-btn img {
-  width: 32px !important;
-  height: 32px !important;
-  max-width: 32px !important;
-  max-height: 32px !important;
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
   display: block;
   margin: 0 auto;
   pointer-events: none;
   object-fit: contain;
   padding: 2px;
   box-sizing: content-box;
+}
+
+/* Ajustement de la taille du texte/icône dans le bouton scroll to top */
+.scroll-to-top-btn span {
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }

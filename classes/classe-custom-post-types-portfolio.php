@@ -325,12 +325,12 @@ class CPT_Portfolio
      */
     public function addColumns($columns)
     {
-        $columns['portfolio_login'] = __('Login', 'g2rd');
-        $columns['portfolio_password'] = __('Mot de passe', 'g2rd');
-        $columns['portfolio_hebergement'] = __('Hébergement', 'g2rd');
-        $columns['portfolio_maintenance'] = __('Maintenance', 'g2rd');
-        $columns['portfolio_contrat'] = __('Contrat', 'g2rd');
-        $columns['portfolio_date_anniv'] = __('Date anniversaire', 'g2rd');
+        $columns['portfolio_login'] = __('Login', 'g2rd-theme');
+        $columns['portfolio_password'] = __('Mot de passe', 'g2rd-theme');
+        $columns['portfolio_hebergement'] = __('Hébergement', 'g2rd-theme');
+        $columns['portfolio_maintenance'] = __('Maintenance', 'g2rd-theme');
+        $columns['portfolio_contrat'] = __('Contrat', 'g2rd-theme');
+        $columns['portfolio_date_anniv'] = __('Date anniversaire', 'g2rd-theme');
         return $columns;
     }
 
@@ -361,7 +361,7 @@ class CPT_Portfolio
         }
         if ($column === 'portfolio_maintenance') {
             $maintenance = get_post_meta($post_id, '_portfolio_maintenance', true);
-            echo $maintenance === '1' ? __('Oui', 'g2rd') : __('Non', 'g2rd');
+            echo $maintenance === '1' ? __('Oui', 'g2rd-theme') : __('Non', 'g2rd-theme');
         }
         if ($column === 'portfolio_contrat') {
             $contrat = get_post_meta($post_id, '_portfolio_contrat', true);

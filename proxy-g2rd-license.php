@@ -1,15 +1,22 @@
 <?php
 /**
- * Proxy sécurisé pour la validation de licence SureCart
+ * Proxy sécurisé pour la validation de licence SureCart (OPTIONNEL)
+ * 
+ * Ce fichier est complètement optionnel. Le thème fonctionne parfaitement sans.
+ * Il est utilisé uniquement si vous souhaitez activer le système de licences.
+ * 
  * Place ce fichier dans un mu-plugin ou dans le functions.php de ton site g2rd.fr
  * Il expose l'endpoint /wp-json/g2rd/v1/validate-license
  * et logge tous les accès dans g2rd-license-proxy.log
+ * 
+ * NOTE: Le système de licences est optionnel. Le thème fonctionne sans ce fichier.
  */
 
 // La clé secrète DOIT être définie dans wp-config.php pour des raisons de sécurité
+// Si elle n'est pas définie, ce fichier ne fait rien (système optionnel)
 if (!defined('G2RD_SURECART_SECRET')) {
-    // Si la clé n'est pas définie, afficher une erreur et arrêter l'exécution
-    error_log('G2RD License Proxy: G2RD_SURECART_SECRET non définie dans wp-config.php');
+    // Si la clé n'est pas définie, le proxy ne s'active pas (c'est normal, le système est optionnel)
+    // Ne pas logger d'erreur car c'est un comportement attendu
     return;
 }
 

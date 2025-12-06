@@ -1,0 +1,102 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "WerinCode",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "name": "Bleu",
+          "slug": "primary",
+          "color": "#1a237e"
+        },
+        {
+          "name": "Violet",
+          "slug": "secondary",
+          "color": "#7b1fa2"
+        },
+        {
+          "name": "Gris foncé",
+          "slug": "tertiary",
+          "color": "#2a2a2a"
+        },
+        {
+          "name": "Blanc",
+          "slug": "white",
+          "color": "#ffffff"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "inter, sans-serif",
+          "name": "Inter",
+          "slug": "primary",
+          "fontFace": [
+            {
+              "fontDisplay": "block",
+              "fontFamily": "Inter",
+              "fontStretch": "normal",
+              "fontStyle": "normal",
+              "fontWeight": "400"
+            }
+          ]
+        },
+        {
+          "fontFamily": "Open Sans, sans-serif",
+          "name": "Open Sans",
+          "slug": "secondary",
+          "fontFace": [
+            {
+              "fontDisplay": "block",
+              "fontFamily": "Open Sans",
+              "fontStretch": "normal",
+              "fontStyle": "normal",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      ],
+      "fontSizes": [
+        {
+          "name": "Petit",
+          "size": "0.8rem",
+          "slug": "s"
+        },
+        {
+          "name": "Moyen",
+          "size": "1.1rem",
+          "slug": "m"
+        },
+        {
+          "name": "Grand",
+          "size": "2rem",
+          "slug": "l"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "elements": {
+      "h1": {
+        "typography": {
+          "fontFamily": "inter",
+          "fontSize": "var:preset|font-size|l"
+        }
+      },
+      "button": {
+        "color": {
+          "background": "var:preset|color|primary",
+          "text": "var:preset|color|white"
+        },
+        ":hover": {
+          "color": {
+            "background": "var:preset|color|secondary",
+            "text": "var:preset|color|white"
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@
  * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: G2RD-theme
+ * Text Domain: g2rd-theme
  * 
  * @package G2RD Theme
  * @since 1.0.0

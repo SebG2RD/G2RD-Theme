@@ -229,7 +229,7 @@ export default function Edit({ attributes, setAttributes }) {
         tagName="h3"
         value={title}
         onChange={(value) => setAttributes({ title: value })}
-        placeholder={__("Add Your Title Here...", "g2rd")}
+        placeholder={__("Add Your Title Here...", "g2rd-theme")}
         className="counter-title"
         style={{ color: titleColor }}
       />
@@ -344,31 +344,31 @@ export default function Edit({ attributes, setAttributes }) {
     <>
       <InspectorControls>
         {/* Panel General */}
-        <PanelBody title={__("General", "g2rd")} initialOpen={true}>
+        <PanelBody title={__("General", "g2rd-theme")} initialOpen={true}>
           <SelectControl
-            label={__("Layout", "g2rd")}
+            label={__("Layout", "g2rd-theme")}
             value={layout}
             options={[
-              { label: __("Number", "g2rd"), value: "number" },
-              { label: __("Circle", "g2rd"), value: "circle" },
-              { label: __("Bar", "g2rd"), value: "bar" },
+              { label: __("Number", "g2rd-theme"), value: "number" },
+              { label: __("Circle", "g2rd-theme"), value: "circle" },
+              { label: __("Bar", "g2rd-theme"), value: "bar" },
             ]}
             onChange={(value) => setAttributes({ layout: value })}
           />
 
           <SelectControl
-            label={__("Alignment", "g2rd")}
+            label={__("Alignment", "g2rd-theme")}
             value={alignment}
             options={[
-              { label: __("Left", "g2rd"), value: "left" },
-              { label: __("Center", "g2rd"), value: "center" },
-              { label: __("Right", "g2rd"), value: "right" },
+              { label: __("Left", "g2rd-theme"), value: "left" },
+              { label: __("Center", "g2rd-theme"), value: "center" },
+              { label: __("Right", "g2rd-theme"), value: "right" },
             ]}
             onChange={(value) => setAttributes({ alignment: value })}
           />
 
           <NumberControl
-            label={__("Starting Number", "g2rd")}
+            label={__("Starting Number", "g2rd-theme")}
             value={startingNumber}
             onChange={(value) =>
               setAttributes({ startingNumber: parseFloat(value) || 0 })
@@ -376,7 +376,7 @@ export default function Edit({ attributes, setAttributes }) {
           />
 
           <NumberControl
-            label={__("Ending Number", "g2rd")}
+            label={__("Ending Number", "g2rd-theme")}
             value={endingNumber}
             onChange={(value) =>
               setAttributes({ endingNumber: parseFloat(value) || 0 })
@@ -384,7 +384,7 @@ export default function Edit({ attributes, setAttributes }) {
           />
 
           <RangeControl
-            label={__("Decimal Places", "g2rd")}
+            label={__("Decimal Places", "g2rd-theme")}
             value={decimalPlaces}
             onChange={(value) => setAttributes({ decimalPlaces: value })}
             min={0}
@@ -392,19 +392,19 @@ export default function Edit({ attributes, setAttributes }) {
           />
 
           <TextControl
-            label={__("Number Prefix", "g2rd")}
+            label={__("Number Prefix", "g2rd-theme")}
             value={numberPrefix}
             onChange={(value) => setAttributes({ numberPrefix: value })}
           />
 
           <TextControl
-            label={__("Number Suffix", "g2rd")}
+            label={__("Number Suffix", "g2rd-theme")}
             value={numberSuffix}
             onChange={(value) => setAttributes({ numberSuffix: value })}
           />
 
           <NumberControl
-            label={__("Animation Duration (ms)", "g2rd")}
+            label={__("Animation Duration (ms)", "g2rd-theme")}
             value={animationDuration}
             onChange={(value) =>
               setAttributes({ animationDuration: parseFloat(value) || 2000 })
@@ -415,21 +415,21 @@ export default function Edit({ attributes, setAttributes }) {
           />
 
           <SelectControl
-            label={__("Thousands Separator", "g2rd")}
+            label={__("Thousands Separator", "g2rd-theme")}
             value={thousands}
             options={[
-              { label: __("Comma", "g2rd"), value: "comma" },
-              { label: __("Space", "g2rd"), value: "space" },
-              { label: __("None", "g2rd"), value: "none" },
+              { label: __("Comma", "g2rd-theme"), value: "comma" },
+              { label: __("Space", "g2rd-theme"), value: "space" },
+              { label: __("None", "g2rd-theme"), value: "none" },
             ]}
             onChange={(value) => setAttributes({ thousands: value })}
           />
         </PanelBody>
 
         {/* Panel Image/Icon */}
-        <PanelBody title={__("Image/Icon", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Image/Icon", "g2rd-theme")} initialOpen={false}>
           <ToggleControl
-            label={__("Enable Icon/Image", "g2rd")}
+            label={__("Enable Icon/Image", "g2rd-theme")}
             checked={enableIcon}
             onChange={(value) => setAttributes({ enableIcon: value })}
           />
@@ -437,30 +437,30 @@ export default function Edit({ attributes, setAttributes }) {
           {enableIcon && (
             <>
               <SelectControl
-                label={__("Select Position", "g2rd")}
+                label={__("Select Position", "g2rd-theme")}
                 value={iconPosition}
                 options={[
-                  { label: __("Top", "g2rd"), value: "top" },
-                  { label: __("Bottom", "g2rd"), value: "bottom" },
-                  { label: __("Left", "g2rd"), value: "left" },
-                  { label: __("Right", "g2rd"), value: "right" },
+                  { label: __("Top", "g2rd-theme"), value: "top" },
+                  { label: __("Bottom", "g2rd-theme"), value: "bottom" },
+                  { label: __("Left", "g2rd-theme"), value: "left" },
+                  { label: __("Right", "g2rd-theme"), value: "right" },
                 ]}
                 onChange={(value) => setAttributes({ iconPosition: value })}
               />
 
               <SelectControl
-                label={__("Select Source", "g2rd")}
+                label={__("Select Source", "g2rd-theme")}
                 value={mediaType}
                 options={[
-                  { label: __("Icon", "g2rd"), value: "icon" },
-                  { label: __("Image", "g2rd"), value: "image" },
+                  { label: __("Icon", "g2rd-theme"), value: "icon" },
+                  { label: __("Image", "g2rd-theme"), value: "image" },
                 ]}
                 onChange={(value) => setAttributes({ mediaType: value })}
               />
 
               {mediaType === "icon" && (
                 <RangeControl
-                  label={__("Icon Size (px)", "g2rd")}
+                  label={__("Icon Size (px)", "g2rd-theme")}
                   value={iconSize}
                   onChange={(value) => setAttributes({ iconSize: value })}
                   min={16}
@@ -469,7 +469,7 @@ export default function Edit({ attributes, setAttributes }) {
               )}
               {mediaType === "image" && (
                 <RangeControl
-                  label={__("Image Size (px)", "g2rd")}
+                  label={__("Image Size (px)", "g2rd-theme")}
                   value={imageSize}
                   onChange={(value) => setAttributes({ imageSize: value })}
                   min={16}
@@ -490,7 +490,7 @@ export default function Edit({ attributes, setAttributes }) {
                         "admin-customizer"
                       )
                     }
-                    label={__("Icon", "g2rd")}
+                    label={__("Icon", "g2rd-theme")}
                     toggleProps={{ variant: "secondary" }}
                   >
                     {({ onClose }) => (
@@ -538,8 +538,8 @@ export default function Edit({ attributes, setAttributes }) {
                     render={({ open }) => (
                       <Button onClick={open} variant="secondary">
                         {imageUrl
-                          ? __("Change Image", "g2rd")
-                          : __("Select Image", "g2rd")}
+                          ? __("Change Image", "g2rd-theme")
+                          : __("Select Image", "g2rd-theme")}
                       </Button>
                     )}
                   />
@@ -550,15 +550,15 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
 
         {/* Panel Number */}
-        <PanelBody title={__("Number", "g2rd")} initialOpen={false}>
-          <label>{__("Color", "g2rd")}</label>
+        <PanelBody title={__("Number", "g2rd-theme")} initialOpen={false}>
+          <label>{__("Color", "g2rd-theme")}</label>
           <ColorPicker
             color={numberColor}
             onChange={(value) => setAttributes({ numberColor: value })}
           />
 
           <RangeControl
-            label={__("Prefix Right Margin", "g2rd")}
+            label={__("Prefix Right Margin", "g2rd-theme")}
             value={prefixRightMargin}
             onChange={(value) => setAttributes({ prefixRightMargin: value })}
             min={0}
@@ -566,7 +566,7 @@ export default function Edit({ attributes, setAttributes }) {
           />
 
           <RangeControl
-            label={__("Suffix Left Margin", "g2rd")}
+            label={__("Suffix Left Margin", "g2rd-theme")}
             value={suffixLeftMargin}
             onChange={(value) => setAttributes({ suffixLeftMargin: value })}
             min={0}
@@ -575,8 +575,8 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
 
         {/* Panel Colors */}
-        <PanelBody title={__("Colors", "g2rd")} initialOpen={false}>
-          <label>{__("Title Color", "g2rd")}</label>
+        <PanelBody title={__("Colors", "g2rd-theme")} initialOpen={false}>
+          <label>{__("Title Color", "g2rd-theme")}</label>
           <ColorPicker
             color={titleColor}
             onChange={(value) => setAttributes({ titleColor: value })}
@@ -584,7 +584,7 @@ export default function Edit({ attributes, setAttributes }) {
 
           {enableIcon && mediaType === "icon" && (
             <>
-              <label>{__("Icon Color", "g2rd")}</label>
+              <label>{__("Icon Color", "g2rd-theme")}</label>
               <ColorPicker
                 color={iconColor}
                 onChange={(value) => setAttributes({ iconColor: value })}
@@ -592,7 +592,7 @@ export default function Edit({ attributes, setAttributes }) {
             </>
           )}
 
-          <label>{__("Background Color", "g2rd")}</label>
+          <label>{__("Background Color", "g2rd-theme")}</label>
           <ColorPicker
             color={backgroundColor}
             onChange={(value) => setAttributes({ backgroundColor: value })}

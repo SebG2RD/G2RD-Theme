@@ -84,6 +84,8 @@ class GitHubUpdater
     public function checkForUpdates($transient)
     {
         // Vérifier si la licence est valide
+        // Si la licence n'est pas valide, simplement ne pas proposer de mises à jour
+        // Cela ne bloque aucune fonctionnalité du thème (le système est optionnel)
         if (!$this->license_manager->isLicenseValid()) {
             return $transient;
         }

@@ -117,14 +117,14 @@ export default function Edit({ attributes, setAttributes }) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__("Timer Settings", "g2rd")}>
+        <PanelBody title={__("Timer Settings", "g2rd-theme")}>
           <DateTimePicker
             currentDate={endDate}
             onChange={(date) => setAttributes({ endDate: format("c", date) })}
             is12Hour={true}
           />
           <TextControl
-            label={__("Title", "g2rd")}
+            label={__("Title", "g2rd-theme")}
             value={title}
             placeholder="Test modifiable"
             onChange={(value) => setAttributes({ title: value })}
@@ -132,86 +132,86 @@ export default function Edit({ attributes, setAttributes }) {
           />
         </PanelBody>
 
-        <PanelBody title={__("Display Units", "g2rd")}>
+        <PanelBody title={__("Display Units", "g2rd-theme")}>
           <ToggleControl
-            label={__("Show Years", "g2rd")}
+            label={__("Show Years", "g2rd-theme")}
             checked={showYears}
             onChange={() => setAttributes({ showYears: !showYears })}
           />
           <ToggleControl
-            label={__("Show Months", "g2rd")}
+            label={__("Show Months", "g2rd-theme")}
             checked={showMonths}
             onChange={() => setAttributes({ showMonths: !showMonths })}
           />
           <ToggleControl
-            label={__("Show Days", "g2rd")}
+            label={__("Show Days", "g2rd-theme")}
             checked={showDays}
             onChange={() => setAttributes({ showDays: !showDays })}
           />
           <ToggleControl
-            label={__("Show Hours", "g2rd")}
+            label={__("Show Hours", "g2rd-theme")}
             checked={showHours}
             onChange={() => setAttributes({ showHours: !showHours })}
           />
           <ToggleControl
-            label={__("Show Minutes", "g2rd")}
+            label={__("Show Minutes", "g2rd-theme")}
             checked={showMinutes}
             onChange={() => setAttributes({ showMinutes: !showMinutes })}
           />
           <ToggleControl
-            label={__("Show Seconds", "g2rd")}
+            label={__("Show Seconds", "g2rd-theme")}
             checked={showSeconds}
             onChange={() => setAttributes({ showSeconds: !showSeconds })}
           />
         </PanelBody>
 
-        <PanelBody title={__("Style Settings", "g2rd")}>
+        <PanelBody title={__("Style Settings", "g2rd-theme")}>
           <SelectControl
-            label={__("Layout", "g2rd")}
+            label={__("Layout", "g2rd-theme")}
             value={layout}
             options={[
-              { label: __("Row (Horizontal)", "g2rd"), value: "row" },
-              { label: __("Column (Vertical)", "g2rd"), value: "column" },
+              { label: __("Row (Horizontal)", "g2rd-theme"), value: "row" },
+              { label: __("Column (Vertical)", "g2rd-theme"), value: "column" },
             ]}
             onChange={(value) => setAttributes({ layout: value })}
           />
           <SelectControl
-            label={__("Timer Style", "g2rd")}
+            label={__("Timer Style", "g2rd-theme")}
             value={timerStyle}
             options={[
-              { label: __("Default", "g2rd"), value: "default" },
-              { label: __("Digital", "g2rd"), value: "digital" },
-              { label: __("Neon", "g2rd"), value: "neon" },
-              { label: __("Retro", "g2rd"), value: "retro" },
-              { label: __("Minimal", "g2rd"), value: "minimal" },
-              { label: __("Bold", "g2rd"), value: "bold" },
+              { label: __("Default", "g2rd-theme"), value: "default" },
+              { label: __("Digital", "g2rd-theme"), value: "digital" },
+              { label: __("Neon", "g2rd-theme"), value: "neon" },
+              { label: __("Retro", "g2rd-theme"), value: "retro" },
+              { label: __("Minimal", "g2rd-theme"), value: "minimal" },
+              { label: __("Bold", "g2rd-theme"), value: "bold" },
             ]}
             onChange={(value) => setAttributes({ timerStyle: value })}
           />
           <SelectControl
-            label={__("Animation", "g2rd")}
+            label={__("Animation", "g2rd-theme")}
             value={animation}
             options={[
-              { label: __("None", "g2rd"), value: "none" },
-              { label: __("Pulse", "g2rd"), value: "pulse" },
-              { label: __("Flip", "g2rd"), value: "flip" },
-              { label: __("Fade", "g2rd"), value: "fade" },
-              { label: __("Bounce", "g2rd"), value: "bounce" },
+              { label: __("None", "g2rd-theme"), value: "none" },
+              { label: __("Pulse", "g2rd-theme"), value: "pulse" },
+              { label: __("Flip", "g2rd-theme"), value: "flip" },
+              { label: __("Fade", "g2rd-theme"), value: "fade" },
+              { label: __("Bounce", "g2rd-theme"), value: "bounce" },
             ]}
             onChange={(value) => setAttributes({ animation: value })}
           />
           <SelectControl
-            label={__("Animation Speed", "g2rd")}
+            label={__("Animation Speed", "g2rd-theme")}
             value={animationSpeed}
             options={[
-              { label: __("Slow", "g2rd"), value: "slow" },
-              { label: __("Normal", "g2rd"), value: "normal" },
-              { label: __("Fast", "g2rd"), value: "fast" },
+              { label: __("Slow", "g2rd-theme"), value: "slow" },
+              { label: __("Normal", "g2rd-theme"), value: "normal" },
+              { label: __("Fast", "g2rd-theme"), value: "fast" },
             ]}
             onChange={(value) => setAttributes({ animationSpeed: value })}
           />
           <RangeControl
-            label={__("Value Size", "g2rd")}
+            label={__("Value Size", "g2rd-theme")}
             value={parseInt(valueSize)}
             onChange={(value) => setAttributes({ valueSize: `${value}em` })}
             min={1}
@@ -219,7 +219,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={0.1}
           />
           <RangeControl
-            label={__("Label Size", "g2rd")}
+            label={__("Label Size", "g2rd-theme")}
             value={parseInt(labelSize)}
             onChange={(value) => setAttributes({ labelSize: `${value}em` })}
             min={0.5}
@@ -227,7 +227,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={0.1}
           />
           <RangeControl
-            label={__("Item Spacing", "g2rd")}
+            label={__("Item Spacing", "g2rd-theme")}
             value={parseInt(itemSpacing)}
             onChange={(value) => setAttributes({ itemSpacing: `${value}px` })}
             min={0}
@@ -235,7 +235,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={1}
           />
           <RangeControl
-            label={__("Item Padding", "g2rd")}
+            label={__("Item Padding", "g2rd-theme")}
             value={parseInt(itemPadding)}
             onChange={(value) => setAttributes({ itemPadding: `${value}px` })}
             min={5}
@@ -243,7 +243,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={1}
           />
           <RangeControl
-            label={__("Border Radius", "g2rd")}
+            label={__("Border Radius", "g2rd-theme")}
             value={parseInt(itemBorderRadius)}
             onChange={(value) =>
               setAttributes({ itemBorderRadius: `${value}px` })
@@ -265,12 +265,12 @@ export default function Edit({ attributes, setAttributes }) {
             gap: itemSpacing,
           }}
         >
-          {renderTimeUnit(__("Years", "g2rd"), "00", showYears)}
-          {renderTimeUnit(__("Months", "g2rd"), "00", showMonths)}
-          {renderTimeUnit(__("Days", "g2rd"), "00", showDays)}
-          {renderTimeUnit(__("Hours", "g2rd"), "00", showHours)}
-          {renderTimeUnit(__("Minutes", "g2rd"), "00", showMinutes)}
-          {renderTimeUnit(__("Seconds", "g2rd"), "00", showSeconds)}
+          {renderTimeUnit(__("Years", "g2rd-theme"), "00", showYears)}
+          {renderTimeUnit(__("Months", "g2rd-theme"), "00", showMonths)}
+          {renderTimeUnit(__("Days", "g2rd-theme"), "00", showDays)}
+          {renderTimeUnit(__("Hours", "g2rd-theme"), "00", showHours)}
+          {renderTimeUnit(__("Minutes", "g2rd-theme"), "00", showMinutes)}
+          {renderTimeUnit(__("Seconds", "g2rd-theme"), "00", showSeconds)}
         </div>
       </div>
     </>

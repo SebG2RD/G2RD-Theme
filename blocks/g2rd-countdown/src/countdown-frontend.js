@@ -2,15 +2,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const countdowns = document.querySelectorAll(".g2rd-countdown");
 
   countdowns.forEach((countdown) => {
-    const endDate = new Date(countdown.dataset.endDate).getTime();
+    // Vérifier que la date de fin est valide
+    const endDateValue = countdown.dataset.endDate;
+    if (!endDateValue) {
+      // Si pas de date définie, afficher "00" pour toutes les valeurs
+      const items = countdown.querySelectorAll(".countdown-item");
+      items.forEach((item) => {
+        const valueElement = item.querySelector(".countdown-value");
+        if (valueElement) {
+          valueElement.textContent = "00";
+        }
+      });
+      return;
+    }
+
+    const endDate = new Date(endDateValue).getTime();
+
+    // Vérifier que la date est valide (pas NaN)
+    if (isNaN(endDate)) {
+      // Si la date est invalide, afficher "00" pour toutes les valeurs
+      const items = countdown.querySelectorAll(".countdown-item");
+      items.forEach((item) => {
+        const valueElement = item.querySelector(".countdown-value");
+        if (valueElement) {
+          valueElement.textContent = "00";
+        }
+      });
+      return;
+    }
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = endDate - now;
 
+      // Si le temps est écoulé, afficher "00" pour toutes les valeurs
       if (distance < 0) {
-        countdown.innerHTML =
-          '<div class="countdown-ended">Countdown Ended!</div>';
+        const items = countdown.querySelectorAll(".countdown-item");
+        items.forEach((item) => {
+          const valueElement = item.querySelector(".countdown-value");
+          if (valueElement) {
+            valueElement.textContent = "00";
+          }
+        });
         return;
       }
 
@@ -36,24 +69,34 @@ document.addEventListener("DOMContentLoaded", function () {
           .textContent.toLowerCase();
         const valueElement = item.querySelector(".countdown-value");
 
+        if (!valueElement) return;
+
+        // S'assurer que les valeurs ne sont pas NaN
+        let value = 0;
         switch (label) {
           case "years":
-            valueElement.textContent = years.toString().padStart(2, "0");
+            value = isNaN(years) ? 0 : years;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
           case "months":
-            valueElement.textContent = months.toString().padStart(2, "0");
+            value = isNaN(months) ? 0 : months;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
           case "days":
-            valueElement.textContent = days.toString().padStart(2, "0");
+            value = isNaN(days) ? 0 : days;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
           case "hours":
-            valueElement.textContent = hours.toString().padStart(2, "0");
+            value = isNaN(hours) ? 0 : hours;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
           case "minutes":
-            valueElement.textContent = minutes.toString().padStart(2, "0");
+            value = isNaN(minutes) ? 0 : minutes;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
           case "seconds":
-            valueElement.textContent = seconds.toString().padStart(2, "0");
+            value = isNaN(seconds) ? 0 : seconds;
+            valueElement.textContent = value.toString().padStart(2, "0");
             break;
         }
       });

@@ -9,7 +9,7 @@
  * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: G2RD-theme
+ * Text Domain: g2rd-theme
  */
 ?>
 <!-- wp:group {"style":{"border":{"radius":"5px","color":"#e2e2ef","width":"1px"},"spacing":{"blockGap":"0","padding":{"top":"0","right":"0","bottom":"0","left":"0"}}},"layout":{"type":"constrained"}} -->

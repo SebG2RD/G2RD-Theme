@@ -42,31 +42,42 @@ require_once __DIR__ . '/classes/class-block-styles.php';
 require_once __DIR__ . '/classes/class-block-categories.php';
 require_once __DIR__ . '/classes/class-glass-effect.php';
 require_once __DIR__ . '/classes/class-carousel-assets.php';
+require_once __DIR__ . '/classes/class-dark-mode.php';
 
 /**
  * Affiche un avertissement si la clé API n'est pas configurée
+ * 
+ * NOTE: Cette fonction est désactivée car le système de licences est optionnel.
+ * Le thème fonctionne parfaitement sans licence. Cette fonction peut être réactivée
+ * si vous souhaitez informer les utilisateurs de la possibilité d'activer les mises à jour.
  */
 function display_api_key_warning() {
+    // Désactivé : Le système de licences est optionnel
+    // Le thème fonctionne sans licence, donc aucun avertissement n'est nécessaire
+    return;
+    
+    /* Code commenté pour référence future
     $screen = get_current_screen();
     // Ne pas afficher l'avertissement sur la page des paramètres du thème
     if ($screen && $screen->id === 'appearance_page_g2rd-theme-settings') {
         return;
     }
     ?>
-    <div class="notice notice-warning is-dismissible">
+    <div class="notice notice-info is-dismissible">
         <p>
-            <strong><?php _e('G2RD Theme - Configuration requise', 'g2rd'); ?></strong>
+            <strong><?php _e('G2RD Theme - Mises à jour optionnelles', 'g2rd-theme'); ?></strong>
         </p>
         <p>
-            <?php _e('La clé API SureCart n\'est pas configurée. Pour bénéficier des mises à jour du thème, veuillez configurer votre clé API.', 'g2rd'); ?>
+            <?php _e('Le thème fonctionne parfaitement sans licence. Pour bénéficier des mises à jour automatiques, vous pouvez configurer votre clé API SureCart (optionnel).', 'g2rd-theme'); ?>
         </p>
         <p>
-            <a href="<?php echo esc_url(admin_url('themes.php?page=g2rd-theme-settings')); ?>" class="button button-primary">
-                <?php _e('Configurer la clé API', 'g2rd'); ?>
+            <a href="<?php echo esc_url(admin_url('themes.php?page=g2rd-license')); ?>" class="button button-secondary">
+                <?php _e('Configurer les mises à jour (optionnel)', 'g2rd-theme'); ?>
             </a>
         </p>
     </div>
     <?php
+    */
 }
 
 /**
@@ -75,17 +86,11 @@ function display_api_key_warning() {
 function bootstrap_theme()
 {
     // Charger les traductions
-    \load_theme_textdomain('G2RD', \get_template_directory() . '/languages');
+    \load_theme_textdomain('g2rd-theme', \get_template_directory() . '/languages');
 
-    // Vérifier si la clé API SureCart est configurée
-    // $surecart_api_key = get_option('g2rd_surecart_api_key');
-    // if (empty($surecart_api_key)) {
-    //     add_action('admin_notices', 'G2RD\\display_api_key_warning');
-    // } else {
-    //     // Initialiser le système de licences
-    //     $license_manager = new SureCartLicenseManager($surecart_api_key);
-    //     $github_updater = new GitHubUpdater($license_manager);
-    // }
+    // Le système de licences est optionnel
+    // Le thème fonctionne parfaitement sans licence
+    // Les mises à jour automatiques ne sont disponibles que si une clé API est configurée
 
     // Liste des classes à initialiser
     $classes = [
@@ -107,16 +112,29 @@ function bootstrap_theme()
         \G2RD\JsonConfig::class,
         \G2RD\GlassEffect::class,
         \G2RD\CarouselAssets::class, // Ajout du gestionnaire d'assets carrousel
+        \G2RD\DarkMode::class, // Gestion du mode sombre
     ];
 
-    // Initialiser d'abord le gestionnaire de licences
+    // Initialiser le système de licences (toujours, même sans clé API)
+    // Le système de licences est complètement optionnel - le thème fonctionne sans
+    // Le menu de licence est toujours accessible pour permettre la configuration
     $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-    $license_manager = new \G2RD\SureCartLicenseManager($api_key);
+    $api_key_from_option = get_option('g2rd_surecart_api_key', '');
+    
+    // Utiliser la clé API depuis la constante ou l'option
+    $final_api_key = !empty($api_key) ? $api_key : $api_key_from_option;
+    
+    // Toujours initialiser le gestionnaire de licences (même sans clé API)
+    // pour que le menu soit accessible et permettre la configuration
+    $license_manager = new \G2RD\SureCartLicenseManager($final_api_key);
     $license_manager->registerHooks();
 
-    // Initialiser le gestionnaire de mises à jour GitHub avec le gestionnaire de licences
-    $github_updater = new \G2RD\GitHubUpdater($license_manager);
-    $github_updater->registerHooks();
+    // Initialiser le gestionnaire de mises à jour GitHub uniquement si une clé API est fournie
+    // Les mises à jour automatiques ne sont disponibles que si une licence est configurée
+    if (!empty($final_api_key)) {
+        $github_updater = new \G2RD\GitHubUpdater($license_manager);
+        $github_updater->registerHooks();
+    }
 
     // Initialiser les autres classes
     foreach ($classes as $class) {
@@ -127,8 +145,11 @@ function bootstrap_theme()
 // Démarrer le thème
 bootstrap_theme();
 
-// Inclusion explicite de la page d'options (hors namespace, à la fin)
-require_once get_template_directory() . '/includes/license-init.php';
+// Inclusion optionnelle de la page d'options de licence (hors namespace, à la fin)
+// Ce fichier est optionnel et ne bloque pas le fonctionnement du thème
+if (file_exists(get_template_directory() . '/includes/license-init.php')) {
+    require_once get_template_directory() . '/includes/license-init.php';
+}
 
 // Forcer Dashicons dans l'éditeur Gutenberg
 add_action('enqueue_block_editor_assets', function() {

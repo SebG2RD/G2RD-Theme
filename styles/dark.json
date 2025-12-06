@@ -1,0 +1,161 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Mode sombre",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "name": "Bleu clair",
+          "slug": "primary",
+          "color": "#6B8DB8"
+        },
+        {
+          "name": "Beige clair",
+          "slug": "secondary",
+          "color": "#E8C4A0"
+        },
+        {
+          "name": "Fond sombre",
+          "slug": "white",
+          "color": "#1A1F2E"
+        },
+        {
+          "name": "Fond secondaire",
+          "slug": "dark-bg",
+          "color": "#252B3D"
+        },
+        {
+          "name": "Texte clair",
+          "slug": "dark-text",
+          "color": "#E8E8E8"
+        }
+      ],
+      "gradients": [
+        {
+          "name": "Bleu dégradé sombre",
+          "slug": "blue",
+          "gradient": "linear-gradient(90deg, #6B8DB8 0%, #1A1F2E 100%)"
+        },
+        {
+          "name": "Beige dégradé sombre",
+          "slug": "beige",
+          "gradient": "linear-gradient(90deg, #E8C4A0 0%, #1A1F2E 100%)"
+        },
+        {
+          "name": "Bleu beige sombre",
+          "slug": "bleubeige",
+          "gradient": "linear-gradient(135deg, #6B8DB8 0%, #E8C4A0 100%)"
+        }
+      ],
+      "duotone": [
+        {
+          "name": "Bleu sombre",
+          "slug": "blue",
+          "colors": ["#6B8DB8", "#E8C4A0"]
+        },
+        {
+          "name": "Rose sombre",
+          "slug": "pink",
+          "colors": ["#E8C4A0", "#1A1F2E"]
+        },
+        {
+          "name": "Vert sombre",
+          "slug": "green",
+          "colors": ["#6B8DB8", "#E8C4A0"]
+        }
+      ]
+    },
+    "shadow": {
+      "presets": [
+        {
+          "name": "Douce sombre",
+          "slug": "light",
+          "shadow": "rgba(0, 0, 0, 0.5) 0px 7px 29px 0px"
+        },
+        {
+          "name": "Fine sombre",
+          "slug": "neat",
+          "shadow": "12px 12px 2px 1px rgba(0, 0, 0, 0.6)"
+        },
+        {
+          "name": "Imposante sombre",
+          "slug": "huge",
+          "shadow": "10px 5px 5px rgba(0, 0, 0, 0.3)"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "text": "var(--wp--preset--color--dark-text)",
+      "background": "var(--wp--preset--color--white)"
+    },
+    "elements": {
+      "h1": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "h2": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "h3": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "h4": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "h5": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "h6": {
+        "color": {
+          "text": "var(--wp--preset--color--dark-text)"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "var(--wp--preset--color--secondary)"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--primary)"
+          }
+        }
+      },
+      "button": {
+        "color": {
+          "background": "var(--wp--preset--color--primary)",
+          "text": "var(--wp--preset--color--white)"
+        },
+        ":hover": {
+          "color": {
+            "background": "var(--wp--preset--color--secondary)",
+            "text": "var(--wp--preset--color--white)"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "g2rd/countdown": {
+        "color": {
+          "background": "var(--wp--preset--color--dark-bg)",
+          "text": "var(--wp--preset--color--dark-text)"
+        },
+        "border": {
+          "color": "var(--wp--preset--color--secondary)"
+        }
+      }
+    }
+  }
+}
+

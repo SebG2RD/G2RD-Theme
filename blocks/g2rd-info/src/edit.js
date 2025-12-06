@@ -226,10 +226,10 @@ export default function Edit({ attributes, setAttributes }) {
 
   // Layouts disponibles
   const layoutOptions = [
-    { label: __("Icône à gauche (ligne)", "g2rd"), value: "icon-left" },
-    { label: __("Icône à droite (ligne)", "g2rd"), value: "icon-right" },
-    { label: __("Icône en haut (colonne)", "g2rd"), value: "icon-top" },
-    { label: __("Icône en bas (colonne)", "g2rd"), value: "icon-bottom" },
+    { label: __("Icône à gauche (ligne)", "g2rd-theme"), value: "icon-left" },
+    { label: __("Icône à droite (ligne)", "g2rd-theme"), value: "icon-right" },
+    { label: __("Icône en haut (colonne)", "g2rd-theme"), value: "icon-top" },
+    { label: __("Icône en bas (colonne)", "g2rd-theme"), value: "icon-bottom" },
   ];
 
   /**
@@ -307,14 +307,14 @@ export default function Edit({ attributes, setAttributes }) {
         tagName="h3"
         value={title}
         onChange={(value) => setAttributes({ title: value })}
-        placeholder={__("Enter title...", "g2rd")}
+        placeholder={__("Enter title...", "g2rd-theme")}
         style={{ color: titleColor || "#333", fontSize: "1.5rem" }}
       />
       <RichText
         tagName="p"
         value={description}
         onChange={(value) => setAttributes({ description: value })}
-        placeholder={__("Enter description...", "g2rd")}
+        placeholder={__("Enter description...", "g2rd-theme")}
         style={{ color: descriptionColor || "#666", fontSize: "1rem" }}
       />
     </div>
@@ -362,9 +362,9 @@ export default function Edit({ attributes, setAttributes }) {
     <>
       {/* Panneau latéral de configuration */}
       <InspectorControls>
-        <PanelBody title={__("Media Settings", "g2rd")} initialOpen={true}>
+        <PanelBody title={__("Media Settings", "g2rd-theme")} initialOpen={true}>
           <SelectControl
-            label={__("Media Type", "g2rd")}
+            label={__("Media Type", "g2rd-theme")}
             value={mediaType}
             options={[
               { label: "Icon", value: "icon" },
@@ -383,7 +383,7 @@ export default function Edit({ attributes, setAttributes }) {
                     "admin-customizer"
                   )
                 }
-                label={__("Icon", "g2rd")}
+                label={__("Icon", "g2rd-theme")}
                 toggleProps={{ variant: "secondary" }}
               >
                 {({ onClose }) => (
@@ -413,7 +413,7 @@ export default function Edit({ attributes, setAttributes }) {
                 )}
               </DropdownMenu>
               <RangeControl
-                label={__("Icon Size", "g2rd")}
+                label={__("Icon Size", "g2rd-theme")}
                 value={iconSize}
                 onChange={(value) => setAttributes({ iconSize: value })}
                 min={16}
@@ -438,15 +438,15 @@ export default function Edit({ attributes, setAttributes }) {
                   render={({ open }) => (
                     <Button onClick={open} variant="secondary">
                       {imageUrl
-                        ? __("Replace Image", "g2rd")
-                        : __("Select Image", "g2rd")}
+                        ? __("Replace Image", "g2rd-theme")
+                        : __("Select Image", "g2rd-theme")}
                     </Button>
                   )}
                 />
               </MediaUploadCheck>
               {imageUrl && (
                 <TextControl
-                  label={__("Alt Text", "g2rd")}
+                  label={__("Alt Text", "g2rd-theme")}
                   value={imageAlt}
                   onChange={(value) => setAttributes({ imageAlt: value })}
                 />
@@ -454,23 +454,23 @@ export default function Edit({ attributes, setAttributes }) {
             </>
           )}
         </PanelBody>
-        <PanelBody title={__("Colors", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Colors", "g2rd-theme")} initialOpen={false}>
           <div>
-            <p>{__("Background Color", "g2rd")}</p>
+            <p>{__("Background Color", "g2rd-theme")}</p>
             <ColorPicker
               color={backgroundColor}
               onChange={(color) => setAttributes({ backgroundColor: color })}
             />
           </div>
           <div>
-            <p>{__("Title Color", "g2rd")}</p>
+            <p>{__("Title Color", "g2rd-theme")}</p>
             <ColorPicker
               color={titleColor}
               onChange={(color) => setAttributes({ titleColor: color })}
             />
           </div>
           <div>
-            <p>{__("Description Color", "g2rd")}</p>
+            <p>{__("Description Color", "g2rd-theme")}</p>
             <ColorPicker
               color={descriptionColor}
               onChange={(color) => setAttributes({ descriptionColor: color })}
@@ -478,7 +478,7 @@ export default function Edit({ attributes, setAttributes }) {
           </div>
           {mediaType === "icon" && (
             <div>
-              <p>{__("Icon Color", "g2rd")}</p>
+              <p>{__("Icon Color", "g2rd-theme")}</p>
               <ColorPicker
                 color={iconColor}
                 onChange={(color) => setAttributes({ iconColor: color })}
@@ -486,15 +486,15 @@ export default function Edit({ attributes, setAttributes }) {
             </div>
           )}
         </PanelBody>
-        <PanelBody title={__("Layout", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Layout", "g2rd-theme")} initialOpen={false}>
           <TextControl
-            label={__("Espacement entre l'icône et le texte (gap)", "g2rd")}
+            label={__("Espacement entre l'icône et le texte (gap)", "g2rd-theme")}
             value={gap}
             onChange={(value) => setAttributes({ gap: value })}
-            help={__("Exemple : 8px, 1rem, 2em...", "g2rd")}
+            help={__("Exemple : 8px, 1rem, 2em...", "g2rd-theme")}
           />
           <SelectControl
-            label={__("Disposition", "g2rd")}
+            label={__("Disposition", "g2rd-theme")}
             value={layout}
             options={layoutOptions}
             onChange={(value) => setAttributes({ layout: value })}

@@ -1,0 +1,211 @@
+/**
+ * Styles pour le mode sombre (Dark Mode)
+ * 
+ * Ce fichier contient les styles CSS qui s'appliquent
+ * quand le dark mode est activé via la classe .dark-mode-active
+ */
+
+/* ============================================
+   TRANSITION GLOBALE
+   ============================================ */
+/* Ajouter une transition douce pour tous les changements de couleur */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================
+   BOUTON TOGGLE
+   ============================================ */
+/* Style du bouton pour basculer le dark mode */
+.g2rd-dark-mode-toggle {
+    position: fixed;
+    bottom: 94px; /* Positionné au-dessus du bouton scroll to top (32px + 50px + 12px d'espacement) */
+    right: 32px; /* Aligné avec le bouton scroll to top */
+    z-index: 10002; /* Au-dessus du bouton scroll to top (z-index: 10001) */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--wp--preset--color--primary, #2F425D);
+    background-color: var(--wp--preset--color--white, #FAFAFA);
+    color: var(--wp--preset--color--primary, #2F425D);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* Inclure la bordure dans les dimensions */
+    padding: 0; /* Pas de padding pour garder la forme ronde */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    overflow: hidden; /* Empêcher le contenu de déborder */
+}
+
+.g2rd-dark-mode-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.g2rd-dark-mode-toggle:focus {
+    outline: 2px solid var(--wp--preset--color--secondary, #D4A373);
+    outline-offset: 2px;
+}
+
+/* Style du bouton en mode sombre */
+.dark-mode-active .g2rd-dark-mode-toggle {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D);
+    border-color: var(--wp--preset--color--secondary, #E8C4A0);
+    color: var(--wp--preset--color--secondary, #E8C4A0);
+}
+
+/* Style des icônes Dashicons dans le bouton */
+.g2rd-dark-mode-toggle .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: block;
+}
+
+/* ============================================
+   STYLES GLOBAUX EN MODE SOMBRE
+   ============================================ */
+/* Quand le dark mode est actif, appliquer les styles sombres */
+.dark-mode-active {
+    background-color: var(--wp--preset--color--white, #1A1F2E) !important;
+    color: var(--wp--preset--color--dark-text, #E8E8E8) !important;
+}
+
+/* Fond de page principal */
+.dark-mode-active body {
+    background-color: var(--wp--preset--color--white, #1A1F2E);
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+}
+
+/* ============================================
+   ÉLÉMENTS DE TEXTE
+   ============================================ */
+/* Titres */
+.dark-mode-active h1,
+.dark-mode-active h2,
+.dark-mode-active h3,
+.dark-mode-active h4,
+.dark-mode-active h5,
+.dark-mode-active h6 {
+    color: var(--wp--preset--color--dark-text, #E8E8E8) !important;
+}
+
+/* Paragraphes */
+.dark-mode-active p {
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+}
+
+/* Liens */
+.dark-mode-active a {
+    color: var(--wp--preset--color--secondary, #E8C4A0);
+}
+
+.dark-mode-active a:hover {
+    color: var(--wp--preset--color--primary, #6B8DB8);
+}
+
+/* ============================================
+   BLOCS WORDPRESS
+   ============================================ */
+/* Groupes */
+.dark-mode-active .wp-block-group {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D);
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+}
+
+/* Colonnes */
+.dark-mode-active .wp-block-columns {
+    background-color: transparent;
+}
+
+/* Images */
+.dark-mode-active img {
+    opacity: 0.9;
+}
+
+/* Boutons */
+.dark-mode-active .wp-block-button__link {
+    background-color: var(--wp--preset--color--primary, #6B8DB8) !important;
+    color: var(--wp--preset--color--white, #1A1F2E) !important;
+}
+
+.dark-mode-active .wp-block-button__link:hover {
+    background-color: var(--wp--preset--color--secondary, #E8C4A0) !important;
+}
+
+/* ============================================
+   BLOCS PERSONNALISÉS G2RD
+   ============================================ */
+/* Bloc countdown */
+.dark-mode-active .wp-block-g2rd-countdown {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D) !important;
+    color: var(--wp--preset--color--dark-text, #E8E8E8) !important;
+    border-color: var(--wp--preset--color--secondary, #E8C4A0) !important;
+}
+
+/* ============================================
+   HEADER ET FOOTER
+   ============================================ */
+.dark-mode-active header,
+.dark-mode-active .wp-block-template-part[data-area="header"] {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D);
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+}
+
+.dark-mode-active footer,
+.dark-mode-active .wp-block-template-part[data-area="footer"] {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D);
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+}
+
+/* ============================================
+   FORMULAIRES
+   ============================================ */
+.dark-mode-active input[type="text"],
+.dark-mode-active input[type="email"],
+.dark-mode-active input[type="password"],
+.dark-mode-active textarea,
+.dark-mode-active select {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D);
+    color: var(--wp--preset--color--dark-text, #E8E8E8);
+    border-color: var(--wp--preset--color--primary, #6B8DB8);
+}
+
+.dark-mode-active input[type="text"]:focus,
+.dark-mode-active input[type="email"]:focus,
+.dark-mode-active input[type="password"]:focus,
+.dark-mode-active textarea:focus,
+.dark-mode-active select:focus {
+    border-color: var(--wp--preset--color--secondary, #E8C4A0);
+    outline-color: var(--wp--preset--color--secondary, #E8C4A0);
+}
+
+/* ============================================
+   CARTES ET CONTENEURS
+   ============================================ */
+.dark-mode-active .wp-block-group.has-background {
+    background-color: var(--wp--preset--color--dark-bg, #252B3D) !important;
+}
+
+/* ============================================
+   OMBRES ET EFFETS
+   ============================================ */
+/* Les ombres sont plus prononcées en mode sombre */
+.dark-mode-active .has-shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   ACCESSIBILITÉ
+   ============================================ */
+/* S'assurer que le contraste est suffisant */
+@media (prefers-contrast: high) {
+    .dark-mode-active {
+        --wp--preset--color--dark-text: #FFFFFF;
+        --wp--preset--color--dark-bg: #000000;
+    }
+}
+

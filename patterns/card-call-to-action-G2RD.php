@@ -10,7 +10,7 @@
  * Block Types: core/group
  * Post Types:
  * Inserter: true
- * Text Domain: G2RD-theme
+ * Text Domain: g2rd-theme
  */
 ?>
 <!-- wp:group {"metadata":{"name":"G2RD Hero"},"className":"is-style-primary","style":{"spacing":{"padding":{"top":"var:preset|spacing|s","bottom":"var:preset|spacing|s"}}},"layout":{"type":"constrained"}} -->

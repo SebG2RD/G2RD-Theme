@@ -26,14 +26,14 @@ export default function Edit({ attributes, setAttributes }) {
             tagName="h3"
             value={title}
             onChange={(value) => setAttributes({ title: value })}
-            placeholder={__("Enter title...", "g2rd")}
+            placeholder={__("Enter title...", "g2rd-theme")}
             style={{ color: "#333", fontSize: "1.5rem" }}
           />
           <RichText
             tagName="p"
             value={description}
             onChange={(value) => setAttributes({ description: value })}
-            placeholder={__("Enter description...", "g2rd")}
+            placeholder={__("Enter description...", "g2rd-theme")}
             style={{ color: "#666", fontSize: "1rem" }}
           />
         </div>

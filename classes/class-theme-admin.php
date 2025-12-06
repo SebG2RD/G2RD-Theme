@@ -216,7 +216,7 @@ class ThemeAdmin
                     button.href = "' . \esc_js(\esc_url(self::G2RD_WEBSITE)) . '";
                     button.target = "_blank";
                     button.className = "g2rd-button";
-                    button.textContent = "' . \esc_js(\__('Visiter G2RD Agence Web', 'g2rd')) . '";
+                    button.textContent = "' . \esc_js(\__('Visiter G2RD Agence Web', 'g2rd-theme')) . '";
                     loginForm.insertAdjacentElement("afterend", button);
                 }
             });

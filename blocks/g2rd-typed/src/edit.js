@@ -92,12 +92,12 @@ export default function Edit({ attributes, setAttributes }) {
       </BlockControls>
 
       <InspectorControls>
-        <PanelBody title={__("Textes animés", "g2rd")} initialOpen={true}>
+        <PanelBody title={__("Textes animés", "g2rd-theme")} initialOpen={true}>
           <TextareaControl
-            label={__("Ajouter un nouveau texte", "g2rd")}
+            label={__("Ajouter un nouveau texte", "g2rd-theme")}
             value={newString}
             onChange={setNewString}
-            placeholder={__("Entrez un nouveau texte à animer...", "g2rd")}
+            placeholder={__("Entrez un nouveau texte à animer...", "g2rd-theme")}
           />
           <Button
             isPrimary
@@ -105,11 +105,11 @@ export default function Edit({ attributes, setAttributes }) {
             disabled={!newString.trim()}
             style={{ marginTop: "8px" }}
           >
-            {__("Ajouter", "g2rd")}
+            {__("Ajouter", "g2rd-theme")}
           </Button>
 
           <div style={{ marginTop: "16px" }}>
-            <strong>{__("Textes actuels :", "g2rd")}</strong>
+            <strong>{__("Textes actuels :", "g2rd-theme")}</strong>
             {typedStrings.map((string, index) => (
               <div
                 key={index}
@@ -132,34 +132,34 @@ export default function Edit({ attributes, setAttributes }) {
                   isSmall
                   onClick={() => removeString(index)}
                 >
-                  {__("Supprimer", "g2rd")}
+                  {__("Supprimer", "g2rd-theme")}
                 </Button>
               </div>
             ))}
           </div>
         </PanelBody>
 
-        <PanelBody title={__("Texte avant/après", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Texte avant/après", "g2rd-theme")} initialOpen={false}>
           <TextControl
-            label={__("Texte avant l'animation", "g2rd")}
+            label={__("Texte avant l'animation", "g2rd-theme")}
             value={textBefore}
             onChange={(value) => setAttributes({ textBefore: value })}
-            placeholder={__("Texte qui apparaît avant l'animation...", "g2rd")}
+            placeholder={__("Texte qui apparaît avant l'animation...", "g2rd-theme")}
           />
           <TextControl
-            label={__("Texte après l'animation", "g2rd")}
+            label={__("Texte après l'animation", "g2rd-theme")}
             value={textAfter}
             onChange={(value) => setAttributes({ textAfter: value })}
-            placeholder={__("Texte qui apparaît après l'animation...", "g2rd")}
+            placeholder={__("Texte qui apparaît après l'animation...", "g2rd-theme")}
           />
         </PanelBody>
 
         <PanelBody
-          title={__("Paramètres d'animation", "g2rd")}
+          title={__("Paramètres d'animation", "g2rd-theme")}
           initialOpen={false}
         >
           <RangeControl
-            label={__("Vitesse de frappe", "g2rd")}
+            label={__("Vitesse de frappe", "g2rd-theme")}
             value={typeSpeed}
             onChange={(value) => setAttributes({ typeSpeed: value })}
             min={10}
@@ -167,7 +167,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={5}
           />
           <RangeControl
-            label={__("Vitesse d'effacement", "g2rd")}
+            label={__("Vitesse d'effacement", "g2rd-theme")}
             value={backSpeed}
             onChange={(value) => setAttributes({ backSpeed: value })}
             min={10}
@@ -175,7 +175,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={5}
           />
           <RangeControl
-            label={__("Délai de départ", "g2rd")}
+            label={__("Délai de départ", "g2rd-theme")}
             value={startDelay}
             onChange={(value) => setAttributes({ startDelay: value })}
             min={0}
@@ -183,7 +183,7 @@ export default function Edit({ attributes, setAttributes }) {
             step={100}
           />
           <RangeControl
-            label={__("Délai avant effacement", "g2rd")}
+            label={__("Délai avant effacement", "g2rd-theme")}
             value={backDelay}
             onChange={(value) => setAttributes({ backDelay: value })}
             min={0}
@@ -191,50 +191,50 @@ export default function Edit({ attributes, setAttributes }) {
             step={100}
           />
           <ToggleControl
-            label={__("Boucle infinie", "g2rd")}
+            label={__("Boucle infinie", "g2rd-theme")}
             checked={loop}
             onChange={() => setAttributes({ loop: !loop })}
           />
           <ToggleControl
-            label={__("Mélanger les textes", "g2rd")}
+            label={__("Mélanger les textes", "g2rd-theme")}
             checked={shuffle}
             onChange={() => setAttributes({ shuffle: !shuffle })}
           />
         </PanelBody>
 
-        <PanelBody title={__("Curseur", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Curseur", "g2rd-theme")} initialOpen={false}>
           <ToggleControl
-            label={__("Afficher le curseur", "g2rd")}
+            label={__("Afficher le curseur", "g2rd-theme")}
             checked={showCursor}
             onChange={() => setAttributes({ showCursor: !showCursor })}
           />
           <TextControl
-            label={__("Caractère du curseur", "g2rd")}
+            label={__("Caractère du curseur", "g2rd-theme")}
             value={cursorChar}
             onChange={(value) => setAttributes({ cursorChar: value })}
             disabled={!showCursor}
           />
         </PanelBody>
 
-        <PanelBody title={__("Options avancées", "g2rd")} initialOpen={false}>
+        <PanelBody title={__("Options avancées", "g2rd-theme")} initialOpen={false}>
           <ToggleControl
-            label={__("Effacement intelligent", "g2rd")}
+            label={__("Effacement intelligent", "g2rd-theme")}
             checked={smartBackspace}
             onChange={() => setAttributes({ smartBackspace: !smartBackspace })}
           />
           <ToggleControl
-            label={__("Fondu de sortie", "g2rd")}
+            label={__("Fondu de sortie", "g2rd-theme")}
             checked={fadeOut}
             onChange={() => setAttributes({ fadeOut: !fadeOut })}
           />
           <TextControl
-            label={__("Classe de fondu", "g2rd")}
+            label={__("Classe de fondu", "g2rd-theme")}
             value={fadeOutClass}
             onChange={(value) => setAttributes({ fadeOutClass: value })}
             disabled={!fadeOut}
           />
           <RangeControl
-            label={__("Délai de fondu", "g2rd")}
+            label={__("Délai de fondu", "g2rd-theme")}
             value={fadeOutDelay}
             onChange={(value) => setAttributes({ fadeOutDelay: value })}
             min={0}
@@ -243,16 +243,16 @@ export default function Edit({ attributes, setAttributes }) {
             disabled={!fadeOut}
           />
           <ToggleControl
-            label={__("CSS automatique", "g2rd")}
+            label={__("CSS automatique", "g2rd-theme")}
             checked={autoInsertCss}
             onChange={() => setAttributes({ autoInsertCss: !autoInsertCss })}
           />
           <SelectControl
-            label={__("Type de contenu", "g2rd")}
+            label={__("Type de contenu", "g2rd-theme")}
             value={contentType}
             options={[
-              { label: __("HTML", "g2rd"), value: "html" },
-              { label: __("Texte", "g2rd"), value: "null" },
+              { label: __("HTML", "g2rd-theme"), value: "html" },
+              { label: __("Texte", "g2rd-theme"), value: "null" },
             ]}
             onChange={(value) => setAttributes({ contentType: value })}
           />
@@ -267,7 +267,7 @@ export default function Edit({ attributes, setAttributes }) {
           <span className="typed-text-animated">
             {typedStrings.length > 0
               ? typedStrings[0]
-              : __("Aucun texte défini", "g2rd")}
+              : __("Aucun texte défini", "g2rd-theme")}
           </span>
           {textAfter && <span className="typed-text-after">{textAfter}</span>}
           {showCursor && <span className="typed-cursor">{cursorChar}</span>}
@@ -286,7 +286,7 @@ export default function Edit({ attributes, setAttributes }) {
           >
             {__(
               "Aucun texte animé défini. Ajoutez des textes dans les paramètres.",
-              "g2rd"
+              "g2rd-theme"
             )}
           </div>
         )}

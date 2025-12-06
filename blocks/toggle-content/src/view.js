@@ -27,29 +27,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkbox = toggleSwitch.querySelector('input[type="checkbox"]');
     if (!checkbox) return;
 
-    // Cocher la case si 'show-left' est la classe par défaut
-    checkbox.checked = block.classList.contains("show-left");
+    // Cocher la case si 'show-right' est la classe par défaut
+    // (car checkbox cochée = bloc droite visible avec la nouvelle logique)
+    checkbox.checked = block.classList.contains("show-right");
 
     checkbox.addEventListener("change", (event) => {
       const target = event.target;
       if (!(target instanceof HTMLInputElement)) return;
 
       if (target.checked) {
-        block.classList.add("show-left");
-        block.classList.remove("show-right");
-      } else {
+        // Checkbox cochée = bloc de droite visible
         block.classList.add("show-right");
         block.classList.remove("show-left");
+      } else {
+        // Checkbox non cochée = bloc de gauche visible
+        block.classList.add("show-left");
+        block.classList.remove("show-right");
       }
     });
 
     // Initial state based on checkbox
     if (checkbox.checked) {
-      block.classList.add("show-left");
-      block.classList.remove("show-right");
-    } else {
+      // Checkbox cochée = bloc de droite visible
       block.classList.add("show-right");
       block.classList.remove("show-left");
+    } else {
+      // Checkbox non cochée = bloc de gauche visible
+      block.classList.add("show-left");
+      block.classList.remove("show-right");
     }
   });
 });

@@ -10,7 +10,7 @@
  * Block Types: core/query
  * Post Types:
  * Inserter: true
- * Text Domain: G2RD-theme
+ * Text Domain: g2rd-theme
  */
 ?>
 

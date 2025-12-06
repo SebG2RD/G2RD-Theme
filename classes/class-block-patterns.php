@@ -73,16 +73,16 @@ class BlockPatterns
     {
         $categories = [
             'g2rd-layout' => [
-                'label' => __('G2RD Layouts', 'g2rd'),
-                'description' => __('Layouts de mise en page G2RD', 'g2rd')
+                'label' => __('G2RD Layouts', 'g2rd-theme'),
+                'description' => __('Layouts de mise en page G2RD', 'g2rd-theme')
             ],
             'g2rd-sections' => [
-                'label' => __('G2RD Sections', 'g2rd'),
-                'description' => __('Sections de contenu G2RD', 'g2rd')
+                'label' => __('G2RD Sections', 'g2rd-theme'),
+                'description' => __('Sections de contenu G2RD', 'g2rd-theme')
             ],
             'g2rd-components' => [
-                'label' => __('G2RD Components', 'g2rd'),
-                'description' => __('Composants réutilisables G2RD', 'g2rd')
+                'label' => __('G2RD Components', 'g2rd-theme'),
+                'description' => __('Composants réutilisables G2RD', 'g2rd-theme')
             ]
         ];
 

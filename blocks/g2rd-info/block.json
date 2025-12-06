@@ -21,7 +21,7 @@
     "align": true,
     "alignWide": true
   },
-  "textdomain": "g2rd",
+  "textdomain": "g2rd-theme",
   "editorScript": "file:./build/index.js",
   "editorStyle": "file:./build/index.css",
   "style": "file:./src/info.css",

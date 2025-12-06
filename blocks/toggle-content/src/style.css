@@ -1,21 +1,153 @@
 /* --- Editor Styles --- */
+/* Dans l'éditeur, on affiche toujours les deux groupes pour permettre l'édition */
+/* On ajoute juste un indicateur visuel pour montrer quel groupe est actif */
+/* Ces styles ne s'appliquent que dans l'éditeur grâce au sélecteur .block-editor-inner-blocks */
+
+/* Styles pour les onglets de l'éditeur */
+.g2rd-toggle-editor-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f0f0f1;
+  border-radius: 4px;
+}
+
+/* Conteneur des InnerBlocks dans l'éditeur */
+.g2rd-toggle-content-editor {
+  position: relative;
+}
+
 .wp-block-g2rd-toggle-content
+  .g2rd-toggle-content-editor
+  > .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+/* Afficher le groupe actif dans l'éditeur */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-content-editor
+  .block-editor-inner-blocks
+  .block-editor-block-list__layout
+  > .wp-block-group.g2rd-toggle-editor-active {
+  display: block !important;
+  border-color: #2196f3;
+  background-color: rgba(33, 150, 243, 0.05);
+}
+
+/* Masquer le groupe inactif dans l'éditeur */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-content-editor
+  .block-editor-inner-blocks
+  .block-editor-block-list__layout
+  > .wp-block-group.g2rd-toggle-editor-hidden {
+  display: none !important;
+}
+
+/* Styles pour tous les groupes dans l'éditeur */
+.wp-block-g2rd-toggle-content
+  .g2rd-toggle-content-editor
+  .block-editor-inner-blocks
+  .block-editor-block-list__layout
+  > .wp-block-group {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+/* Indicateur pour le groupe actif (celui qui sera visible par défaut) */
+.wp-block-g2rd-toggle-content.show-left
   .block-editor-inner-blocks
   > .block-editor-block-list__layout
-  > .wp-block:nth-child(2) {
-  display: none;
+  > .wp-block:first-child::before {
+  content: "✓ Contenu de gauche (visible par défaut)";
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background: #2196f3;
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 3px;
+  font-weight: bold;
+  z-index: 10;
 }
-.wp-block-g2rd-toggle-content.show-right
+
+.wp-block-g2rd-toggle-content.show-left
   .block-editor-inner-blocks
   > .block-editor-block-list__layout
   > .wp-block:first-child {
-  display: none;
+  border-color: #2196f3;
+  background-color: rgba(33, 150, 243, 0.05);
 }
+
+.wp-block-g2rd-toggle-content.show-left
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:nth-child(2)::before {
+  content: "Contenu de droite (masqué par défaut)";
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background: #999;
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 3px;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.wp-block-g2rd-toggle-content.show-right
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:first-child::before {
+  content: "Contenu de gauche (masqué par défaut)";
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background: #999;
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 3px;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.wp-block-g2rd-toggle-content.show-right
+  .block-editor-inner-blocks
+  > .block-editor-block-list__layout
+  > .wp-block:nth-child(2)::before {
+  content: "✓ Contenu de droite (visible par défaut)";
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background: #2196f3;
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 3px;
+  font-weight: bold;
+  z-index: 10;
+}
+
 .wp-block-g2rd-toggle-content.show-right
   .block-editor-inner-blocks
   > .block-editor-block-list__layout
   > .wp-block:nth-child(2) {
-  display: block;
+  border-color: #2196f3;
+  background-color: rgba(33, 150, 243, 0.05);
 }
 
 /* --- Frontend & Editor Preview --- */
@@ -62,35 +194,36 @@
 }
 
 /* --- Frontend Logic --- */
+/* Quand la checkbox est cochée, on montre le bloc de droite et on masque celui de gauche */
 .wp-block-g2rd-toggle-content
   .g2rd-toggle-checkbox:checked
   + .g2rd-toggle-container
   + .g2rd-toggle-content-container
   > .wp-block-group:first-child {
-  display: block;
+  display: none;
 }
 .wp-block-g2rd-toggle-content
   .g2rd-toggle-checkbox:checked
   + .g2rd-toggle-container
   + .g2rd-toggle-content-container
   > .wp-block-group:last-child {
-  display: none;
+  display: block;
 }
 
-/* Par défaut (non coché), on montre le deuxième bloc */
+/* Par défaut (non coché), on montre le bloc de gauche et on masque celui de droite */
 .wp-block-g2rd-toggle-content
   .g2rd-toggle-checkbox:not(:checked)
   + .g2rd-toggle-container
   + .g2rd-toggle-content-container
   > .wp-block-group:first-child {
-  display: none;
+  display: block;
 }
 .wp-block-g2rd-toggle-content
   .g2rd-toggle-checkbox:not(:checked)
   + .g2rd-toggle-container
   + .g2rd-toggle-content-container
   > .wp-block-group:last-child {
-  display: block;
+  display: none;
 }
 
 /* Appliquer la couleur active et la transformation quand la case est cochée */

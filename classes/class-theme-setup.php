@@ -207,14 +207,14 @@ class ThemeSetup
     {
         // Enregistrer les catégories
         $categories = [
-            'design' => \__('Design', 'g2rd'),
-            'card' => \__('Card', 'g2rd'),
-            'hero' => \__('Hero', 'g2rd'),
-            'info' => \__('Info', 'g2rd'),
-            'posts' => \__('Posts', 'g2rd'),
-            'header' => \__('Header', 'g2rd'),
-            'footer' => \__('Footer', 'g2rd'),
-            'widgets' => \__('Widgets', 'g2rd')
+            'design' => \__('Design', 'g2rd-theme'),
+            'card' => \__('Card', 'g2rd-theme'),
+            'hero' => \__('Hero', 'g2rd-theme'),
+            'info' => \__('Info', 'g2rd-theme'),
+            'posts' => \__('Posts', 'g2rd-theme'),
+            'header' => \__('Header', 'g2rd-theme'),
+            'footer' => \__('Footer', 'g2rd-theme'),
+            'widgets' => \__('Widgets', 'g2rd-theme')
         ];
 
         foreach ($categories as $slug => $label) {
@@ -230,6 +230,6 @@ class ThemeSetup
      */
     public function loadThemeTextdomain(): void
     {
-        load_theme_textdomain('g2rd', get_template_directory() . '/languages');
+        load_theme_textdomain('g2rd-theme', get_template_directory() . '/languages');
     }
 }

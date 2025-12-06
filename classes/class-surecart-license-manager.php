@@ -52,11 +52,16 @@ class SureCartLicenseManager
      * Constructeur de la classe
      *
      * @since 1.0.0
-     * @param string $api_key Clé API SureCart
+     * @param string $api_key Clé API SureCart (optionnelle)
+     * 
+     * NOTE: Le système de licences est complètement optionnel.
+     * Le thème fonctionne parfaitement sans licence.
      */
-    public function __construct($api_key)
+    public function __construct($api_key = '')
     {
         $this->api_key = $api_key;
+        // Toujours enregistrer les hooks pour que le menu soit accessible
+        // même sans clé API (pour permettre la configuration)
         $this->registerHooks();
     }
 
@@ -131,16 +136,31 @@ class SureCartLicenseManager
      *
      * @since 1.0.0
      * @return void
+     * 
+     * NOTE: Cette fonction est désactivée car le système de licences est optionnel.
+     * Le thème fonctionne parfaitement sans licence, donc aucun avertissement n'est nécessaire.
      */
     public function displayLicenseNotices()
     {
+        // Désactivé : Le système de licences est optionnel
+        // Le thème fonctionne sans licence, donc aucun avertissement n'est nécessaire
+        return;
+        
+        /* Code commenté pour référence future
+        // Ne montrer des notifications que si une clé API est configurée
+        // (cela indique que l'utilisateur souhaite utiliser le système de licences)
+        if (empty($this->api_key)) {
+            return;
+        }
+        
         if (!$this->isLicenseValid()) {
-?>
-            <div class="notice notice-warning">
-                <p><?php \_e('Votre licence G2RD Theme n\'est pas active. Veuillez activer votre licence pour bénéficier des mises à jour.', 'g2rd'); ?></p>
+        ?>
+            <div class="notice notice-info">
+                <p><?php \_e('Le système de licences est optionnel. Le thème fonctionne parfaitement sans licence. Pour activer les mises à jour automatiques, veuillez configurer votre licence.', 'g2rd-theme'); ?></p>
             </div>
         <?php
         }
+        */
     }
 
     /**
@@ -203,6 +223,17 @@ class SureCartLicenseManager
      */
     public function isLicenseValid()
     {
+        // Si aucune clé API n'est configurée, le système de licences n'est pas utilisé
+        // Retourner false mais cela ne bloque rien (le système est optionnel)
+        $api_key = !empty($this->api_key) ? $this->api_key : (defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '');
+        $api_key_from_option = \get_option('g2rd_surecart_api_key', '');
+        $final_api_key = !empty($api_key) ? $api_key : $api_key_from_option;
+        
+        if (empty($final_api_key)) {
+            // Aucune clé API configurée = système de licences non utilisé (optionnel)
+            return false;
+        }
+        
         $license_key = \get_option('g2rd_license_key');
 
         // Debug: Vérifier si la clé de licence est présente
@@ -213,16 +244,6 @@ class SureCartLicenseManager
         if (empty($license_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('G2RD License Debug - No license key found in database');
-            }
-            return false;
-        }
-
-        // Utiliser directement l'API SureCart
-        $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
-
-        if (empty($api_key)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('G2RD License Debug - No API key configured');
             }
             return false;
         }
@@ -463,13 +484,13 @@ class SureCartLicenseManager
     {
         ?>
         <div class="wrap">
-            <h1><?php \_e('G2RD License', 'g2rd'); ?></h1>
+            <h1><?php \_e('G2RD License', 'g2rd-theme'); ?></h1>
 
             <form method="post" action="options.php">
                 <?php \settings_fields('g2rd_license'); ?>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php \_e('Clé de licence', 'g2rd'); ?></th>
+                        <th scope="row"><?php \_e('Clé de licence', 'g2rd-theme'); ?></th>
                         <td>
                             <input type="text" name="g2rd_license_key" value="<?php echo \esc_attr(\get_option('g2rd_license_key')); ?>" class="regular-text">
                         </td>
@@ -479,9 +500,9 @@ class SureCartLicenseManager
             </form>
 
             <!-- Section de diagnostic -->
-            <h2><?php \_e('Validation de la licence', 'g2rd'); ?></h2>
+            <h2><?php \_e('Validation de la licence', 'g2rd-theme'); ?></h2>
             <div class="card">
-                <h3><?php \_e('État actuel', 'g2rd'); ?></h3>
+                <h3><?php \_e('État actuel', 'g2rd-theme'); ?></h3>
                 <?php
                 $license_key = \get_option('g2rd_license_key');
                 // Utiliser getUserLicenses() au lieu de isLicenseValid() pour être cohérent avec les tests qui fonctionnent
@@ -500,33 +521,33 @@ class SureCartLicenseManager
                 ?>
                 <table class="form-table">
                     <tr>
-                        <th><?php \_e('Clé de licence enregistrée', 'g2rd'); ?></th>
+                        <th><?php \_e('Clé de licence enregistrée', 'g2rd-theme'); ?></th>
                         <td>
                             <?php if ($license_key): ?>
                                 <span style="color: green;">✓ <?php echo \esc_html(substr($license_key, 0, 8) . '...'); ?></span>
                             <?php else: ?>
-                                <span style="color: red;">✗ <?php \_e('Aucune clé enregistrée', 'g2rd'); ?></span>
+                                <span style="color: red;">✗ <?php \_e('Aucune clé enregistrée', 'g2rd-theme'); ?></span>
                             <?php endif; ?>
                         </td>
                     </tr>
                     <tr>
-                        <th><?php \_e('Statut de la licence', 'g2rd'); ?></th>
+                        <th><?php \_e('Statut de la licence', 'g2rd-theme'); ?></th>
                         <td>
                             <?php if ($is_valid): ?>
-                                <span style="color: green;">✓ <?php \_e('Licence valide', 'g2rd'); ?></span>
+                                <span style="color: green;">✓ <?php \_e('Licence valide', 'g2rd-theme'); ?></span>
                             <?php else: ?>
-                                <span style="color: red;">✗ <?php \_e('Licence invalide ou expirée', 'g2rd'); ?></span>
+                                <span style="color: red;">✗ <?php \_e('Licence invalide ou expirée', 'g2rd-theme'); ?></span>
                             <?php endif; ?>
 
                             <br><br>
                             <button type="button" id="verify-license-btn" class="button button-primary">
-                                <?php \_e('Vérifier la licence maintenant', 'g2rd'); ?>
+                                <?php \_e('Vérifier la licence maintenant', 'g2rd-theme'); ?>
                             </button>
                             <span id="verify-license-result"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th><?php \_e('Test de connexion à l\'API SureCart', 'g2rd'); ?></th>
+                        <th><?php \_e('Test de connexion à l\'API SureCart', 'g2rd-theme'); ?></th>
                         <td>
                             <?php
                             $api_key = defined('G2RD_SURECART_API_KEY') ? 'Configurée' : 'Non configurée';
@@ -540,9 +561,9 @@ class SureCartLicenseManager
             </div>
 
             <!-- Section de gestion des CPT -->
-            <h2><?php \_e('Gestion des types de contenu personnalisés (CPT)', 'g2rd'); ?></h2>
+            <h2><?php \_e('Gestion des types de contenu personnalisés (CPT)', 'g2rd-theme'); ?></h2>
             <div class="card">
-                <p class="description"><?php \_e('Activez ou désactivez les types de contenu personnalisés et personnalisez leurs noms selon vos besoins.', 'g2rd'); ?></p>
+                <p class="description"><?php \_e('Activez ou désactivez les types de contenu personnalisés et personnalisez leurs noms selon vos besoins.', 'g2rd-theme'); ?></p>
 
                 <div class="g2rd-cpt-container" style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
                     <?php
@@ -588,7 +609,7 @@ class SureCartLicenseManager
                                             <span class="g2rd-toggle-slider"></span>
                                         </label>
                                         <label for="cpt-<?php echo \esc_attr($cpt_key); ?>-toggle" style="margin: 0; font-weight: 500; cursor: pointer;">
-                                            <?php \_e('Activer ce type de contenu', 'g2rd'); ?>
+                                            <?php \_e('Activer ce type de contenu', 'g2rd-theme'); ?>
                                         </label>
                                         <span class="g2rd-cpt-status" id="cpt-<?php echo \esc_attr($cpt_key); ?>-status" style="margin-left: auto;"></span>
                                     </div>
@@ -598,7 +619,7 @@ class SureCartLicenseManager
                                 <div class="g2rd-cpt-name-section">
                                     <label for="cpt-<?php echo \esc_attr($cpt_key); ?>-name" style="display: block; margin-bottom: 8px; font-weight: 500;">
                                         <span class="dashicons dashicons-edit" style="font-size: 16px; vertical-align: middle; color: #646970;"></span>
-                                        <?php \_e('Nom personnalisé', 'g2rd'); ?>
+                                        <?php \_e('Nom personnalisé', 'g2rd-theme'); ?>
                                     </label>
                                     <div style="display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;">
                                         <input type="text"
@@ -613,11 +634,11 @@ class SureCartLicenseManager
                                             data-cpt="<?php echo \esc_attr($cpt_key); ?>"
                                             style="white-space: nowrap;">
                                             <span class="dashicons dashicons-yes-alt" style="font-size: 16px; vertical-align: middle; margin-right: 4px;"></span>
-                                            <?php \_e('Sauvegarder', 'g2rd'); ?>
+                                            <?php \_e('Sauvegarder', 'g2rd-theme'); ?>
                                         </button>
                                     </div>
                                     <p class="description" style="margin-top: 8px; margin-bottom: 0;">
-                                        <?php \_e('Le nom personnalisé remplacera le nom par défaut dans le menu WordPress et les pages d\'administration.', 'g2rd'); ?>
+                                        <?php \_e('Le nom personnalisé remplacera le nom par défaut dans le menu WordPress et les pages d\'administration.', 'g2rd-theme'); ?>
                                     </p>
                                     <span class="g2rd-cpt-name-status" id="cpt-<?php echo \esc_attr($cpt_key); ?>-name-status" style="display: block; margin-top: 8px;"></span>
                                 </div>
@@ -628,7 +649,7 @@ class SureCartLicenseManager
             </div>
 
             <!-- Section des licences -->
-            <h2><?php \_e('Vos licences', 'g2rd'); ?></h2>
+            <h2><?php \_e('Vos licences', 'g2rd-theme'); ?></h2>
             <div class="card">
                 <?php
                 $licenses = $this->getUserLicenses();
@@ -637,9 +658,9 @@ class SureCartLicenseManager
                     <table class="wp-list-table widefat fixed striped">
                         <thead>
                             <tr>
-                                <th><?php \_e('Clé', 'g2rd'); ?></th>
-                                <th><?php \_e('Statut', 'g2rd'); ?></th>
-                                <th><?php \_e('Date d\'expiration', 'g2rd'); ?></th>
+                                <th><?php \_e('Clé', 'g2rd-theme'); ?></th>
+                                <th><?php \_e('Statut', 'g2rd-theme'); ?></th>
+                                <th><?php \_e('Date d\'expiration', 'g2rd-theme'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -661,7 +682,7 @@ class SureCartLicenseManager
 
                                         // Si la licence existe et n'est pas expirée, elle est active
                                         $status_color = $is_expired ? 'red' : 'green';
-                                        $status_text = $is_expired ? \__('Expirée', 'g2rd') : \__('Active', 'g2rd');
+                                        $status_text = $is_expired ? \__('Expirée', 'g2rd-theme') : \__('Active', 'g2rd-theme');
                                         ?>
                                         <span style="color: <?php echo \esc_attr($status_color); ?>;"><?php echo \esc_html($status_text); ?></span>
                                     </td>
@@ -675,7 +696,7 @@ class SureCartLicenseManager
                                             $expiration_date = \date('d/m/Y', $expiration_timestamp);
                                             echo \esc_html($expiration_date);
                                         } else {
-                                            echo \esc_html(\__('Non disponible', 'g2rd'));
+                                            echo \esc_html(\__('Non disponible', 'g2rd-theme'));
                                         }
                                         ?>
                                     </td>
@@ -684,7 +705,7 @@ class SureCartLicenseManager
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p><?php \_e('Aucune licence trouvée.', 'g2rd'); ?></p>
+                    <p><?php \_e('Aucune licence trouvée.', 'g2rd-theme'); ?></p>
                 <?php endif; ?>
             </div>
 
@@ -728,17 +749,17 @@ class SureCartLicenseManager
             'ajaxUrl' => \admin_url('admin-ajax.php'),
             'nonce' => \wp_create_nonce('g2rd_license_nonce'),
             'strings' => [
-                'verifying' => \__('Vérification en cours...', 'g2rd'),
-                'success' => \__('Licence validée avec succès !', 'g2rd'),
-                'error' => \__('Erreur lors de la vérification', 'g2rd'),
-                'proxyTest' => \__('Test du proxy en cours...', 'g2rd'),
-                'proxySuccess' => \__('Proxy accessible', 'g2rd'),
-                'proxyError' => \__('Proxy inaccessible', 'g2rd'),
-                'saving' => \__('Sauvegarde en cours...', 'g2rd'),
-                'saved' => \__('Sauvegardé', 'g2rd'),
-                'errorSaving' => \__('Erreur lors de la sauvegarde', 'g2rd'),
-                'nameSaved' => \__('Nom sauvegardé avec succès', 'g2rd'),
-                'nameError' => \__('Erreur lors de la sauvegarde du nom', 'g2rd'),
+                'verifying' => \__('Vérification en cours...', 'g2rd-theme'),
+                'success' => \__('Licence validée avec succès !', 'g2rd-theme'),
+                'error' => \__('Erreur lors de la vérification', 'g2rd-theme'),
+                'proxyTest' => \__('Test du proxy en cours...', 'g2rd-theme'),
+                'proxySuccess' => \__('Proxy accessible', 'g2rd-theme'),
+                'proxyError' => \__('Proxy inaccessible', 'g2rd-theme'),
+                'saving' => \__('Sauvegarde en cours...', 'g2rd-theme'),
+                'saved' => \__('Sauvegardé', 'g2rd-theme'),
+                'errorSaving' => \__('Erreur lors de la sauvegarde', 'g2rd-theme'),
+                'nameSaved' => \__('Nom sauvegardé avec succès', 'g2rd-theme'),
+                'nameError' => \__('Erreur lors de la sauvegarde du nom', 'g2rd-theme'),
             ]
         ]);
 
@@ -758,14 +779,14 @@ class SureCartLicenseManager
         \check_ajax_referer('g2rd_license_nonce', 'nonce');
 
         if (!\current_user_can('manage_options')) {
-            \wp_die(\__('Permissions insuffisantes', 'g2rd'));
+            \wp_die(\__('Permissions insuffisantes', 'g2rd-theme'));
         }
 
         $license_key = \get_option('g2rd_license_key');
 
         if (empty($license_key)) {
             \wp_send_json_error([
-                'message' => \__('Aucune clé de licence enregistrée', 'g2rd')
+                'message' => \__('Aucune clé de licence enregistrée', 'g2rd-theme')
             ]);
         }
 
@@ -773,12 +794,12 @@ class SureCartLicenseManager
 
         if ($is_valid) {
             \wp_send_json_success([
-                'message' => \__('Licence valide', 'g2rd'),
+                'message' => \__('Licence valide', 'g2rd-theme'),
                 'status' => 'valid'
             ]);
         } else {
             \wp_send_json_error([
-                'message' => \__('Licence invalide ou expirée', 'g2rd'),
+                'message' => \__('Licence invalide ou expirée', 'g2rd-theme'),
                 'status' => 'invalid'
             ]);
         }
@@ -796,7 +817,7 @@ class SureCartLicenseManager
 
         if (!\current_user_can('manage_options')) {
             \wp_send_json_error([
-                'message' => \__('Permissions insuffisantes', 'g2rd')
+                'message' => \__('Permissions insuffisantes', 'g2rd-theme')
             ]);
         }
 
@@ -812,7 +833,7 @@ class SureCartLicenseManager
 
         if (!isset($valid_cpts[$cpt])) {
             \wp_send_json_error([
-                'message' => \__('CPT invalide', 'g2rd')
+                'message' => \__('CPT invalide', 'g2rd-theme')
             ]);
         }
 
@@ -827,8 +848,8 @@ class SureCartLicenseManager
 
         \wp_send_json_success([
             'message' => $enabled_value === '1'
-                ? \__('CPT activé avec succès', 'g2rd')
-                : \__('CPT désactivé avec succès', 'g2rd'),
+                ? \__('CPT activé avec succès', 'g2rd-theme')
+                : \__('CPT désactivé avec succès', 'g2rd-theme'),
             'enabled' => $enabled_value
         ]);
     }
@@ -845,7 +866,7 @@ class SureCartLicenseManager
 
         if (!\current_user_can('manage_options')) {
             \wp_send_json_error([
-                'message' => \__('Permissions insuffisantes', 'g2rd')
+                'message' => \__('Permissions insuffisantes', 'g2rd-theme')
             ]);
         }
 
@@ -861,14 +882,14 @@ class SureCartLicenseManager
 
         if (!isset($valid_cpts[$cpt])) {
             \wp_send_json_error([
-                'message' => \__('CPT invalide', 'g2rd')
+                'message' => \__('CPT invalide', 'g2rd-theme')
             ]);
         }
 
         // Vérifier que le nom n'est pas vide
         if (empty($name)) {
             \wp_send_json_error([
-                'message' => \__('Le nom ne peut pas être vide', 'g2rd')
+                'message' => \__('Le nom ne peut pas être vide', 'g2rd-theme')
             ]);
         }
 
@@ -881,7 +902,7 @@ class SureCartLicenseManager
         \flush_rewrite_rules();
 
         \wp_send_json_success([
-            'message' => \__('Nom sauvegardé avec succès', 'g2rd'),
+            'message' => \__('Nom sauvegardé avec succès', 'g2rd-theme'),
             'name' => $name
         ]);
     }

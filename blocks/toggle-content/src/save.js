@@ -25,7 +25,7 @@ export default function save({ attributes }) {
         type="checkbox"
         id={blockId}
         className="g2rd-toggle-checkbox"
-        defaultChecked={showLeft}
+        defaultChecked={!showLeft}
         style={{ display: "none" }}
       />
 
