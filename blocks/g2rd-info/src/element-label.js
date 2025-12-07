@@ -12,17 +12,15 @@
  * @copyright (c) 2024 Sebastien GERARD
  * @link https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
  */
-(function (wp) {
-  // Ne s'exécuter que dans l'éditeur WordPress
-  if (!wp || !wp.blockEditor) {
-    return;
-  }
 
+// Imports WordPress
+import { createElement, useEffect } from "@wordpress/element";
+import { addFilter } from "@wordpress/hooks";
+import { __ } from "@wordpress/i18n";
+
+// Ne s'exécuter que dans l'éditeur WordPress
+if (typeof window.wp !== "undefined" && window.wp.blockEditor) {
   try {
-    const { __ } = wp.i18n;
-    const { addFilter } = wp.hooks;
-    const { useEffect } = wp.element;
-
     /**
      * Fonction utilitaire pour résoudre une variable CSS WordPress
      */
@@ -490,7 +488,7 @@
       function (BlockEdit) {
         return function (props) {
           if (props.name !== "g2rd/info") {
-            return wp.element.createElement(BlockEdit, props);
+            return createElement(BlockEdit, props);
           }
 
           // Modifier le label "Link" en "Icône" et ajouter le contrôle de bordure
@@ -633,7 +631,7 @@
             };
           }, []);
 
-          return wp.element.createElement(BlockEdit, props);
+          return createElement(BlockEdit, props);
         };
       },
       20
@@ -641,4 +639,4 @@
   } catch (e) {
     console.error("Error initializing G2RD Info Element Label", e);
   }
-})(window.wp);
+}

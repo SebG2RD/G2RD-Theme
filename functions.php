@@ -151,26 +151,3 @@ bootstrap_theme();
 if (file_exists(get_template_directory() . '/includes/license-init.php')) {
     require_once get_template_directory() . '/includes/license-init.php';
 }
-
-// Forcer Dashicons dans l'éditeur Gutenberg
-add_action('enqueue_block_editor_assets', function () {
-    wp_enqueue_style('dashicons');
-
-    // Script pour personnaliser le label de l'élément link en "Icône" pour le bloc g2rd/info
-    // Le script est maintenant dans le dossier du bloc pour une meilleure organisation
-    wp_enqueue_script(
-        'g2rd-info-element-label',
-        get_template_directory_uri() . '/blocks/g2rd-info/src/element-label.js',
-        [
-            'wp-blocks',
-            'wp-element',
-            'wp-components',
-            'wp-block-editor',
-            'wp-compose',
-            'wp-i18n',
-            'wp-hooks',
-        ],
-        wp_get_theme()->get('Version'),
-        true
-    );
-});
