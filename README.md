@@ -184,6 +184,18 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.7
+
+- **Amélioration du bloc G2RD Info** : Personnalisation complète des couleurs dans l'onglet Styles
+- **Contrôle de couleur de bordure** : Ajout d'un contrôle dans l'onglet Styles avec palette WordPress
+- **Correction du débordement de l'icône** : Adaptation automatique de la taille du conteneur selon la taille de l'icône
+- **Amélioration de la détection des couleurs** : Meilleure détection et application des couleurs dans l'éditeur WordPress
+- **Résolution des conflits** : Correction des conflits entre scripts (element-label.js et info-frontend.js)
+- **Optimisation du code** : Simplification et optimisation du code JavaScript pour meilleures performances
+- **Spécificité CSS améliorée** : Amélioration de la spécificité CSS pour garantir l'application des couleurs dans l'éditeur
+- **Fallback sur couleur du texte** : Support du fallback sur la couleur du texte pour la bordure (comportement WordPress par défaut)
+- **Nettoyage du code** : Suppression du fichier edit-simple.js non utilisé pour éviter la confusion
+
 ### 1.1.6
 
 - **Corrections de sécurité et conformité WordPress.org** : Améliorations majeures pour la validation WordPress.org

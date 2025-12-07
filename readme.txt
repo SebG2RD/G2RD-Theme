@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,17 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.7 =
+* Amélioration du bloc G2RD Info : Personnalisation complète des couleurs dans l'onglet Styles
+* Ajout d'un contrôle de couleur de bordure dans l'onglet Styles avec palette WordPress
+* Correction du débordement de l'icône : adaptation automatique de la taille du conteneur
+* Amélioration de la détection et application des couleurs dans l'éditeur WordPress
+* Résolution des conflits entre scripts (element-label.js et info-frontend.js)
+* Simplification et optimisation du code JavaScript pour meilleures performances
+* Amélioration de la spécificité CSS pour garantir l'application des couleurs dans l'éditeur
+* Support du fallback sur la couleur du texte pour la bordure (comportement WordPress par défaut)
+* Suppression du fichier edit-simple.js non utilisé pour éviter la confusion
 
 = 1.1.6 =
 * **Corrections de sécurité et conformité WordPress.org** : Améliorations majeures pour la validation WordPress.org

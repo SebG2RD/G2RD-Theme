@@ -4,6 +4,32 @@
   display: block;
   width: 100%;
   transition: all 0.3s ease;
+  /* La couleur de bordure est gérée par WordPress dans l'onglet Styles */
+  /* WordPress définit --wp--preset--color--border dans les styles inline du bloc */
+  /* Par défaut, utiliser la couleur du texte si aucune couleur de bordure n'est définie */
+  border-color: var(--wp--preset--color--border, currentColor);
+}
+
+/* Fallback : utiliser aussi la classe générée par WordPress si elle existe */
+.g2rd-info-block.has-border-color {
+  border-color: var(--wp--preset--color--border, currentColor);
+}
+
+/* Si aucune couleur de bordure n'est définie, utiliser la couleur du texte */
+.g2rd-info-block:not(.has-border-color) {
+  border-color: currentColor;
+}
+
+/* Option pour prendre toute la hauteur du parent */
+.g2rd-info-block.g2rd-info-full-height {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.g2rd-info-block.g2rd-info-full-height .g2rd-info-content {
+  flex: 1;
+  display: flex;
 }
 
 .g2rd-info-content {
@@ -22,39 +48,78 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  width: auto;
+  height: auto;
+  padding: 8px;
   border-radius: 50%;
   line-height: 1;
   position: relative;
+  flex-shrink: 0;
+  /* Empêcher le débordement de l'icône */
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .g2rd-info-icon .dashicons {
-  font-size: 28px;
   line-height: 1;
   vertical-align: middle;
   background: none !important;
   border-radius: 0 !important;
-  color: #fff;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  /* La taille de l'icône est définie via fontSize dans le style inline */
+}
+
+/* L'icône utilise l'élément "link" de WordPress pour sa couleur dans l'onglet Styles */
+/* IMPORTANT : Les Dashicons utilisent ::before pour afficher l'icône */
+/* Le script JavaScript appliquera la couleur au ::before via une feuille de style dynamique */
+.g2rd-info-block .g2rd-info-icon .g2rd-info-icon-element::before,
+.g2rd-info-block .g2rd-info-icon-element::before,
+.g2rd-info-block .g2rd-info-icon .dashicons::before {
+  /* Utiliser la variable CSS WordPress pour la couleur link */
+  /* Cette variable est définie dans les styles inline du bloc quand une couleur link est sélectionnée */
+  color: var(--wp--preset--color--link, currentColor);
+}
+
+/* Spécificité élevée avec la classe has-link-color */
+.g2rd-info-block.has-link-color .g2rd-info-icon .g2rd-info-icon-element::before,
+.g2rd-info-block.has-link-color .g2rd-info-icon-element::before,
+.g2rd-info-block.has-link-color .g2rd-info-icon .dashicons::before {
+  color: var(--wp--preset--color--link, currentColor);
 }
 
 .g2rd-info-text {
   flex: 1;
 }
 
-.g2rd-info-text h3 {
+/* Le titre utilise l'élément "heading" de WordPress pour sa couleur */
+.g2rd-info-text h3,
+.g2rd-info-title {
   margin: 0 0 0.5rem 0;
   line-height: 1.2;
+  /* Par défaut, utiliser la couleur du texte */
+  color: inherit;
 }
 
-.g2rd-info-text p {
+/* Quand une couleur heading est définie, WordPress ajoute la classe .has-heading-color au bloc */
+.g2rd-info-block.has-heading-color .g2rd-info-text h3,
+.g2rd-info-block.has-heading-color .g2rd-info-title {
+  /* Utiliser la variable CSS WordPress pour la couleur heading */
+  color: var(--wp--preset--color--heading, inherit);
+}
+
+/* La description utilise la couleur "text" du bloc (gérée automatiquement par WordPress) */
+.g2rd-info-text p,
+.g2rd-info-description {
   margin: 0;
   line-height: 1.6;
+  /* Hériter de la couleur du texte du bloc (gérée par WordPress via has-text-color) */
+  color: inherit;
 }
 
 .g2rd-info-image {
@@ -166,10 +231,25 @@
 /* Editor Specific Styles */
 .editor-styles-wrapper .g2rd-info-block {
   /* Ensure proper display in editor */
+  /* Les couleurs sont appliquées via JavaScript dans element-label.js */
 }
 
 .editor-styles-wrapper .g2rd-info-content {
   /* Maintain layout in editor */
+}
+
+/* Forcer l'application des couleurs dans l'éditeur */
+.editor-styles-wrapper .g2rd-info-block[style*="--wp--preset--color--border"] {
+  border-color: var(--wp--preset--color--border, currentColor) !important;
+}
+
+.editor-styles-wrapper .g2rd-info-block.has-border-color {
+  border-color: var(--wp--preset--color--border, currentColor) !important;
+}
+
+/* Classe ajoutée par JavaScript pour forcer l'application */
+.g2rd-info-block.has-border-color-applied {
+  border-color: inherit !important;
 }
 
 /* Accessibility */

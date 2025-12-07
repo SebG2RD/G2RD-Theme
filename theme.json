@@ -3,6 +3,32 @@
   "version": 3,
   "settings": {
     "blocks": {
+      "g2rd/info": {
+        "color": {
+          "background": true,
+          "text": true,
+          "heading": true,
+          "link": true,
+          "elements": ["heading", "link"]
+        },
+        "border": {
+          "color": true,
+          "radius": true,
+          "style": true,
+          "width": true
+        },
+        "shadow": true,
+        "spacing": {
+          "margin": true,
+          "padding": true
+        },
+        "typography": {
+          "fontSize": true,
+          "fontFamily": true,
+          "fontWeight": true,
+          "lineHeight": true
+        }
+      },
       "g2rd/countdown": {
         "color": {
           "background": true,

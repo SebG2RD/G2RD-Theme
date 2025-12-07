@@ -1,3 +1,14 @@
+= 1.1.7 =
+* Amélioration du bloc G2RD Info : Personnalisation complète des couleurs dans l'onglet Styles
+* Ajout d'un contrôle de couleur de bordure dans l'onglet Styles avec palette WordPress
+* Correction du débordement de l'icône : adaptation automatique de la taille du conteneur
+* Amélioration de la détection et application des couleurs dans l'éditeur WordPress
+* Résolution des conflits entre scripts (element-label.js et info-frontend.js)
+* Simplification et optimisation du code JavaScript pour meilleures performances
+* Amélioration de la spécificité CSS pour garantir l'application des couleurs dans l'éditeur
+* Support du fallback sur la couleur du texte pour la bordure (comportement WordPress par défaut)
+* Suppression du fichier edit-simple.js non utilisé pour éviter la confusion
+
 = 1.1.6 =
 * Corrections de sécurité et conformité WordPress.org
 * Correction du conflit de licence : Uniformisation GPL-2.0-or-later

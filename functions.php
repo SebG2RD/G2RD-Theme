@@ -51,11 +51,12 @@ require_once __DIR__ . '/classes/class-dark-mode.php';
  * Le thème fonctionne parfaitement sans licence. Cette fonction peut être réactivée
  * si vous souhaitez informer les utilisateurs de la possibilité d'activer les mises à jour.
  */
-function display_api_key_warning() {
+function display_api_key_warning()
+{
     // Désactivé : Le système de licences est optionnel
     // Le thème fonctionne sans licence, donc aucun avertissement n'est nécessaire
     return;
-    
+
     /* Code commenté pour référence future
     $screen = get_current_screen();
     // Ne pas afficher l'avertissement sur la page des paramètres du thème
@@ -120,10 +121,10 @@ function bootstrap_theme()
     // Le menu de licence est toujours accessible pour permettre la configuration
     $api_key = defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '';
     $api_key_from_option = get_option('g2rd_surecart_api_key', '');
-    
+
     // Utiliser la clé API depuis la constante ou l'option
     $final_api_key = !empty($api_key) ? $api_key : $api_key_from_option;
-    
+
     // Toujours initialiser le gestionnaire de licences (même sans clé API)
     // pour que le menu soit accessible et permettre la configuration
     $license_manager = new \G2RD\SureCartLicenseManager($final_api_key);
@@ -152,6 +153,24 @@ if (file_exists(get_template_directory() . '/includes/license-init.php')) {
 }
 
 // Forcer Dashicons dans l'éditeur Gutenberg
-add_action('enqueue_block_editor_assets', function() {
+add_action('enqueue_block_editor_assets', function () {
     wp_enqueue_style('dashicons');
+
+    // Script pour personnaliser le label de l'élément link en "Icône" pour le bloc g2rd/info
+    // Le script est maintenant dans le dossier du bloc pour une meilleure organisation
+    wp_enqueue_script(
+        'g2rd-info-element-label',
+        get_template_directory_uri() . '/blocks/g2rd-info/src/element-label.js',
+        [
+            'wp-blocks',
+            'wp-element',
+            'wp-components',
+            'wp-block-editor',
+            'wp-compose',
+            'wp-i18n',
+            'wp-hooks',
+        ],
+        wp_get_theme()->get('Version'),
+        true
+    );
 });
