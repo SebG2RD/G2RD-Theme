@@ -82,10 +82,10 @@ class ScriptsManager
     public function addPreloadLinks(): void
     {
         $template_uri = get_template_directory_uri();
-        
+
         // Précharger les polices critiques
         echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
-        
+
         // Précharger les styles critiques
         echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/css/critical.css" as="style">';
     }
@@ -124,6 +124,15 @@ class ScriptsManager
             \get_template_directory_uri() . '/assets/js/g2rd-particles.js',
             [],
             $this->theme_version,
+            true
+        );
+
+        // Script Typed.js pour le bloc g2rd-typed (chargé depuis les fichiers locaux)
+        \wp_enqueue_script(
+            'typed-js',
+            \get_template_directory_uri() . '/assets/js/vendor/typed.min.js',
+            [],
+            '2.0.12',
             true
         );
 
@@ -175,7 +184,8 @@ class ScriptsManager
     /**
      * Charge le CSS du bloc countdown côté front
      */
-    public static function enqueue_g2rd_countdown_css() {
+    public static function enqueue_g2rd_countdown_css()
+    {
         $css_path = get_template_directory_uri() . '/blocks/g2rd-countdown/build/index.css';
         if (file_exists(get_template_directory() . '/blocks/g2rd-countdown/build/index.css')) {
             wp_enqueue_style('g2rd-countdown-front', $css_path, array(), filemtime(get_template_directory() . '/blocks/g2rd-countdown/build/index.css'));

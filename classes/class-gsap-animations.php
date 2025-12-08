@@ -61,15 +61,15 @@ class GSAPAnimations
     public function addPreloadLinks(): void
     {
         if (!\is_admin()) {
-            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/js/vendor/gsap.min.js" as="script">';
-            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js" as="script">';
+            echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/js/vendor/gsap.min.js" as="script">';
+            echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/js/vendor/ScrollTrigger.min.js" as="script">';
         }
     }
 
     /**
      * Enregistre et charge les scripts GSAP pour le frontend
      * 
-     * Charge les bibliothèques GSAP et ScrollTrigger depuis CDN,
+     * Charge les bibliothèques GSAP et ScrollTrigger depuis les fichiers locaux,
      * ainsi que le script personnalisé d'animations.
      *
      * @since 1.0.0
@@ -79,19 +79,19 @@ class GSAPAnimations
     {
         // Charger GSAP uniquement sur le frontend
         if (!\is_admin()) {
-            // Charger GSAP depuis un CDN pour de meilleures performances
+            // Charger GSAP depuis les fichiers locaux du thème
             \wp_enqueue_script(
                 'gsap',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
+                \get_template_directory_uri() . '/assets/js/vendor/gsap.min.js',
                 [],
                 '3.12.2',
                 true
             );
 
-            // Charger ScrollTrigger depuis le même CDN
+            // Charger ScrollTrigger depuis les fichiers locaux du thème
             \wp_enqueue_script(
                 'scrolltrigger',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
+                \get_template_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js',
                 ['gsap'],
                 '3.12.2',
                 true

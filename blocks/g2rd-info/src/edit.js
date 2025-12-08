@@ -18,7 +18,7 @@ import {
   ToggleControl,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * Icônes organisées par catégories pour le DropdownMenu
@@ -200,7 +200,7 @@ const iconCategories = {
 /**
  * Bloc Info G2RD - Composant principal d'édition
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, clientId }) {
   // Déstructuration des attributs du bloc
   const {
     mediaType,
@@ -272,6 +272,142 @@ export default function Edit({ attributes, setAttributes }) {
       height: fullHeight ? "100%" : undefined,
     },
   });
+
+  // Référence pour accéder au DOM du bloc
+  const blockRef = useRef(null);
+
+  /**
+   * Fonction pour résoudre une variable CSS WordPress
+   */
+  const resolveCssVariable = (variableValue) => {
+    if (!variableValue || !variableValue.startsWith("var(")) {
+      return variableValue;
+    }
+
+    const varMatch = variableValue.match(/var\(--wp--preset--color--([^,)]+)/);
+    if (varMatch) {
+      const colorSlug = varMatch[1];
+      const root = document.documentElement;
+      const resolved = window
+        .getComputedStyle(root)
+        .getPropertyValue(`--wp--preset--color--${colorSlug}`)
+        .trim();
+      return resolved || null;
+    }
+
+    return null;
+  };
+
+  /**
+   * Appliquer la couleur de bordure dans l'éditeur
+   * Ce useEffect s'exécute après chaque rendu pour s'assurer que la couleur est appliquée
+   */
+  useEffect(() => {
+    // Fonction pour appliquer la couleur de bordure
+    const applyBorderColor = () => {
+      // Trouver l'élément du bloc dans le DOM en utilisant clientId ou la référence
+      let blockElement = blockRef.current;
+
+      // Si pas de référence, chercher par clientId ou par classe
+      if (!blockElement && clientId) {
+        // Chercher le bloc par son data-block-id
+        const blockWrapper = document.querySelector(
+          `[data-block="${clientId}"]`
+        );
+        if (blockWrapper) {
+          const found = blockWrapper.querySelector(".g2rd-info-block");
+          blockElement = found || blockWrapper;
+        }
+      }
+
+      // Si toujours pas trouvé, utiliser la référence ou chercher le premier bloc
+      if (!blockElement) {
+        blockElement = document.querySelector(".g2rd-info-block");
+      }
+
+      if (!blockElement || !(blockElement instanceof HTMLElement)) {
+        return;
+      }
+
+      // Vérifier si WordPress a défini la variable CSS pour la bordure
+      const inlineStyle = blockElement.getAttribute("style") || "";
+      const computedStyle = window.getComputedStyle(blockElement);
+      const borderColorVar = computedStyle
+        .getPropertyValue("--wp--preset--color--border")
+        .trim();
+
+      // Si WordPress a défini la variable CSS (via useBlockProps), s'assurer qu'elle est utilisée
+      // On utilise la variable CSS directement, sans la résoudre, pour permettre les mises à jour
+      if (
+        borderColorVar ||
+        blockElement.classList.contains("has-border-color")
+      ) {
+        // Vérifier si border-color utilise déjà la variable CSS
+        const currentBorderColor = blockElement.style.borderColor;
+        const currentStyleHasVar =
+          inlineStyle.includes("border-color") &&
+          (inlineStyle.includes("var(--wp--preset--color--border") ||
+            inlineStyle.includes("--wp--preset--color--border"));
+
+        // Si border-color n'utilise pas encore la variable CSS, l'appliquer (sans !important)
+        if (!currentStyleHasVar) {
+          blockElement.style.setProperty(
+            "border-color",
+            "var(--wp--preset--color--border, currentColor)"
+          );
+        }
+      } else {
+        // Si aucune couleur de bordure n'est définie, retirer le style inline pour utiliser le CSS par défaut
+        if (blockElement.style.borderColor) {
+          blockElement.style.removeProperty("border-color");
+        }
+      }
+    };
+
+    // Appliquer avec un délai pour laisser WordPress appliquer ses styles d'abord
+    const timeoutId = setTimeout(applyBorderColor, 100);
+
+    // Observer les changements dans les styles et classes
+    const observer = new MutationObserver(() => {
+      // Délai pour laisser WordPress appliquer ses styles
+      setTimeout(applyBorderColor, 50);
+    });
+
+    // Trouver l'élément à observer après un court délai
+    setTimeout(() => {
+      let blockElement = blockRef.current;
+
+      if (!blockElement && clientId) {
+        const blockWrapper = document.querySelector(
+          `[data-block="${clientId}"]`
+        );
+        if (blockWrapper) {
+          const found = blockWrapper.querySelector(".g2rd-info-block");
+          blockElement = found || blockWrapper;
+        }
+      }
+
+      if (!blockElement) {
+        blockElement = document.querySelector(".g2rd-info-block");
+      }
+
+      if (blockElement && blockElement instanceof HTMLElement) {
+        observer.observe(blockElement, {
+          attributes: true,
+          attributeFilter: ["style", "class"],
+        });
+      }
+    }, 200);
+
+    // Réappliquer périodiquement pour s'assurer que la couleur est toujours correcte
+    const intervalId = setInterval(applyBorderColor, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+      clearInterval(intervalId);
+    };
+  }, [borderWidth, borderRadius, clientId]); // Réexécuter si les attributs de bordure changent ou si clientId change
 
   // Layouts disponibles
   const layoutOptions = [
@@ -368,7 +504,12 @@ export default function Edit({ attributes, setAttributes }) {
   const getTextAlign = () => {
     if (layout === "icon-top" || layout === "icon-bottom") {
       // L'alignement du texte suit l'alignement de l'icône
-      return iconAlignment || "center";
+      const align = iconAlignment || "center";
+      // S'assurer que la valeur est valide
+      if (align === "left" || align === "center" || align === "right") {
+        return align;
+      }
+      return "center";
     }
     return "left";
   };
@@ -624,7 +765,18 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
       </InspectorControls>
       {/* Rendu du bloc dans l'éditeur */}
-      <div {...blockProps}>
+      <div
+        {...blockProps}
+        ref={(el) => {
+          // Fusionner la référence de useBlockProps avec notre référence
+          if (typeof blockProps.ref === "function") {
+            blockProps.ref(el);
+          } else if (blockProps.ref) {
+            blockProps.ref.current = el;
+          }
+          blockRef.current = el;
+        }}
+      >
         <div
           className={`g2rd-info-content g2rd-layout-${layout}`}
           style={getFlexStyles()}

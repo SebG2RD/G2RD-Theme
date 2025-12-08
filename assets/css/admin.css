@@ -109,7 +109,7 @@
 }
 
 /* Admin Bar */
-#wpadminbar {
+.nojq {
   background-color: var(--primary-color) !important;
 }
 
@@ -176,38 +176,38 @@
 }
 
 /* Admin Bar Text Color */
-#wpadminbar #wp-admin-bar-site-name > a.ab-item,
-#wpadminbar .ab-icon::before,
-#wpadminbar .ab-item::before,
-#wpadminbar a.ab-item,
-#wpadminbar > #wp-toolbar span.ab-label,
-#wpadminbar > #wp-toolbar span.noticon {
+.nojq #wp-admin-bar-site-name > a.ab-item,
+.nojq .ab-icon::before,
+.nojq .ab-item::before,
+.nojq a.ab-item,
+.nojq > #wp-toolbar span.ab-label,
+.nojq > #wp-toolbar span.noticon {
   color: var(--text-light) !important;
 }
 
 /* Admin bar hover */
-#wpadminbar .ab-top-menu > li:hover > .ab-item,
-#wpadminbar .ab-top-menu > li.hover > .ab-item,
-#wpadminbar > #wp-toolbar li.hover span.ab-label,
-#wpadminbar > #wp-toolbar li:hover span.ab-label,
-#wpadminbar .ab-top-menu > li > .ab-item:focus {
+.nojq .ab-top-menu > li:hover > .ab-item,
+.nojq .ab-top-menu > li.hover > .ab-item,
+.nojq > #wp-toolbar li.hover span.ab-label,
+.nojq > #wp-toolbar li:hover span.ab-label,
+.nojq .ab-top-menu > li > .ab-item:focus {
   background-color: var(--menu-submenu-bg) !important;
   color: var(--text-light) !important;
 }
 
-#wpadminbar .menupop .ab-sub-wrapper {
+.nojq .menupop .ab-sub-wrapper {
   background-color: var(--menu-submenu-bg) !important;
 }
 
-#wpadminbar .quicklinks .menupop ul li a:hover,
-#wpadminbar .quicklinks .menupop ul li a:focus,
-#wpadminbar .quicklinks .menupop ul li a:hover strong,
-#wpadminbar .quicklinks .menupop ul li a:focus strong,
-#wpadminbar .quicklinks .menupop .ab-sub-secondary li a:hover,
-#wpadminbar .quicklinks .menupop .ab-sub-secondary li a:focus,
-#wpadminbar .quicklinks .menupop li:hover a,
-#wpadminbar .quicklinks .menupop li a:focus,
-#wpadminbar .quicklinks .menupop li a:focus span#ab-awaiting-mod,
-#wpadminbar .quicklinks .menupop li a:hover span#ab-updates {
+.nojq .quicklinks .menupop ul li a:hover,
+.nojq .quicklinks .menupop ul li a:focus,
+.nojq .quicklinks .menupop ul li a:hover strong,
+.nojq .quicklinks .menupop ul li a:focus strong,
+.nojq .quicklinks .menupop .ab-sub-secondary li a:hover,
+.nojq .quicklinks .menupop .ab-sub-secondary li a:focus,
+.nojq .quicklinks .menupop li:hover a,
+.nojq .quicklinks .menupop li a:focus,
+.nojq .quicklinks .menupop li a:focus span#ab-awaiting-mod,
+.nojq .quicklinks .menupop li a:hover span#ab-updates {
   color: var(--menu-highlight-color) !important;
 }

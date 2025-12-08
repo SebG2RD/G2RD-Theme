@@ -62,11 +62,38 @@ jQuery(document).ready(function ($) {
     var cpt = $toggle.data("cpt");
     var enabled = $toggle.is(":checked") ? "1" : "0";
     var $status = $("#cpt-" + cpt + "-status");
+    var $nameSection = $("#cpt-" + cpt + "-name-section");
+    var $nameInput = $("#cpt-" + cpt + "-name");
+    var currentName = $nameInput.val().trim();
+
+    // Si on essaie d'activer, vérifier que le nom est défini
+    if (enabled === "1" && currentName === "") {
+      // Réactiver le toggle
+      $toggle.prop("checked", false);
+      // Mettre en évidence le champ nom
+      $nameInput
+        .focus()
+        .css("border-color", "#d63638")
+        .css("box-shadow", "0 0 0 1px #d63638");
+      $status
+        .removeClass("success")
+        .addClass("error")
+        .html(
+          '<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>Vous devez d\'abord définir un nom pour ce type de contenu'
+        );
+      setTimeout(function () {
+        $nameInput.css("border-color", "").css("box-shadow", "");
+      }, 3000);
+      return;
+    }
 
     // Afficher le message de sauvegarde avec icône
     $status
       .removeClass("success error")
-      .html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.saving);
+      .html(
+        '<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' +
+          g2rdLicense.strings.saving
+      );
 
     // Désactiver le toggle pendant la sauvegarde
     $toggle.prop("disabled", true);
@@ -86,7 +113,10 @@ jQuery(document).ready(function ($) {
           $status
             .removeClass("error")
             .addClass("success")
-            .html('<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' + response.data.message);
+            .html(
+              '<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' +
+                response.data.message
+            );
           // Recharger la page après 1 seconde pour que les changements prennent effet
           setTimeout(function () {
             location.reload();
@@ -95,7 +125,10 @@ jQuery(document).ready(function ($) {
           $status
             .removeClass("success")
             .addClass("error")
-            .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + (response.data.message || g2rdLicense.strings.errorSaving));
+            .html(
+              '<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' +
+                (response.data.message || g2rdLicense.strings.errorSaving)
+            );
           // Réactiver le toggle et inverser l'état en cas d'erreur
           $toggle.prop("checked", !$toggle.prop("checked"));
           $toggle.prop("disabled", false);
@@ -105,7 +138,12 @@ jQuery(document).ready(function ($) {
         $status
           .removeClass("success")
           .addClass("error")
-          .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.errorSaving + ": " + error);
+          .html(
+            '<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' +
+              g2rdLicense.strings.errorSaving +
+              ": " +
+              error
+          );
         // Réactiver le toggle et inverser l'état en cas d'erreur
         $toggle.prop("checked", !$toggle.prop("checked"));
         $toggle.prop("disabled", false);
@@ -133,7 +171,10 @@ jQuery(document).ready(function ($) {
     // Afficher le message de sauvegarde avec icône
     $status
       .removeClass("success error")
-      .html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.saving);
+      .html(
+        '<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px;"></span>' +
+          g2rdLicense.strings.saving
+      );
 
     // Désactiver le bouton pendant la sauvegarde
     $btn.prop("disabled", true).addClass("button-disabled");
@@ -153,7 +194,15 @@ jQuery(document).ready(function ($) {
           $status
             .removeClass("error")
             .addClass("success")
-            .html('<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' + response.data.message);
+            .html(
+              '<span class="dashicons dashicons-yes-alt" style="vertical-align: middle; margin-right: 4px;"></span>' +
+                response.data.message
+            );
+          // Mettre à jour le header avec le nouveau nom
+          var $headerName = $("#cpt-" + cpt + "-header-name");
+          if ($headerName.length) {
+            $headerName.text(response.data.name);
+          }
           // Recharger la page après 1 seconde pour que les changements prennent effet
           setTimeout(function () {
             location.reload();
@@ -162,7 +211,10 @@ jQuery(document).ready(function ($) {
           $status
             .removeClass("success")
             .addClass("error")
-            .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + (response.data.message || g2rdLicense.strings.nameError));
+            .html(
+              '<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' +
+                (response.data.message || g2rdLicense.strings.nameError)
+            );
           $btn.prop("disabled", false).removeClass("button-disabled");
         }
       },
@@ -170,7 +222,12 @@ jQuery(document).ready(function ($) {
         $status
           .removeClass("success")
           .addClass("error")
-          .html('<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' + g2rdLicense.strings.nameError + ": " + error);
+          .html(
+            '<span class="dashicons dashicons-warning" style="vertical-align: middle; margin-right: 4px;"></span>' +
+              g2rdLicense.strings.nameError +
+              ": " +
+              error
+          );
         $btn.prop("disabled", false).removeClass("button-disabled");
       },
     });

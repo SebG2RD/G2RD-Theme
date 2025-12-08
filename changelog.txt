@@ -1,3 +1,12 @@
+= 1.1.71 =
+* Corrections de conformité WordPress.org
+* Remplacement de #wpadminbar par .nojq dans admin.css
+* Correction de la fonction de traduction sans domaine de texte
+* Désactivation par défaut des CPT (Portfolio, Prestations, Qui sommes-nous)
+* Ajout de descriptions claires pour chaque CPT
+* Nom personnalisé obligatoire à l'activation des CPT
+* Remplacement des ressources CDN par des fichiers locaux (GSAP, ScrollTrigger, Typed.js)
+
 = 1.1.7 =
 * Amélioration du bloc G2RD Info : Personnalisation complète des couleurs dans l'onglet Styles
 * Ajout d'un contrôle de couleur de bordure dans l'onglet Styles avec palette WordPress

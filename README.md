@@ -184,6 +184,14 @@ Ce thème est distribué sous licence EUPL-1.2. Voir le fichier LICENSE pour plu
 
 ## Changelog
 
+### 1.1.71
+
+- **Corrections de conformité WordPress.org** : Remplacement de #wpadminbar par .nojq dans admin.css
+- **Correction de traduction** : Suppression de l'import inutilisé de la fonction \_e
+- **Gestion des CPT** : Désactivation par défaut des Custom Post Types (Portfolio, Prestations, Qui sommes-nous)
+- **Interface CPT améliorée** : Ajout de descriptions claires pour chaque CPT et nom personnalisé obligatoire à l'activation
+- **Ressources locales** : Remplacement des ressources CDN (GSAP, ScrollTrigger, Typed.js) par des fichiers locaux
+
 ### 1.1.7
 
 - **Amélioration du bloc G2RD Info** : Personnalisation complète des couleurs dans l'onglet Styles

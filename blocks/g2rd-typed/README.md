@@ -102,7 +102,7 @@ Le bloc utilise les classes CSS suivantes pour la personnalisation :
 
 ## Dépendances
 
-- **Typed.js** : Chargé automatiquement depuis CDN (https://cdn.jsdelivr.net/npm/typed.js@2.0.12)
+- **Typed.js** : Chargé automatiquement depuis les fichiers locaux du thème (`/assets/js/vendor/typed.min.js`)
 - **WordPress 6.5+** : Compatible avec les fonctionnalités FSE
 
 ## Support

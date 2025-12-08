@@ -209,25 +209,33 @@ if (typeof window.wp !== "undefined" && window.wp.blockEditor) {
         }
 
         // Appliquer la couleur de bordure
-        if (
-          borderColor &&
-          borderColor !== "inherit" &&
-          borderColor !== "currentColor" &&
-          borderColor !== ""
-        ) {
-          // Appliquer via style inline avec !important
-          blockWrapper.style.setProperty(
-            "border-color",
-            borderColor,
-            "important"
-          );
+        // On utilise la variable CSS directement au lieu de résoudre la couleur
+        // Cela permet à WordPress de mettre à jour la couleur quand l'utilisateur change la couleur dans l'onglet Styles
+        const computedStyle = window.getComputedStyle(blockWrapper);
+        const borderColorVar = computedStyle
+          .getPropertyValue("--wp--preset--color--border")
+          .trim();
 
-          // Aussi appliquer via une classe CSS pour plus de spécificité dans l'éditeur
-          blockWrapper.classList.add("has-border-color-applied");
+        if (
+          borderColorVar ||
+          blockWrapper.classList.contains("has-border-color")
+        ) {
+          // Utiliser la variable CSS directement (sans !important) pour permettre les mises à jour
+          const inlineStyle = blockWrapper.getAttribute("style") || "";
+          const currentStyleHasVar =
+            inlineStyle.includes("border-color") &&
+            (inlineStyle.includes("var(--wp--preset--color--border") ||
+              inlineStyle.includes("--wp--preset--color--border"));
+
+          if (!currentStyleHasVar) {
+            blockWrapper.style.setProperty(
+              "border-color",
+              "var(--wp--preset--color--border, currentColor)"
+            );
+          }
         } else {
           // Si aucune couleur n'est définie, retirer le style inline pour utiliser le CSS par défaut
           blockWrapper.style.removeProperty("border-color");
-          blockWrapper.classList.remove("has-border-color-applied");
         }
 
         // ===== APPLIQUER LA COULEUR LINK À L'ICÔNE =====

@@ -24,7 +24,6 @@ use function wp_remote_get;
 use function wp_remote_post;
 use function is_wp_error;
 use function wp_remote_retrieve_body;
-use function _e;
 use function esc_attr;
 use function esc_html;
 use function submit_button;
@@ -145,7 +144,7 @@ class SureCartLicenseManager
         // Désactivé : Le système de licences est optionnel
         // Le thème fonctionne sans licence, donc aucun avertissement n'est nécessaire
         return;
-        
+
         /* Code commenté pour référence future
         // Ne montrer des notifications que si une clé API est configurée
         // (cela indique que l'utilisateur souhaite utiliser le système de licences)
@@ -228,12 +227,12 @@ class SureCartLicenseManager
         $api_key = !empty($this->api_key) ? $this->api_key : (defined('G2RD_SURECART_API_KEY') ? G2RD_SURECART_API_KEY : '');
         $api_key_from_option = \get_option('g2rd_surecart_api_key', '');
         $final_api_key = !empty($api_key) ? $api_key : $api_key_from_option;
-        
+
         if (empty($final_api_key)) {
             // Aucune clé API configurée = système de licences non utilisé (optionnel)
             return false;
         }
-        
+
         $license_key = \get_option('g2rd_license_key');
 
         // Debug: Vérifier si la clé de licence est présente
@@ -482,7 +481,7 @@ class SureCartLicenseManager
      */
     public function renderLicensePage()
     {
-        ?>
+?>
         <div class="wrap">
             <h1><?php \_e('G2RD License', 'g2rd-theme'); ?></h1>
 
@@ -567,37 +566,51 @@ class SureCartLicenseManager
 
                 <div class="g2rd-cpt-container" style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
                     <?php
-                    // Définir les CPT avec leurs icônes et valeurs par défaut
+                    // Définir les CPT avec leurs icônes, descriptions et valeurs par défaut
                     $cpts = [
                         'prestations' => [
                             'label' => 'Prestations',
                             'icon' => 'dashicons-clipboard',
-                            'default_name' => 'Prestations'
+                            'default_name' => 'Prestations',
+                            'description' => 'Créez une section dédiée pour présenter vos services ou prestations. Chaque prestation peut contenir jusqu\'à 5 sections avec titre, description et image. Idéal pour mettre en avant ce que vous proposez à vos clients de manière structurée et visuelle.'
                         ],
                         'qui-sommes-nous' => [
                             'label' => 'Qui sommes-nous',
                             'icon' => 'dashicons-groups',
-                            'default_name' => 'Qui sommes nous'
+                            'default_name' => 'Qui sommes nous',
+                            'description' => 'Présentez les membres de votre équipe avec leurs compétences, expériences et objectifs. Chaque membre peut avoir une photo, une description et des informations détaillées. Parfait pour humaniser votre entreprise et créer un lien de confiance avec vos visiteurs.'
                         ],
                         'portfolio' => [
                             'label' => 'Portfolio',
                             'icon' => 'dashicons-admin-appearance',
-                            'default_name' => 'Portfolio'
+                            'default_name' => 'Portfolio',
+                            'description' => 'Montrez vos réalisations et projets avec des détails complets : lien vers le site, scores de performance, accessibilité, SEO, identifiants de connexion et informations de maintenance. Excellent pour démontrer votre expertise et la qualité de votre travail à vos clients potentiels.'
                         ]
                     ];
 
                     foreach ($cpts as $cpt_key => $cpt_data):
-                        $enabled = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_enabled', '1');
-                        $custom_name = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_name', $cpt_data['default_name']);
+                        // Par défaut, les CPT sont désactivés (valeur par défaut '0')
+                        $enabled = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_enabled', '0');
+                        // Le nom personnalisé n'a pas de valeur par défaut - il doit être défini à l'activation
+                        $custom_name = \get_option('g2rd_cpt_' . str_replace('-', '_', $cpt_key) . '_name', '');
                     ?>
                         <div class="g2rd-cpt-item postbox" style="flex: 1; min-width: 300px; margin: 0; border: 1px solid #c3c4c7; box-shadow: 0 1px 1px rgba(0,0,0,.04);">
                             <div class="postbox-header" style="border-bottom: 1px solid #c3c4c7; padding: 12px 15px; background: #f6f7f7;">
                                 <h3 class="hndle" style="margin: 0; padding: 0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
                                     <span class="dashicons <?php echo \esc_attr($cpt_data['icon']); ?>" style="font-size: 18px; width: 18px; height: 18px; color: #2271b1;"></span>
-                                    <?php echo \esc_html($custom_name); ?>
+                                    <span id="cpt-<?php echo \esc_attr($cpt_key); ?>-header-name">
+                                        <?php echo !empty($custom_name) ? \esc_html($custom_name) : \esc_html($cpt_data['label']); ?>
+                                    </span>
                                 </h3>
                             </div>
                             <div class="inside" style="padding: 15px;">
+                                <!-- Description du CPT -->
+                                <div class="g2rd-cpt-description" style="margin-bottom: 20px; padding: 15px; background: #f0f6fc; border-left: 4px solid #2271b1; border-radius: 4px;">
+                                    <p style="margin: 0; color: #1d2327; line-height: 1.6;">
+                                        <?php echo \esc_html($cpt_data['description']); ?>
+                                    </p>
+                                </div>
+
                                 <!-- Toggle Activation -->
                                 <div class="g2rd-cpt-toggle-section" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #dcdcde;">
                                     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -615,11 +628,12 @@ class SureCartLicenseManager
                                     </div>
                                 </div>
 
-                                <!-- Nom personnalisé -->
-                                <div class="g2rd-cpt-name-section">
+                                <!-- Nom personnalisé (toujours visible pour permettre la configuration) -->
+                                <div class="g2rd-cpt-name-section" id="cpt-<?php echo \esc_attr($cpt_key); ?>-name-section">
                                     <label for="cpt-<?php echo \esc_attr($cpt_key); ?>-name" style="display: block; margin-bottom: 8px; font-weight: 500;">
                                         <span class="dashicons dashicons-edit" style="font-size: 16px; vertical-align: middle; color: #646970;"></span>
                                         <?php \_e('Nom personnalisé', 'g2rd-theme'); ?>
+                                        <span style="color: #d63638;">*</span>
                                     </label>
                                     <div style="display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;">
                                         <input type="text"
@@ -628,6 +642,7 @@ class SureCartLicenseManager
                                             value="<?php echo \esc_attr($custom_name); ?>"
                                             class="regular-text g2rd-cpt-name-input"
                                             placeholder="<?php echo \esc_attr($cpt_data['default_name']); ?>"
+                                            required
                                             style="flex: 1; min-width: 200px;">
                                         <button type="button"
                                             class="button button-primary g2rd-save-cpt-name"
@@ -637,8 +652,8 @@ class SureCartLicenseManager
                                             <?php \_e('Sauvegarder', 'g2rd-theme'); ?>
                                         </button>
                                     </div>
-                                    <p class="description" style="margin-top: 8px; margin-bottom: 0;">
-                                        <?php \_e('Le nom personnalisé remplacera le nom par défaut dans le menu WordPress et les pages d\'administration.', 'g2rd-theme'); ?>
+                                    <p class="description" style="margin-top: 8px; margin-bottom: 0; color: #646970;">
+                                        <?php \_e('Ce nom apparaîtra dans le menu WordPress et les pages d\'administration. Vous devez définir un nom pour activer ce type de contenu.', 'g2rd-theme'); ?>
                                     </p>
                                     <span class="g2rd-cpt-name-status" id="cpt-<?php echo \esc_attr($cpt_key); ?>-name-status" style="display: block; margin-top: 8px;"></span>
                                 </div>
@@ -839,6 +854,24 @@ class SureCartLicenseManager
 
         $option_name = $valid_cpts[$cpt];
         $enabled_value = ($enabled === '1' || $enabled === 'true') ? '1' : '0';
+
+        // Si on essaie d'activer, vérifier que le nom est défini
+        if ($enabled_value === '1') {
+            $name_options = [
+                'prestations' => 'g2rd_cpt_prestations_name',
+                'qui-sommes-nous' => 'g2rd_cpt_qui_sommes_nous_name',
+                'portfolio' => 'g2rd_cpt_portfolio_name'
+            ];
+
+            if (isset($name_options[$cpt])) {
+                $cpt_name = \get_option($name_options[$cpt], '');
+                if (empty($cpt_name)) {
+                    \wp_send_json_error([
+                        'message' => \__('Vous devez d\'abord définir un nom pour ce type de contenu avant de l\'activer.', 'g2rd-theme')
+                    ]);
+                }
+            }
+        }
 
         // Sauvegarder l'état
         \update_option($option_name, $enabled_value);

@@ -13,16 +13,30 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const config = JSON.parse(configData);
 
-      // Charger Typed.js depuis CDN si pas déjà chargé
-      if (typeof Typed === "undefined") {
-        const script = document.createElement("script");
-        script.src = "https://cdn.jsdelivr.net/npm/typed.js@2.0.12";
-        script.onload = () => {
-          initializeTyped(typedElement, stringsElement, config);
-        };
-        document.head.appendChild(script);
-      } else {
+      // Typed.js est chargé via wp_enqueue_script depuis les fichiers locaux du thème
+      // Vérifier si Typed.js est déjà disponible, sinon attendre qu'il soit chargé
+      if (typeof Typed !== "undefined") {
+        // Typed.js est déjà chargé, initialiser directement
         initializeTyped(typedElement, stringsElement, config);
+      } else {
+        // Attendre que Typed.js soit chargé par WordPress
+        // Le script est enregistré avec wp_enqueue_script, donc il sera chargé automatiquement
+        const checkTyped = setInterval(() => {
+          if (typeof Typed !== "undefined") {
+            clearInterval(checkTyped);
+            initializeTyped(typedElement, stringsElement, config);
+          }
+        }, 50);
+
+        // Timeout de sécurité après 5 secondes
+        setTimeout(() => {
+          clearInterval(checkTyped);
+          if (typeof Typed !== "undefined") {
+            initializeTyped(typedElement, stringsElement, config);
+          } else {
+            console.error("Typed.js n'a pas pu être chargé");
+          }
+        }, 5000);
       }
     } catch (error) {
       console.error("Erreur lors de l'initialisation de Typed.js:", error);

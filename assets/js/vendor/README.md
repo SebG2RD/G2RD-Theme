@@ -17,3 +17,17 @@ Instructions :
 4. Placez les fichiers dans ce dossier
 
 Note : Assurez-vous de respecter la licence de GSAP lors de l'utilisation de ces fichiers.
+
+## Typed.js
+
+Le fichier suivant doit être téléchargé :
+
+- `typed.min.js` : Version 2.0.12
+
+Instructions :
+
+1. Téléchargez depuis : https://cdn.jsdelivr.net/npm/typed.js@2.0.12/dist/typed.min.js
+2. Ou depuis GitHub : https://github.com/mattboldt/typed.js/releases/tag/v2.0.12
+3. Placez le fichier `typed.min.js` dans ce dossier
+
+Note : Assurez-vous de respecter la licence MIT de Typed.js lors de l'utilisation de ce fichier.

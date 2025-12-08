@@ -4,7 +4,7 @@ Tags: full-site-editing, editor-style, block-styles, wide-blocks, custom-colors,
 Requires at least: 6.5
 Tested up to: 6.5
 Requires PHP: 8.0
-Stable tag: 1.1.7
+Stable tag: 1.1.71
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,13 @@ Oui, le thème inclut des outils de migration pour faciliter la transition depui
 Oui, le thème est conçu pour être compatible avec les standards FSE de WordPress et peut coexister avec d'autres thèmes FSE.
 
 == Changelog ==
+
+= 1.1.71 =
+* Corrections de conformité WordPress.org : Remplacement de #wpadminbar par .nojq dans admin.css
+* Correction de traduction : Suppression de l'import inutilisé de la fonction _e
+* Gestion des CPT : Désactivation par défaut des Custom Post Types (Portfolio, Prestations, Qui sommes-nous)
+* Interface CPT améliorée : Ajout de descriptions claires pour chaque CPT et nom personnalisé obligatoire à l'activation
+* Ressources locales : Remplacement des ressources CDN (GSAP, ScrollTrigger, Typed.js) par des fichiers locaux
 
 = 1.1.7 =
 * Amélioration du bloc G2RD Info : Personnalisation complète des couleurs dans l'onglet Styles

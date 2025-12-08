@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gestion du type de contenu personnalisé Qui sommes-nous
  * 
@@ -29,10 +30,11 @@ class CPT_QuiSommesNous
     public function registerHooks(): void
     {
         // Vérifier si le CPT est activé avant d'enregistrer les hooks
-        if (\get_option('g2rd_cpt_qui_sommes_nous_enabled', '1') !== '1') {
+        // Par défaut, les CPT sont désactivés (valeur par défaut '0')
+        if (\get_option('g2rd_cpt_qui_sommes_nous_enabled', '0') !== '1') {
             return;
         }
-        
+
         add_action('init', [$this, 'registerPostType']);
         add_action('add_meta_boxes', [$this, 'addMetaBox']);
         add_action('save_post_qui-sommes-nous', [$this, 'saveMeta']);
@@ -49,14 +51,15 @@ class CPT_QuiSommesNous
     public function registerPostType(): void
     {
         // Vérifier si le CPT est activé
-        if (\get_option('g2rd_cpt_qui_sommes_nous_enabled', '1') !== '1') {
+        // Par défaut, les CPT sont désactivés (valeur par défaut '0')
+        if (\get_option('g2rd_cpt_qui_sommes_nous_enabled', '0') !== '1') {
             return;
         }
-        
+
         // Récupérer le nom personnalisé ou utiliser le nom par défaut
         $custom_name = \get_option('g2rd_cpt_qui_sommes_nous_name', 'Qui sommes nous');
         $singular_name = 'Membre'; // On peut aussi personnaliser ça plus tard si besoin
-        
+
         $labels = [
             'name' => $custom_name,
             'all_items' => 'Les membres de l\'équipe',
@@ -247,4 +250,4 @@ jQuery(document).ready(function($){
         }
         return $use_block_editor;
     }
-} 
+}
