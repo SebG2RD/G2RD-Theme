@@ -1,0 +1,126 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "g2rd/portfolio-universel",
+  "version": "1.0.0",
+  "title": "G2RD Portfolio Universel Filtrable",
+  "category": "g2rd-bloks",
+  "icon": "grid-view",
+  "description": "Un bloc portfolio universel qui affiche Articles, CPT et produits WooCommerce avec filtres dynamiques, recherche, et différents modes d'affichage.",
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "align": ["wide", "full"],
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "textdomain": "g2rd-portfolio-universel",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./src/portfolio-universel.css",
+  "viewScript": "file:./build/portfolio-universel-frontend.js",
+  "attributes": {
+    "postTypes": {
+      "type": "array",
+      "default": ["post"]
+    },
+    "includeWooCommerce": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayMode": {
+      "type": "string",
+      "default": "grid"
+    },
+    "itemsPerPage": {
+      "type": "number",
+      "default": 12
+    },
+    "paginationType": {
+      "type": "string",
+      "default": "load-more"
+    },
+    "showFilters": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCategories": {
+      "type": "boolean",
+      "default": true
+    },
+    "showTags": {
+      "type": "boolean",
+      "default": true
+    },
+    "showTaxonomies": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDateFilter": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthorFilter": {
+      "type": "boolean",
+      "default": true
+    },
+    "linkType": {
+      "type": "string",
+      "default": "modal"
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": false
+    },
+    "imageAspectRatio": {
+      "type": "string",
+      "default": "16/9"
+    },
+    "gap": {
+      "type": "number",
+      "default": 20
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "loadMoreText": {
+      "type": "string",
+      "default": "Charger plus"
+    },
+    "styles": {
+      "type": "object",
+      "default": {}
+    }
+  }
+}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Classe principale pour la configuration du thème
  * 
@@ -79,12 +80,24 @@ class ThemeSetup
     public function addPreloadLinks(): void
     {
         if (!is_admin()) {
-            // Précharger les polices
-            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
-            
-            // Précharger les styles critiques
-            echo '<link rel="preload" href="' . get_stylesheet_uri() . '" as="style">';
-            echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/css/accessibility.css" as="style">';
+            $template_dir = get_template_directory();
+            $template_uri = get_template_directory_uri();
+
+            // Précharger les polices (seulement si le fichier existe)
+            $main_font = $template_dir . '/assets/fonts/your-main-font.woff2';
+            if (file_exists($main_font)) {
+                echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
+            }
+
+            // Précharger les styles critiques (seulement si les fichiers existent)
+            if (file_exists(get_stylesheet_directory() . '/style.css')) {
+                echo '<link rel="preload" href="' . esc_url(get_stylesheet_uri()) . '" as="style">';
+            }
+
+            $accessibility_css = $template_dir . '/assets/css/accessibility.css';
+            if (file_exists($accessibility_css)) {
+                echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/css/accessibility.css" as="style">';
+            }
         }
     }
 

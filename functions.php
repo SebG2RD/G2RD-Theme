@@ -43,6 +43,7 @@ require_once __DIR__ . '/classes/class-block-categories.php';
 require_once __DIR__ . '/classes/class-glass-effect.php';
 require_once __DIR__ . '/classes/class-carousel-assets.php';
 require_once __DIR__ . '/classes/class-dark-mode.php';
+require_once __DIR__ . '/classes/class-portfolio-universel-api.php';
 
 /**
  * Affiche un avertissement si la clé API n'est pas configurée
@@ -114,6 +115,7 @@ function bootstrap_theme()
         \G2RD\GlassEffect::class,
         \G2RD\CarouselAssets::class, // Ajout du gestionnaire d'assets carrousel
         \G2RD\DarkMode::class, // Gestion du mode sombre
+        \G2RD\PortfolioUniverselAPI::class, // API REST pour le portfolio universel
     ];
 
     // Initialiser le système de licences (toujours, même sans clé API)

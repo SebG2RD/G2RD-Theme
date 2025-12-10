@@ -74,6 +74,8 @@ class CPT_Portfolio
             'labels' => $labels,
             'public' => true,
             'show_in_rest' => true,
+            'rest_base' => 'portfolio',
+            'rest_controller_class' => 'WP_REST_Posts_Controller',
             'has_archive' => true,
             'supports' => ['title', 'editor', 'thumbnail', 'revisions', 'custom-fields', 'excerpt', 'tags'],
             'menu_position' => 5,

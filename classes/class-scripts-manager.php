@@ -82,12 +82,19 @@ class ScriptsManager
     public function addPreloadLinks(): void
     {
         $template_uri = get_template_directory_uri();
+        $template_dir = get_template_directory();
 
-        // Précharger les polices critiques
-        echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
+        // Précharger les polices critiques (seulement si le fichier existe)
+        $main_font = $template_dir . '/assets/fonts/your-main-font.woff2';
+        if (file_exists($main_font)) {
+            echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin>';
+        }
 
-        // Précharger les styles critiques
-        echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/css/critical.css" as="style">';
+        // Précharger les styles critiques (seulement si le fichier existe)
+        $critical_css = $template_dir . '/assets/css/critical.css';
+        if (file_exists($critical_css)) {
+            echo '<link rel="preload" href="' . esc_url($template_uri) . '/assets/css/critical.css" as="style">';
+        }
     }
 
     /**
@@ -128,13 +135,17 @@ class ScriptsManager
         );
 
         // Script Typed.js pour le bloc g2rd-typed (chargé depuis les fichiers locaux)
-        \wp_enqueue_script(
-            'typed-js',
-            \get_template_directory_uri() . '/assets/js/vendor/typed.min.js',
-            [],
-            '2.0.12',
-            true
-        );
+        // Seulement si le fichier existe (voir README.md dans assets/js/vendor/)
+        $typed_js_path = \get_template_directory() . '/assets/js/vendor/typed.min.js';
+        if (file_exists($typed_js_path)) {
+            \wp_enqueue_script(
+                'typed-js',
+                \get_template_directory_uri() . '/assets/js/vendor/typed.min.js',
+                [],
+                '2.0.12',
+                true
+            );
+        }
 
         // Script pour les blocs (gsap-block-controls.js est géré par la classe GSAP_Animations)
         // \wp_enqueue_script(
